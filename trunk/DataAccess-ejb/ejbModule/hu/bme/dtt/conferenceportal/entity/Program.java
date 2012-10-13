@@ -1,5 +1,6 @@
 package hu.bme.dtt.conferenceportal.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,7 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Program {
+public class Program implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7705315014604055395L;
 	@Column(name = "PROGRAM_DESCRIPTION")
 	private String description;
 	@Column(name = "PROGRAM_END")

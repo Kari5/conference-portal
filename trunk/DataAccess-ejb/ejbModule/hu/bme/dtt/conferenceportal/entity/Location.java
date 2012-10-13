@@ -1,5 +1,7 @@
 package hu.bme.dtt.conferenceportal.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Location {
+public class Location implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3993579242993428896L;
 	@Column(name = "LOCATION_ADDRESS")
 	private String address;
 	@Column(name = "GOOGLE_MAPS")

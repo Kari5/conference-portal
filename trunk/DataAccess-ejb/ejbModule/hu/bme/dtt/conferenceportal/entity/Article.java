@@ -1,5 +1,7 @@
 package hu.bme.dtt.conferenceportal.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Article {
+public class Article implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2729039797476763987L;
 	@Column(name = "ARTICLE_AUTHOR")
 	private String author;
 	@Id
