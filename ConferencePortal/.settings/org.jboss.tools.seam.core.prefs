@@ -1,0 +1,17 @@
+#Sat Oct 13 14:45:34 CEST 2012
+action.package=hu.bme.dtt.conferenceportal.session
+action.sources=/ConferencePortal-ejb/ejbModule
+eclipse.preferences.version=1
+model.package=hu.bme.dtt.conferenceportal.entity
+model.sources=/ConferencePortal-ejb/ejbModule
+seam.ear.project=ConferencePortal-ear
+seam.ejb.project=ConferencePortal-ejb
+seam.project.connection.profile=BIRT Classic Models Sample Database
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/ConferencePortal/WebContent
+seam.runtime.name=jboss-seam-2.2.2.Final
+seam.test.creating=false
+seam.test.project=ConferencePortal-test
+test.package=org.domain.conferenceportal.test
+test.sources=/ConferencePortal-test/test-src
