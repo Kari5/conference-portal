@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -17,7 +18,7 @@ public class Article implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2729039797476763987L;
-	@Column(name = "ARTICLE_AUTHOR")
+	@Column(name = "ARTICLE_AUTHOR", nullable=false)
 	private String author;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,13 +26,13 @@ public class Article implements Serializable {
 	private Long id;
 	@Column(name = "ARTICLE_PDF_PATH")
 	private String pdfPath;
-	@Column(name = "ARTICLE_TITLE")
+	@Column(name = "ARTICLE_TITLE", nullable=false)
 	private String title;
 	@Column(name = "ARTICLE_URL")
 	private String url;
-	@OneToMany(cascade = { CascadeType.MERGE },
+	@ManyToOne(cascade = { CascadeType.MERGE },
 			targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", nullable=false)
 	private User user;
 
 	public String getAuthor() {

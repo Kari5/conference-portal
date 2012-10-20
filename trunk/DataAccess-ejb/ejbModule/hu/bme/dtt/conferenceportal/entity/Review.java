@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -25,7 +26,7 @@ public class Review implements Serializable {
 	private Double score;
 	@Column(name = "REVIEW_TEXT")
 	private String text;
-	@OneToMany(cascade = { CascadeType.MERGE },
+	@ManyToOne(cascade = { CascadeType.MERGE },
 			targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
 	@JoinColumn(name = "USER_ID")
 	private User user;

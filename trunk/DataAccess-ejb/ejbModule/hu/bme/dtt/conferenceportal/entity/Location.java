@@ -22,7 +22,7 @@ public class Location implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "LOCATION_ID")
 	private Long id;
-	@Column(name = "LOCATION_NAME")
+	@Column(name = "LOCATION_NAME", nullable=false)
 	private String name;
 
 	public String getAddress() {
