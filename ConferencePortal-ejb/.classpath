@@ -13,5 +13,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/ConferencePortal-ear/EarContent/jboss-seam.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataAccess-ejb"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
