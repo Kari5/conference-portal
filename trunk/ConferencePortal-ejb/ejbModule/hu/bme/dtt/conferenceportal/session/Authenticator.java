@@ -1,5 +1,11 @@
 package hu.bme.dtt.conferenceportal.session;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import hu.bme.dtt.conferenceportal.dao.UserDao;
+import hu.bme.dtt.conferenceportal.entity.User;
+
 import org.jboss.logging.Logger;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -13,19 +19,33 @@ public class Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
-
+    
     public boolean authenticate()
     {
     	LOGGER.info("authenticating " + credentials.getUsername());
-        //write your authentication logic here,
-        //return true if the authentication was
-        //successful, false otherwise
+        
+    	UserDao userDao;
+    	try {
+			userDao=InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			LOGGER.info("Belsõ hiba!");
+			return false;
+		}
+    	
         if ("admin".equals(credentials.getUsername()))
         {
             identity.addRole("admin");
             return true;
         }
+        
+        if(userDao.getUser(credentials.getUsername(), credentials.getPassword())!=null){
+        	identity.addRole("admin");
+        	return true;
+        }
+        
         return false;
     }
-
+    
 }
