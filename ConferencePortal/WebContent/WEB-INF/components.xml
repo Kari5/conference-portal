@@ -25,6 +25,8 @@
 	<persistence:managed-persistence-context
 		name="entityManager" auto-create="true"
 		persistence-unit-jndi-name="java:/ConferencePortalEntityManagerFactory" />
+		
+	<security:identity-manager identity-store="#{jpaIdentityStore}"/>
 
 	<security:jpa-identity-store user-class="hu.bme.dtt.conferenceportal.entity.User"
 		role-class="hu.bme.dtt.conferenceportal.entity.Role" />
