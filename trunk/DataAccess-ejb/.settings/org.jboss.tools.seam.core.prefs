@@ -1,0 +1,17 @@
+action.package=org.domain.dataaccessejb.session
+action.sources=/DataAccess-ejb/ejbModule
+eclipse.preferences.version=1
+model.package=org.domain.dataaccessejb.entity
+model.sources=/DataAccess-ejb/ejbModule
+seam.ear.project=DataAccess-ejb
+seam.ejb.project=DataAccess-ejb
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/DataAccess-ejb/ejbModule
+seam.runtime.name=jboss-seam-2.2.2.Final
+seam.settings.changed.by.user=true
+seam.test.creating=false
+seam.test.project=DataAccess-ejb
+test.package=org.domain.dataaccessejb.test
+test.sources=/DataAccess-ejb/ejbModule
