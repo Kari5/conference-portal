@@ -14,32 +14,69 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.jboss.seam.annotations.security.management.UserFirstName;
+import org.jboss.seam.annotations.security.management.UserLastName;
+import org.jboss.seam.annotations.security.management.UserPassword;
+import org.jboss.seam.annotations.security.management.UserPrincipal;
+import org.jboss.seam.annotations.security.management.UserRoles;
+
+import com.sun.xml.internal.ws.developer.UsesJAXBContext;
+
 @Entity(name = "User_")
 public class User implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5821534526043723923L;
+	/**
+	 * 
+	 */
 	@Column(name = "USER_EMAIL")
 	private String eMail;
+	/**
+	 * 
+	 */
+	@UserFirstName
 	@Column(name = "USER_FIRST_NAME")
 	private String firstName;
+	/**
+	 * 
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID")
 	private Long id;
+	/**
+	 * 
+	 */
+	@UserLastName
 	@Column(name = "USER_LAST_NAME")
 	private String lastName;
-	@Column(name = "USER_PASSWORD")
+	/**
+	 * 
+	 */
+	@UserPassword(hash="md5")
+	@Column(name = "USER_PASSWORD", nullable=false)
 	private String password;
+	/**
+	 * 
+	 */
+	@UserRoles
 	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class,
 			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Collection<Role> roles;
+	/**
+	 * 
+	 */
 	@Column(name = "USER_TEL")
 	private String tel;
-	@Column(name = "USER_NAME")
+	/**
+	 * 
+	 */
+	@UserPrincipal
+	@Column(name = "USER_NAME", nullable=false)
 	private String userName;
 
 	public String geteMail() {

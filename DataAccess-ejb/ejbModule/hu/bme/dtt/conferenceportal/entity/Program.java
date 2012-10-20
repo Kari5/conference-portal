@@ -25,7 +25,7 @@ public class Program implements Serializable {
 	private Long id;
 	@Column(name = "PROGRAM_START")
 	private Date start;
-	@Column(name = "PROGRAM_TITLE")
+	@Column(name = "PROGRAM_TITLE", nullable=false)
 	private String title;
 
 	public String getDescription() {
