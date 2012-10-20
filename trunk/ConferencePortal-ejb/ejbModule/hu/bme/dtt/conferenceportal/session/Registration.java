@@ -7,12 +7,17 @@ import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.User;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.security.Credentials;
+import org.jboss.seam.security.Identity;
+import org.jboss.seam.security.management.IdentityManager;
+import org.jboss.seam.security.management.IdentityStore;
+import org.jboss.seam.security.management.JpaIdentityStore;
 
 @Name("registrationBackBean")
 @Scope(ScopeType.PAGE)
@@ -21,6 +26,8 @@ public class Registration {
 	@In
 	Credentials credentials;
 	
+	IdentityStore identityStore;
+	
 	private User newUser;
 	
 	private static final Logger LOGGER = Logger.getLogger(Authenticator.class);
@@ -28,6 +35,7 @@ public class Registration {
 	@Create
 	public void init(){
 		newUser=new User();
+		identityStore=(IdentityStore)Component.getInstance(JpaIdentityStore.class, true);
 	}
 
 	public User getNewUser() {
@@ -48,15 +56,17 @@ public class Registration {
 				LOGGER.info("Belsõ hiba!");
 				return "#";
 			}
-	    	if(userDao.userNameExists(credentials.getUsername())){
+	    	if(identityStore.userExists(credentials.getUsername())){
 	    		LOGGER.info("Felhasználónév már létezik!");
 	    		return "#";
 	    	}
 	    	
 	    	newUser.setUserName(credentials.getUsername());
 	    	newUser.setPassword(credentials.getPassword());
-	    	
-	    	if(userDao.save(newUser)){
+	    	if(identityStore.createUser(newUser.getUserName(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName())){
+	    		User user=userDao.getUser(newUser.getUserName());
+	    		user.seteMail(newUser.geteMail());
+	    		user.setTel(newUser.getTel());
 	    		LOGGER.info("Sikeres mentés!");
 	    		return "home";
 	    	}

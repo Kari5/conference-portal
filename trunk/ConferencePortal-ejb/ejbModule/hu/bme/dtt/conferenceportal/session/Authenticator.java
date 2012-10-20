@@ -11,6 +11,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
+import org.jboss.seam.security.management.IdentityManager;
 
 @Name("authenticator")
 public class Authenticator
@@ -19,6 +20,7 @@ public class Authenticator
 
     @In Identity identity;
     @In Credentials credentials;
+    @In IdentityManager identityManager;
     
     public boolean authenticate()
     {
@@ -40,7 +42,7 @@ public class Authenticator
             return true;
         }
         
-        if(userDao.getUser(credentials.getUsername(), credentials.getPassword())!=null){
+        if(identityManager.authenticate(credentials.getUsername(), credentials.getPassword())){
         	identity.addRole("admin");
         	return true;
         }
