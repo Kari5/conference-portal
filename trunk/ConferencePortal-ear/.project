@@ -3,9 +3,10 @@
 	<name>ConferencePortal-ear</name>
 	<comment></comment>
 	<projects>
+		<project>DataAccess-ejb</project>
 		<project>ConferencePortal-ejb</project>
 		<project>ConferencePortal</project>
-		<project>DataAccess-ejb</project>
+		<project>GenericDao</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
