@@ -33,29 +33,12 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User getUser(final String userName, final String password) {
+	public User getUser(final String userName) {
 		StringBuilder queryString = new StringBuilder();
 		queryString.append("FROM User_ as u ");
 		queryString.append("	WHERE");
 		queryString.append("		u.userName = ?");
-		queryString.append("	AND");
-		queryString.append("		u.password = ?");
-		return (User) executeQuerySingleResult(queryString.toString(),
-				userName, password);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean userNameExists(final String userName) {
-		StringBuilder queryString = new StringBuilder();
-		queryString.append("SELECT COUNT(*) FROM User_ as u ");
-		queryString.append("	WHERE");
-		queryString.append("		u.userName = ?");
-		Long result = (Long) executeQuerySingleResult(queryString.toString(),
-				userName);
-		return result > 0;
+		return (User) executeQuerySingleResult(queryString.toString(), userName);
 	}
 
 }

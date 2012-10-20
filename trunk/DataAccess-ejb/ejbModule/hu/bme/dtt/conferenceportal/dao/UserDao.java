@@ -20,16 +20,6 @@ public interface UserDao extends GenericDao<User> {
 	 *            A jelszó
 	 * @return A User objektum
 	 */
-	User getUser(final String userName, final String password);
-
-	/**
-	 * A <code>userNameExists</code> függvény visszadja, hogy szerepel-e már a
-	 * paraméterben megadott felhasználónév az adatbázisban.
-	 * 
-	 * @param userName
-	 *            A keresett felhasználónév.
-	 * @return Létezik-a már.
-	 */
-	boolean userNameExists(final String userName);
+	User getUser(final String userName);
 
 }
