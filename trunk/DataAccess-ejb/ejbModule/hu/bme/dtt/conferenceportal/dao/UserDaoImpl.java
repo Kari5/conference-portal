@@ -57,8 +57,8 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		queryString.append("SELECT COUNT(*) FROM User_ as u ");
 		queryString.append("	WHERE");
 		queryString.append("		u.userName = ?");
-		Integer result = (Integer) executeQuerySingleResult(
-				queryString.toString(), userName);
+		Long result = (Long) executeQuerySingleResult(queryString.toString(),
+				userName);
 		return result > 0;
 	}
 
@@ -74,7 +74,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 			throw new ConferencePortalDataException("Parameter is empty!");
 		}
 		StringBuilder queryString = new StringBuilder();
-		queryString.append("FROM User_");
+		queryString.append("FROM User_ as u");
 		queryString.append("	WHERE");
 
 		return null;
