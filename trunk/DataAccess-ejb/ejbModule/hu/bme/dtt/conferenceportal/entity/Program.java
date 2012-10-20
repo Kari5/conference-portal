@@ -9,65 +9,57 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Egy program pontot reprezentáló entitás.
+ * 
+ */
 @Entity
 public class Program implements Serializable {
 	/**
-	 * 
+	 * Serialization id.
 	 */
 	private static final long serialVersionUID = 7705315014604055395L;
 	@Column(name = "PROGRAM_DESCRIPTION")
+	/**
+	 * A program pont leírása.
+	 */
 	private String description;
+	/**
+	 * A program pont vége.
+	 */
 	@Column(name = "PROGRAM_END")
 	private Date end;
+	/**
+	 * A kulcs.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PROGRAM_ID")
 	private Long id;
+	/**
+	 * A program pont kezdete.
+	 */
 	@Column(name = "PROGRAM_START")
 	private Date start;
+	/**
+	 * A program pont címe.
+	 */
 	@Column(name = "PROGRAM_TITLE", nullable = false)
 	private String title;
 
-	public String getDescription() {
-		return description;
-	}
-
-	public Date getEnd() {
-		return end;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Date getStart() {
-		return start;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setStart(Date start) {
-		this.start = start;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	/**
+	 * Visszadja az objektum sztring reprezentációját.
+	 * 
+	 * <p>
+	 * Formátum:
+	 * <ul>
+	 * <li>ClassName:
+	 * <li>AttributeName1=AttributeValue1
+	 * <li>AttributeName2=AttributeValue2
+	 * <li>...
+	 * </ul>
+	 * </p>
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -82,5 +74,80 @@ public class Program implements Serializable {
 		builder.append(",\ntitle=");
 		builder.append(title);
 		return builder.toString();
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the end
+	 */
+	public Date getEnd() {
+		return end;
+	}
+
+	/**
+	 * @param end
+	 *            the end to set
+	 */
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the start
+	 */
+	public Date getStart() {
+		return start;
+	}
+
+	/**
+	 * @param start
+	 *            the start to set
+	 */
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title
+	 *            the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
