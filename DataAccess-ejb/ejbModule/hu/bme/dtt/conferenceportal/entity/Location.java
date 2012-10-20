@@ -22,7 +22,7 @@ public class Location implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "LOCATION_ID")
 	private Long id;
-	@Column(name = "LOCATION_NAME", nullable=false)
+	@Column(name = "LOCATION_NAME", nullable = false)
 	private String name;
 
 	public String getAddress() {
@@ -55,5 +55,19 @@ public class Location implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Location :\naddress=");
+		builder.append(address);
+		builder.append(",\ngoogleMaps=");
+		builder.append(googleMaps);
+		builder.append(",\nid=");
+		builder.append(id);
+		builder.append(",\nname=");
+		builder.append(name);
+		return builder.toString();
 	}
 }

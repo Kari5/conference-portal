@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Review implements Serializable {
@@ -26,8 +25,7 @@ public class Review implements Serializable {
 	private Double score;
 	@Column(name = "REVIEW_TEXT")
 	private String text;
-	@ManyToOne(cascade = { CascadeType.MERGE },
-			targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
+	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 
@@ -61,5 +59,19 @@ public class Review implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Review :\nid=");
+		builder.append(id);
+		builder.append(",\nscore=");
+		builder.append(score);
+		builder.append(",\ntext=");
+		builder.append(text);
+		builder.append(",\nuser=");
+		builder.append(user);
+		return builder.toString();
 	}
 }
