@@ -1,11 +1,7 @@
 package hu.bme.dtt.conferenceportal.dao;
 
-import hu.bme.dtt.conferenceportal.entity.Role;
 import hu.bme.dtt.conferenceportal.entity.User;
-import hu.bme.dtt.conferenceportal.exception.ConferencePortalDataException;
 import hu.futurion.mt.dao.GenericDaoImpl;
-
-import java.util.Collection;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,24 +56,6 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		Long result = (Long) executeQuerySingleResult(queryString.toString(),
 				userName);
 		return result > 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @throws ConferencePortalDataException
-	 */
-	@Override
-	public Collection<User> getUsersByRoles(final Role... roles)
-			throws ConferencePortalDataException {
-		if (roles.length < 1) {
-			throw new ConferencePortalDataException("Parameter is empty!");
-		}
-		StringBuilder queryString = new StringBuilder();
-		queryString.append("FROM User_ as u");
-		queryString.append("	WHERE");
-
-		return null;
 	}
 
 }
