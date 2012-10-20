@@ -1,17 +1,12 @@
 package hu.bme.dtt.conferenceportal.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 import org.jboss.seam.annotations.security.management.RoleName;
 
@@ -32,7 +27,7 @@ public class Role implements Serializable {
 	 * 
 	 */
 	@RoleName
-	@Column(name = "ROLE_NAME", nullable=false)
+	@Column(name = "ROLE_NAME", nullable = false)
 	private String name;
 
 	public Long getId() {
@@ -43,13 +38,22 @@ public class Role implements Serializable {
 		return name;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Role :\nid=");
+		builder.append(id);
+		builder.append(",\nname=");
+		builder.append(name);
+		return builder.toString();
 	}
 
 }

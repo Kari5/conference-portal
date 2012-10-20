@@ -20,8 +20,6 @@ import org.jboss.seam.annotations.security.management.UserPassword;
 import org.jboss.seam.annotations.security.management.UserPrincipal;
 import org.jboss.seam.annotations.security.management.UserRoles;
 
-import com.sun.xml.internal.ws.developer.UsesJAXBContext;
-
 @Entity(name = "User_")
 public class User implements Serializable {
 	/**
@@ -55,17 +53,15 @@ public class User implements Serializable {
 	/**
 	 * 
 	 */
-	@UserPassword(hash="md5")
-	@Column(name = "USER_PASSWORD", nullable=false)
+	@UserPassword(hash = "md5")
+	@Column(name = "USER_PASSWORD", nullable = false)
 	private String password;
 	/**
 	 * 
 	 */
 	@UserRoles
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class,
-			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"),
-			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private Collection<Role> roles;
 	/**
 	 * 
@@ -76,7 +72,7 @@ public class User implements Serializable {
 	 * 
 	 */
 	@UserPrincipal
-	@Column(name = "USER_NAME", nullable=false)
+	@Column(name = "USER_NAME", nullable = false)
 	private String userName;
 
 	public String geteMail() {
@@ -141,5 +137,27 @@ public class User implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User :\neMail=");
+		builder.append(eMail);
+		builder.append(",\nfirstName=");
+		builder.append(firstName);
+		builder.append(",\nid=");
+		builder.append(id);
+		builder.append(",\nlastName=");
+		builder.append(lastName);
+		builder.append(",\npassword=");
+		builder.append(password);
+		builder.append(",\nroles=");
+		builder.append(roles);
+		builder.append(",\ntel=");
+		builder.append(tel);
+		builder.append(",\nuserName=");
+		builder.append(userName);
+		return builder.toString();
 	}
 }

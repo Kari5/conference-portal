@@ -18,7 +18,7 @@ public class Tag implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "TAG_ID")
 	private Long id;
-	@Column(name = "TAG_NAME", nullable=false)
+	@Column(name = "TAG_NAME", nullable = false)
 	private String name;
 
 	public Long getId() {
@@ -35,5 +35,15 @@ public class Tag implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Tag :\nid=");
+		builder.append(id);
+		builder.append(",\nname=");
+		builder.append(name);
+		return builder.toString();
 	}
 }

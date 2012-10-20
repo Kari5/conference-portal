@@ -25,7 +25,7 @@ public class Program implements Serializable {
 	private Long id;
 	@Column(name = "PROGRAM_START")
 	private Date start;
-	@Column(name = "PROGRAM_TITLE", nullable=false)
+	@Column(name = "PROGRAM_TITLE", nullable = false)
 	private String title;
 
 	public String getDescription() {
@@ -66,5 +66,21 @@ public class Program implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Program :\ndescription=");
+		builder.append(description);
+		builder.append(",\nend=");
+		builder.append(end);
+		builder.append(",\nid=");
+		builder.append(id);
+		builder.append(",\nstart=");
+		builder.append(start);
+		builder.append(",\ntitle=");
+		builder.append(title);
+		return builder.toString();
 	}
 }
