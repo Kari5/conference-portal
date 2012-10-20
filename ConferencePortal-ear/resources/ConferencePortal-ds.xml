@@ -7,7 +7,7 @@
 	<local-tx-datasource>
 		<jndi-name>ConferencePortalDatasource</jndi-name>
 		<use-java-context>true</use-java-context>
-		<connection-url>jdbc:sqlserver://localhost:1433;databaseName=ConferencePortal</connection-url>
+		<connection-url>jdbc:sqlserver://KARCSI-PC_\SQLEXPRESS:1433;databaseName=ConferencePortal</connection-url>
 		<driver-class>com.microsoft.sqlserver.jdbc.SQLServerDataSource</driver-class>
 		<user-name>shazak</user-name>
 		<password>testing</password>

@@ -2,14 +2,19 @@
 <project-modules id="moduleCoreId" project-version="1.5.0">
 <wb-module deploy-name="ConferencePortal-ear">
 <wb-resource deploy-path="/" source-path="/EarContent"/>
-<dependent-module deploy-path="/" handle="module:/resource/ConferencePortal-ejb/ConferencePortal-ejb">
-<dependency-type>uses</dependency-type>
-</dependent-module>
-<dependent-module deploy-path="/" handle="module:/resource/ConferencePortal/ConferencePortal">
-<dependency-type>uses</dependency-type>
-</dependent-module>
         <dependent-module archiveName="DataAccess-ejb.jar" deploy-path="/" handle="module:/resource/DataAccess-ejb/DataAccess-ejb">
             <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ConferencePortal-ejb.jar" deploy-path="/" handle="module:/resource/ConferencePortal-ejb/ConferencePortal-ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ConferencePortal.war" deploy-path="/" handle="module:/resource/ConferencePortal/ConferencePortal">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="GenericDao.jar" deploy-path="/lib" handle="module:/resource/GenericDao/GenericDao">
             <dependency-type>uses</dependency-type>
         </dependent-module>
 </wb-module>
