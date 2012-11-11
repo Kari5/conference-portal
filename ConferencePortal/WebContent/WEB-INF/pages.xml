@@ -16,6 +16,15 @@
             </rule>
         </navigation>
     </page>
+    
+    <page view-id="/editConference.xhtml">
+    <begin-conversation join="true"/>
+    	<navigation>
+    	 <rule if-outcome="home">
+                <redirect view-id="/home.xhtml"/>
+            </rule>
+    	</navigation>
+    </page>
 
     <exception class="org.jboss.seam.framework.EntityNotFoundException">
         <redirect view-id="/error.xhtml">
