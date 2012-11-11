@@ -6,7 +6,8 @@
        no-conversation-view-id="/home.xhtml"
        login-view-id="/login.xhtml">
 
-    <page view-id="*">
+    <page view-id="/home.xhtml">
+    <begin-conversation join="true"/>
         <navigation>
             <rule if-outcome="home">
                 <redirect view-id="/home.xhtml"/>
@@ -14,13 +15,30 @@
             <rule if-outcome="registration">
                 <redirect view-id="/registration.xhtml"/>
             </rule>
+            <rule if-outcome="editConfernce">
+                <redirect view-id="/editConference.xhtml"/>
+            </rule>
+        </navigation>
+    </page>
+    
+    <page view-id="/login.xhtml">
+        <navigation>
+            <rule if-outcome="home">
+                <redirect view-id="/home.xhtml"/>
+            </rule>
+            <rule if-outcome="registration">
+                <redirect view-id="/registration.xhtml"/>
+            </rule>
+            <rule if-outcome="editConfernce">
+                <redirect view-id="/editConference.xhtml"/>
+            </rule>
         </navigation>
     </page>
     
     <page view-id="/editConference.xhtml">
-    <begin-conversation join="true"/>
     	<navigation>
     	 <rule if-outcome="home">
+                <end-conversation before-redirect="true"/>
                 <redirect view-id="/home.xhtml"/>
             </rule>
     	</navigation>

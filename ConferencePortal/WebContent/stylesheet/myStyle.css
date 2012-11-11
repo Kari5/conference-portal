@@ -34,3 +34,7 @@
 .noBorder {
 	border:0px;
 }
+
+.cursorPointer{
+	cursor: pointer;
+}
