@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b3dbfc), color-stop(1, #ffffff) );
+	background:-moz-linear-gradient( center top, #b3dbfc 5%, #80b5ea 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3dbfc', endColorstr='#ffffff');
+	background-color:#bddbfa;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #84bbf3;
+	display:inline-block;
+	color:black;
+	font-family:arial;
+	padding:3px 12px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}
+
+.myButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #80b5ea), color-stop(1, #bddbfa) );
+	background:-moz-linear-gradient( center top, #80b5ea 5%, #bddbfa 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#80b5ea', endColorstr='#bddbfa');
+	background-color:#80b5ea;
+}
+
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.noBorder {
+	border:0px;
+}

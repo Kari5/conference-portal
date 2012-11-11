@@ -1,0 +1,143 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
+
+
+	<ui:define name="body">
+	<center>
+		<h:form>
+		<rich:panel style="width:800px" header="#{editConferenceBackBean.newConfernece ? messages['confernece.new_confernece'] : messages['conference.edit_conference']}">
+		<center>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{messages['conference.title']}:" />
+				<h:inputText value="#{editConferenceBackBean.conference.title}" size="100" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.short_title']}:" />
+				<h:inputText value="#{editConferenceBackBean.conference.shortTitle}" size="100"/>
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.tags']}:" />
+				<rich:panel>
+					<rich:dataGrid value="#{editConferenceBackBean.conference.tags}" var="tag" columns="5" style="border:0px" columnClasses="noBorder">
+						<h:outputText value="#{tag.name}"/>
+					</rich:dataGrid>
+					<h:commandButton action="#" onclick="#{rich:component('tag_panel')}.show()" value="#{messages['conference.add']}" title="#{messages['conference.add']}" image="img/edit_add.png" styleClass="myButton">
+						
+					</h:commandButton>
+					
+				</rich:panel>
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.description']}:" />
+				<h:inputTextarea value="#{editConferenceBackBean.conference.description}" rows="10" cols="73" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.start_date']}:" />
+				<rich:calendar value="#{editConferenceBackBean.conference.startDate}" popup="true"
+					datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true"
+					cellWidth="24px" cellHeight="22px" style="width:200px" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.end_date']}:" />
+				<rich:calendar value="#{editConferenceBackBean.conference.endDate}" popup="true"
+					datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true"
+					cellWidth="24px" cellHeight="22px" style="width:200px" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.location']}:" />
+				<rich:spacer />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.programs']}:" />
+				<rich:panel>
+					<rich:dataGrid value="#{editConferenceBackBean.conference.programs}" var="program" columns="1" style="border:0px" columnClasses="noBorder">
+					<rich:panel>
+						<h:panelGrid columns="2">
+							<rich:panel style="border:0px">
+							<h:panelGrid columns="1">
+							<h:outputText value="#{program.title}"/>
+							<h:outputText value="#{program.start} - #{program.end}" />
+							</h:panelGrid>
+							</rich:panel>
+							<h:outputText value="#{program.description}" />
+						</h:panelGrid>
+					</rich:panel>
+					</rich:dataGrid>
+					<h:commandButton action="#" onclick="#{rich:component('program_panel')}.show()" value="#{messages['conference.add']}" title="#{messages['conference.add']}" image="img/edit_add.png" styleClass="myButton"/>
+				</rich:panel>
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.summary']}:" />
+				<h:inputTextarea value="#{editConferenceBackBean.conference.summary}" rows="10" cols="73"/>
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.articles']}:" />
+				<rich:spacer />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+			</h:panelGrid>
+			<h:commandButton action="#{editConferenceBackBean.print()}" value="#{messages['conference.save']}" title="#{messages['conference.save']}" image="/img/save.png" styleClass="myButton"/>
+			</center>
+		</rich:panel>
+		</h:form>
+		</center>
+		
+		
+		
+		<!-- Tag hozzaado panel -->
+		
+		<rich:modalPanel id="tag_panel" autosized="true" domElementAttachment="form">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:outputText value="Tag Panel"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink"/>
+                <rich:componentControl for="tag_panel" attachTo="hidelink" operation="hide" event="onclick"/>
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+        <h:outputText value="Tag hozzaadasa..."/>
+        </h:form>
+    </rich:modalPanel>
+		
+	<!-- Program hozzaado panel -->
+		<rich:modalPanel id="program_panel" autosized="true" domElementAttachment="form">
+        <f:facet name="header">
+            <h:panelGroup>
+                <h:outputText value="Tag Panel"/>
+            </h:panelGroup>
+        </f:facet>
+        <f:facet name="controls">
+            <h:panelGroup>
+                <h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink_program"/>
+                <rich:componentControl for="tag_panel" attachTo="hidelink_program" operation="hide" event="onclick"/>
+            </h:panelGroup>
+        </f:facet>
+        <h:form>
+        <h:outputText value="Program hozzaadasa..."/>
+        </h:form>
+    </rich:modalPanel>
+		
+	</ui:define>
+
+</ui:composition>
