@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<f:subview xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:modalPanel id="program_panel" autosized="true"
+		domElementAttachment="form">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Program Panel" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/delete.png" styleClass="hidelink"
+					id="hidelink_program" style="cursor:pointer" />
+				<rich:componentControl for="program_panel"
+					attachTo="hidelink_program" operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{messages['conference.title']}" />
+				<h:inputText value="#{editConferenceBackBean.selectedProgram.title}" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.start_date']}:" />
+				<rich:calendar
+					value="#{editConferenceBackBean.selectedProgram.start}"
+					popup="true" datePattern="yyyy. MM. dd. HH:mm"
+					showApplyButton="true" cellWidth="24px" cellHeight="22px"
+					style="width:200px" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.end_date']}:" />
+				<rich:calendar value="#{editConferenceBackBean.selectedProgram.end}"
+					popup="true" datePattern="yyyy. MM. dd. HH:mm"
+					showApplyButton="true" cellWidth="24px" cellHeight="22px"
+					style="width:200px" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+				<h:outputText value="#{messages['conference.description']}:" />
+				<h:inputTextarea
+					value="#{editConferenceBackBean.selectedProgram.description}"
+					rows="5" />
+				<rich:separator height="1" lineType="solid" />
+				<rich:separator height="1" lineType="solid" />
+
+			</h:panelGrid>
+			<a4j:commandButton action="#{editConferenceBackBean.saveProgram()}"
+				value="OK" image="/img/save.png" title="OK" styleClass="myButton"
+				onclick="#{rich:component('program_panel')}.hide()"
+				reRender="program_dataGrid" />
+		</h:form>
+	</rich:modalPanel>
+
+
+
+</f:subview>

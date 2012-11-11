@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<f:subview xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:modalPanel id="tag_panel" autosized="true"
+		domElementAttachment="form">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Tag Panel" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/delete.png" styleClass="hidelink"
+					id="hidelink" style="cursor:pointer" />
+				<rich:componentControl for="tag_panel" attachTo="hidelink"
+					operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form>
+			<rich:pickList value="#{editConferenceBackBean.selectedTags}"
+				id="tag_select">
+				<f:selectItems value="#{editConferenceBackBean.tagsSelectItems}" />
+			</rich:pickList>
+			<h:panelGrid columns="4">
+				<h:outputText value="Uj tag: " />
+				<h:inputText id="tag_name" value="#{editConferenceBackBean.tagName}" />
+				<rich:spacer width="10px" />
+				<a4j:commandButton action="#{editConferenceBackBean.saveNewTag()}"
+					value="Add" reRender="tag_select" />
+			</h:panelGrid>
+			<a4j:commandButton action="#{editConferenceBackBean.changeTags()}"
+				value="OK" image="/img/save.png" title="OK" styleClass="myButton"
+				onclick="#{rich:component('tag_panel')}.hide()"
+				reRender="tag_dataGrid" />
+		</h:form>
+	</rich:modalPanel>
+
+
+</f:subview>
