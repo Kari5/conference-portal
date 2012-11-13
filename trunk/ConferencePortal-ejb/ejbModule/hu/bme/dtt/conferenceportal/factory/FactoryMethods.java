@@ -2,6 +2,7 @@ package hu.bme.dtt.conferenceportal.factory;
 
 import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
+import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
 import hu.bme.dtt.conferenceportal.util.StateContainer;
 import hu.bme.dtt.conferenceportal.util.StateHolder;
@@ -35,6 +36,11 @@ public class FactoryMethods {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Factory(value = "selectedProgramStateHolder", scope = ScopeType.PAGE)
+	public StateHolder<Program> selectedProgramStateHolder() {
+		return new StateHolder<Program>();
 	}
 
 }

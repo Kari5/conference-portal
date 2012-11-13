@@ -19,9 +19,11 @@
 		<f:facet name="controls">
 			<h:panelGroup>
 				<h:graphicImage value="/img/delete.png" styleClass="hidelink"
-					id="hidelink_program" style="cursor:pointer" />
+					id="hidelink_program" style="cursor:pointer" title="cancel"/>
 				<rich:componentControl for="program_panel"
-					attachTo="hidelink_program" operation="hide" event="onclick" />
+					attachTo="hidelink_program" operation="hide" event="onclick">
+				<a4j:support event="onclick" action="#{editConferenceBackBean.rollBackProgram()}"/>
+				</rich:componentControl>
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
@@ -56,10 +58,20 @@
 				<rich:separator height="1" lineType="solid" />
 
 			</h:panelGrid>
+			<rich:toolBar>
+			<rich:toolBarGroup location="left">
 			<a4j:commandButton action="#{editConferenceBackBean.saveProgram()}"
 				value="OK" image="/img/save.png" title="OK" styleClass="myButton"
 				onclick="#{rich:component('program_panel')}.hide()"
 				reRender="program_dataGrid" />
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right">
+			<a4j:commandButton action="#"
+				value="OK" image="/img/delete.png" title="Delete" styleClass="myButton"
+				onclick="#{rich:component('program_panel')}.hide()"
+				reRender="program_dataGrid" />
+			</rich:toolBarGroup>
+			</rich:toolBar>
 		</h:form>
 	</rich:modalPanel>
 
