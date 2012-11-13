@@ -59,7 +59,8 @@ public class Conference implements Serializable {
 	 * A Konferenciát felvevõ felhasználó.
 	 */
 	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
-	@JoinColumn(name = "USER_ID", nullable = false)
+	@JoinColumn(name = "USER_ID"/* , nullable = false */)
+	// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell tölteni!
 	private User owner;
 	/**
 	 * A Konferencia résztvevõi.
@@ -70,13 +71,13 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia program pontjai.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class, cascade = { CascadeType.MERGE })
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "PROGRAM_ID")
 	private Collection<Program> programs;
 	/**
 	 * A Konferencia kérdései.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class, cascade = { CascadeType.MERGE })
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "QUESTION_ID")
 	private Collection<Question> questions;
 	/**

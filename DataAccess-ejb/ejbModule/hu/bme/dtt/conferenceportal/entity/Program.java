@@ -48,6 +48,37 @@ public class Program implements Serializable {
 	private String title;
 
 	/**
+	 * Konstruktor értékátadással.
+	 * 
+	 * @param description
+	 *            leírás
+	 * @param end
+	 *            befejezés idõpontja
+	 * @param id
+	 *            azonosító
+	 * @param start
+	 *            kezdés idõpontja
+	 * @param title
+	 *            cím
+	 */
+	public Program(String description, Date end, Long id, Date start,
+			String title) {
+		super();
+		this.description = description;
+		this.end = end;
+		this.id = id;
+		this.start = start;
+		this.title = title;
+	}
+
+	/**
+	 * Default konstruktor.
+	 */
+	public Program() {
+		super();
+	}
+
+	/**
 	 * Visszadja az objektum sztring reprezentációját.
 	 * 
 	 * <p>
@@ -149,5 +180,12 @@ public class Program implements Serializable {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * Klónozó függvény.
+	 */
+	public Program clone() {
+		return new Program(description, end, id, start, title);
 	}
 }

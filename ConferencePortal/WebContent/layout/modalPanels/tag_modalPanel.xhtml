@@ -29,17 +29,21 @@
 				id="tag_select">
 				<f:selectItems value="#{editConferenceBackBean.tagsSelectItems}" />
 			</rich:pickList>
-			<h:panelGrid columns="4">
-				<h:outputText value="Uj tag: " />
-				<h:inputText id="tag_name" value="#{editConferenceBackBean.tagName}" />
-				<rich:spacer width="10px" />
-				<a4j:commandButton action="#{editConferenceBackBean.saveNewTag()}"
-					value="Add" reRender="tag_select" />
-			</h:panelGrid>
-			<a4j:commandButton action="#{editConferenceBackBean.changeTags()}"
-				value="OK" image="/img/save.png" title="OK" styleClass="myButton"
-				onclick="#{rich:component('tag_panel')}.hide()"
-				reRender="tag_dataGrid" />
+			<rich:toolBar>
+				<rich:toolBarGroup location="left">
+					<h:outputText value="#{messages['conference.new_tag']}:" />
+					<h:inputText id="tag_name"
+						value="#{editConferenceBackBean.tagName}" />
+					<a4j:commandButton action="#{editConferenceBackBean.saveNewTag()}"
+						value="Add" reRender="tag_select" />
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right">
+					<a4j:commandButton action="#{editConferenceBackBean.changeTags()}"
+						value="OK" image="/img/save.png" title="OK" styleClass="myButton"
+						onclick="#{rich:component('tag_panel')}.hide()"
+						reRender="tag_dataGrid" />
+				</rich:toolBarGroup>
+			</rich:toolBar>
 		</h:form>
 	</rich:modalPanel>
 

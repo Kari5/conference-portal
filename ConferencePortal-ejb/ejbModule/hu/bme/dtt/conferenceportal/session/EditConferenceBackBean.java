@@ -1,5 +1,6 @@
 package hu.bme.dtt.conferenceportal.session;
 
+import hu.bme.dtt.conferenceportal.dao.ConfereneceDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
@@ -21,6 +22,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
 
 @Name("editConferenceBackBean")
 @Scope(ScopeType.PAGE)
@@ -36,6 +38,11 @@ public class EditConferenceBackBean {
 	 * A szerkesztésre fentartott konferencia.
 	 */
 	private Conference conference;
+
+	/**
+	 * Konferencia táblához dao.
+	 */
+	ConfereneceDao conferenceDao;
 
 	/**
 	 * Logiaki változó, ha új konfernecia lesz mentve, akkor igaz, különben
@@ -63,7 +70,19 @@ public class EditConferenceBackBean {
 	private List<Program> programs;
 
 	/** Szerkesztésre kiválasztott program. */
-	private Program selectedProgram;
+	@In(create = true)
+	private StateHolder<Program> selectedProgramStateHolder;
+
+	/**
+	 * Szerkesztés alatt álló program ideiglenes tárolóhelye. Arra a célra van,
+	 * ha a változásokat mégsem akarja elmenteni a felhasználó.
+	 */
+	private Program oldProgram;
+
+	/**
+	 * A szerkesztés alatt álló program indexe.
+	 */
+	private Integer oldProgramIndex;
 
 	/** Logoláshoz logger. */
 	private static final Logger logger = Logger
@@ -130,6 +149,8 @@ public class EditConferenceBackBean {
 		try {
 			tagDao = (TagDao) InitialContext
 					.doLookup("ConferencePortal-ear/tagDao/local");
+			conferenceDao = (ConfereneceDao) InitialContext
+					.doLookup("ConferencePortal-ear/conferenceDao/local");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,15 +198,26 @@ public class EditConferenceBackBean {
 	}
 
 	/**
-	 * Átállítja a kiválasztott programot.
+	 * Átállítja a kiválasztott programot. A kiválasztott programot ideiglenesen
+	 * kiveszi a programok listájából, hogy mikor elmentjük, ne kerüljön be
+	 * kétszer ugyan az a programpont.
 	 * 
 	 * @param program
 	 *            az új kiválasztott program
 	 */
 	public void changeSelectedProgram(Program program) {
 		logger.info("changeSelected program meghívódott.");
-		this.selectedProgram = program;
-		logger.info("Új kiválasztott program: " + this.selectedProgram);
+		if (programs.contains(program)) {
+			oldProgramIndex = programs.indexOf(program);
+			programs.remove(program);
+			logger.info("Kiválasztott program ideiglenesen eltávolítva a listából.");
+		}
+		this.selectedProgramStateHolder.setSelected(program);
+		oldProgram = program.clone();
+		logger.info("Új kiválasztott program: "
+				+ this.selectedProgramStateHolder);
+		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
@@ -193,14 +225,52 @@ public class EditConferenceBackBean {
 	 */
 	public void newSelectedProgram() {
 		logger.info("A kiválasztott program új program lesz.");
-		this.selectedProgram = new Program();
+		oldProgramIndex = null;
+		oldProgram = null;
+		this.selectedProgramStateHolder.setSelected(new Program());
+		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
 	 * Berakja a programok listájába az aktuálisan szerkesztett programot.
 	 */
 	public void saveProgram() {
-		programs.add(selectedProgram);
+		if (oldProgramIndex == null) {
+			programs.add(getSelectedProgram());
+		} else {
+			programs.add(oldProgramIndex, getSelectedProgram());
+		}
+	}
+
+	/**
+	 * A szerkesztés alatt álló programot rollBack-eli. Visszaírja az
+	 * ideiglenesen letárolt oldProgramot.
+	 */
+	public void rollBackProgram() {
+		if (oldProgram != null) {
+			programs.add(oldProgramIndex, oldProgram.clone());
+		}
+	}
+
+	/**
+	 * Elmenti a szerkesztés alatt álló konferenciát. Kezeli, hogy új
+	 * konferenciáról van-e szó, vagy egy régit kell-e updatelni. Végül
+	 * beállítja a conferenceStateHolder-be az elmentett konferenciát.
+	 */
+	public void saveConference() {
+		logger.info("saveConference meghívódott.");
+		if (newConfernece) {
+			// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell
+			// tölteni!
+			conferenceDao.save(conference);
+			newConfernece = false;
+			FacesMessages.instance().add("Sikeres mentés!");
+		} else {
+			conferenceDao.updateConference(conference);
+			FacesMessages.instance().add("Sikeres módosítás!");
+		}
+		this.conferenceStateHolder.setSelected(conference);
 	}
 
 	/**
@@ -312,7 +382,7 @@ public class EditConferenceBackBean {
 	 * @return the selectedProgram
 	 */
 	public Program getSelectedProgram() {
-		return selectedProgram;
+		return selectedProgramStateHolder.getSelected();
 	}
 
 	/**
@@ -320,7 +390,7 @@ public class EditConferenceBackBean {
 	 *            the selectedProgram to set
 	 */
 	public void setSelectedProgram(Program selectedProgram) {
-		this.selectedProgram = selectedProgram;
+		this.selectedProgramStateHolder.setSelected(selectedProgram);
 	}
 
 }

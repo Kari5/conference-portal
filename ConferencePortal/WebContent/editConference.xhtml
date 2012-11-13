@@ -135,13 +135,13 @@
 							<rich:separator height="1" lineType="solid" />
 
 						</h:panelGrid>
-						<h:commandButton action="#{editConferenceBackBean.print()}"
+						<a4j:commandButton action="#{editConferenceBackBean.saveConference()}"
 							value="#{messages['conference.save']}"
 							title="#{messages['conference.save']}" image="/img/save.png"
 							styleClass="myButton" />
 					</center>
 				</rich:panel>
-				<h:commandButton action="#{editConferenceBackBean.changeNew()}"
+				<a4j:commandButton action="#{editConferenceBackBean.changeNew()}"
 					value="change new" />
 			</a4j:form>
 		</center>
