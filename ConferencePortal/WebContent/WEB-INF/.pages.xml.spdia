@@ -77,8 +77,13 @@
  </item>
  <item NAME="#xerror.xhtml" PATH="/error.xhtml" SHAPE="472,121,0,0"
   TYPE="page" model-entity="SeamPagesDiagramItem"/>
- <item NAME="#xregistration.xhtml" PATH="/registration.xhtml"
-  SHAPE="376,249,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#registration.xhtml" NAME="#xregistration.xhtml"
+  PATH="/registration.xhtml" SHAPE="376,249,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/home.xhtml" NAME="output" PATH="/home.xhtml"
+   TARGET="#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output1"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
  <item ID="#editConference.xhtml" NAME="#xeditConference.xhtml"
   PATH="/editConference.xhtml" SHAPE="24,1081,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
   <output ID="/home.xhtml" NAME="output" PATH="/home.xhtml"
