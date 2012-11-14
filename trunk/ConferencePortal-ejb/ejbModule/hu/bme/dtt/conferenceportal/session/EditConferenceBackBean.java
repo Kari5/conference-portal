@@ -2,6 +2,7 @@ package hu.bme.dtt.conferenceportal.session;
 
 import hu.bme.dtt.conferenceportal.dao.ConfereneceDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
+import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -260,7 +262,24 @@ public class EditConferenceBackBean {
 	 */
 	public void saveConference() {
 		logger.info("saveConference meghívódott.");
+		if(conference.getTitle() == null || conference.getTitle().isEmpty()){
+			FacesMessages.instance().add("Cím megadása kötelezõ!");
+			return;
+		}
+		if(conference.getShortTitle() == null || conference.getShortTitle().isEmpty()){
+			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"Adatok hiányosak", "Rövid cím megadása kötelezõ!");
+			msg.notify();
+			//FacesMessages.instance().add(msg);
+			return;
+		}
 		if (newConfernece) {
+			try {
+				UserDao userDao=InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+				conference.setOwner(userDao.getUser("Kari"));
+			} catch (NamingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell
 			// tölteni!
 			conferenceDao.save(conference);
