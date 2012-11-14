@@ -99,7 +99,7 @@ public class Conference implements Serializable {
 	 * A Konferencia kulcsszavai.
 	 */
 	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class, cascade = { CascadeType.MERGE })
-	@JoinTable(name = "Conference_User", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+	@JoinTable(name = "Conference_Tags", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	private Collection<Tag> tags;
 	/**
 	 * A Konferencia címe.
