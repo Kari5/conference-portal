@@ -22,12 +22,25 @@
     </page>
     
     <page view-id="/login.xhtml">
+    
         <navigation>
             <rule if-outcome="home">
                 <redirect view-id="/home.xhtml"/>
             </rule>
             <rule if-outcome="registration">
                 <redirect view-id="/registration.xhtml"/>
+            </rule>
+            <rule if-outcome="editConfernce">
+                <redirect view-id="/editConference.xhtml"/>
+            </rule>
+        </navigation>
+    </page>
+    
+    <page view-id="/registration.xhtml">
+    <begin-conversation join="true"/>
+        <navigation>
+            <rule if-outcome="home">
+                <redirect view-id="/home.xhtml"/>
             </rule>
             <rule if-outcome="editConfernce">
                 <redirect view-id="/editConference.xhtml"/>

@@ -87,15 +87,15 @@
 										<h:panelGrid columns="2">
 											<rich:panel style="border:0px">
 												<h:outputText value="#{program.title}" />
-												<rich:spacer width="5px"/>
+												<rich:spacer width="5px" />
 												<h:outputText
 													value="#{program.start.toLocaleString()} - #{program.end.toLocaleString()}" />
 											</rich:panel>
-										 	<a4j:commandButton
+											<a4j:commandButton
 												action="#{editConferenceBackBean.changeSelectedProgram(program)}"
 												onclick="#{rich:component('program_panel')}.show()"
 												image="img/edit.png" styleClass="myButton" />
-										 
+
 										</h:panelGrid>
 										<rich:toolTip followMouse="true" direction="top-right"
 											showDelay="250" styleClass="tooltip">
@@ -125,20 +125,38 @@
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.articles']}:" />
-							<a4j:commandButton
-									action="#"
-									onclick="#{rich:component('article_panel')}.show()"
-									value="#{messages['conference.add']}"
-									title="#{messages['conference.add']}" image="img/edit_add.png"
-									styleClass="myButton" />
+							<a4j:commandButton action="#"
+								onclick="#{rich:component('article_panel')}.show()"
+								value="#{messages['conference.add']}"
+								title="#{messages['conference.add']}" image="img/edit_add.png"
+								styleClass="myButton" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 						</h:panelGrid>
-						<a4j:commandButton action="#{editConferenceBackBean.saveConference()}"
+						<a4j:commandButton
+							action="#{editConferenceBackBean.saveConference()}"
 							value="#{messages['conference.save']}"
 							title="#{messages['conference.save']}" image="/img/save.png"
 							styleClass="myButton" />
+						<s:div id="state_message" styleClass="state_message">
+						<rich:spacer height="5px"/>
+							<rich:messages>								
+								<f:facet name="errorMarker">
+									<h:graphicImage url="/img/error.gif" />
+									<rich:spacer width="5px"/>
+								</f:facet>
+								<f:facet name="infoMarker">
+									<h:graphicImage url="/img/error.gif" />
+									<rich:spacer width="5px"/>
+								</f:facet>
+								<f:facet name="passedMarker">
+									<h:graphicImage url="/image/accept.png" />
+									<rich:spacer width="5px"/>
+								</f:facet>
+							</rich:messages>
+							<rich:spacer height="5px"/>
+						</s:div>
 					</center>
 				</rich:panel>
 				<a4j:commandButton action="#{editConferenceBackBean.changeNew()}"
@@ -149,15 +167,15 @@
 
 
 		<!-- Tag hozzaado panel -->
-		<ui:include src="layout/modalPanels/tag_modalPanel.xhtml"/>
-		
+		<ui:include src="layout/modalPanels/tag_modalPanel.xhtml" />
+
 
 		<!-- Program hozzaado panel -->
-		<ui:include src="layout/modalPanels/program_modalPanel.xhtml"/>
-		
+		<ui:include src="layout/modalPanels/program_modalPanel.xhtml" />
+
 		<!-- Uj cikk feltoltes panel -->
-		<ui:include src="layout/modalPanels/article_modalPanel.xhtml"/>
-		
+		<ui:include src="layout/modalPanels/article_modalPanel.xhtml" />
+
 	</ui:define>
 
 </ui:composition>

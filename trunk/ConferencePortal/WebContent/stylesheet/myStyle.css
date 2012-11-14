@@ -38,3 +38,9 @@
 .cursorPointer{
 	cursor: pointer;
 }
+
+.state_message{
+	border:1px;
+	background-color: #CBDCF2;
+	text-align: center;
+}
