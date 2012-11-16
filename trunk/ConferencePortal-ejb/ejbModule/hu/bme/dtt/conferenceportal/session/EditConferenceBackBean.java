@@ -1,6 +1,6 @@
 package hu.bme.dtt.conferenceportal.session;
 
-import hu.bme.dtt.conferenceportal.dao.ConfereneceDao;
+import hu.bme.dtt.conferenceportal.dao.ConferenceDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
@@ -44,7 +44,7 @@ public class EditConferenceBackBean {
 	/**
 	 * Konferencia táblához dao.
 	 */
-	ConfereneceDao conferenceDao;
+	ConferenceDao conferenceDao;
 
 	/**
 	 * Logiaki változó, ha új konfernecia lesz mentve, akkor igaz, különben
@@ -151,7 +151,7 @@ public class EditConferenceBackBean {
 		try {
 			tagDao = (TagDao) InitialContext
 					.doLookup("ConferencePortal-ear/tagDao/local");
-			conferenceDao = (ConfereneceDao) InitialContext
+			conferenceDao = (ConferenceDao) InitialContext
 					.doLookup("ConferencePortal-ear/conferenceDao/local");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

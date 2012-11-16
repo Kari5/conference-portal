@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 
 @Stateless(name = "conferenceDao")
 public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
-		ConfereneceDao {
+		ConferenceDao {
 
 	public static final Logger logger = Logger
 			.getLogger(ConferenceDaoImpl.class);
@@ -36,6 +36,9 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 		return entityManager;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void updateConference(Conference conference) {
 		List<Tag> tags = new ArrayList<Tag>();
@@ -108,6 +111,15 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 		// FIXME: Programok mentését javítani
 		entityManager.persist(conference);
 		return true;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Conference> conferences() {
+		return (List<Conference>)executeQueryMultipleResult("FROM Conference");
 	}
 
 }
