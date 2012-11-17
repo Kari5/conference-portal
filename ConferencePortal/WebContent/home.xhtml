@@ -14,9 +14,9 @@
     <center>
 	<h:panelGrid columns="3" columnClasses="top20,top60,top20" style="width:100%">
         <rich:panel>
-			<rich:dataGrid value="#{homePageBackBean.conferenceMap.values()}" var="conference" columns="1" rowKeyVar="row">
+			<rich:dataGrid value="#{homePageBackBean.conferences}" var="conference" columns="1" rowKeyVar="row">
 				<h:outputText value="#{row}" />
-				<a4j:commandLink value="" action="#{homePageBackBean.changeSelectedConference(conference)}" reRender="conferencePanel"><h:outputText value="#{conference}" /> </a4j:commandLink>
+				<a4j:commandLink value="" action="#{homePageBackBean.changeSelectedConference(conference)}" reRender="conferencePanel"><h:outputText value="#{conference.shortTitle}" /> </a4j:commandLink>
 				<rich:separator height="1" lineType="solid" />
 			</rich:dataGrid>
         </rich:panel>
