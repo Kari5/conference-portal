@@ -52,6 +52,61 @@ public class AccountPermission implements Serializable {
 	@PermissionTarget
 	private String target;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof AccountPermission)) {
+			return false;
+		}
+		AccountPermission other = (AccountPermission) obj;
+		if (action == null) {
+			if (other.action != null) {
+				return false;
+			}
+		} else if (!action.equals(other.action)) {
+			return false;
+		}
+		if (discriminator == null) {
+			if (other.discriminator != null) {
+				return false;
+			}
+		} else if (!discriminator.equals(other.discriminator)) {
+			return false;
+		}
+		if (permissionId == null) {
+			if (other.permissionId != null) {
+				return false;
+			}
+		} else if (!permissionId.equals(other.permissionId)) {
+			return false;
+		}
+		if (recipient == null) {
+			if (other.recipient != null) {
+				return false;
+			}
+		} else if (!recipient.equals(other.recipient)) {
+			return false;
+		}
+		if (target == null) {
+			if (other.target != null) {
+				return false;
+			}
+		} else if (!target.equals(other.target)) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @return the action
 	 */
@@ -85,6 +140,23 @@ public class AccountPermission implements Serializable {
 	 */
 	public String getTarget() {
 		return target;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((action == null) ? 0 : action.hashCode());
+		result = prime * result + ((discriminator == null) ? 0 : discriminator.hashCode());
+		result = prime * result + ((permissionId == null) ? 0 : permissionId.hashCode());
+		result = prime * result + ((recipient == null) ? 0 : recipient.hashCode());
+		result = prime * result + ((target == null) ? 0 : target.hashCode());
+		return result;
 	}
 
 	/**
