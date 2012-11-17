@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- definition of simple elements -->
+	<xs:element name="target" type="xs:string" />
+	<xs:element name="action" type="xs:string" />
+	<xs:element name="discriminator" type="xs:string" />
+	<xs:element name="recipient" type="xs:string" />
+
+	<!-- definition of complex elements -->
+
+	<xs:element name="permission">
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element ref="target" />
+				<xs:element ref="action" />
+				<xs:element ref="discriminator" />
+				<xs:element ref="recipient" />
+			</xs:sequence>
+		</xs:complexType>
+    </xs:element>
+
+	<xs:element name="permissionlist">
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element ref="permission" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+    </xs:element>
+
+</xs:schema>
