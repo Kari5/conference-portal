@@ -1,90 +1,100 @@
 package hu.bme.dtt.conferenceportal.session;
 
-import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.User;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
 import org.jboss.logging.Logger;
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.FacesMessages;
-import org.jboss.seam.security.Credentials;
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.RunAsOperation;
 import org.jboss.seam.security.management.IdentityManager;
-import org.jboss.seam.security.management.IdentityStore;
 import org.jboss.seam.security.management.JpaIdentityStore;
 
+/**
+ * Új felhasználó regisztrácijáért felelõs backing bean.
+ */
 @Name("registrationBackBean")
 @Scope(ScopeType.PAGE)
 public class Registration {
-
-	@In
-	Credentials credentials;
-	@In
-	Identity identity;
-
-	@In
-	IdentityManager identityManager;
-
-	private User newUser;
-
-	private UserDao userDao;
-
+	/**
+	 * Naplózáshoz.
+	 */
 	private static final Logger LOGGER = Logger.getLogger(Authenticator.class);
+	/**
+	 * A felhasználó bejelentkezését végzi.
+	 */
+	@In
+	private Identity identity;
+	/**
+	 * A felhasználó létrehozását végzi.
+	 */
+	@In
+	private IdentityManager identityManager;
+	/**
+	 * Az új felhasználó adatait ideiglenesen tároló objektum.
+	 */
+	private User newUser = new User();
 
-	@Create
-	public void init() {
-		newUser = new User();
-		try {
-			userDao = InitialContext
-					.doLookup("ConferencePortal-ear/userDao/local");
-		} catch (NamingException e) {
-			LOGGER.error("Belsõ hiba!" + e.getMessage(), e);
-		}
+	/**
+	 * Az új felhasználót adatbázisba perzisztálás elõtt kiegészíti a továbi
+	 * adatokkal.
+	 * 
+	 * @param user
+	 *            A mentendõ felhasználó.
+	 */
+	@Observer(JpaIdentityStore.EVENT_PRE_PERSIST_USER)
+	public void creatingNewUser(User user) {
+		LOGGER.debug("Adding data to user: " + user.getUserName());
+		user.seteMail(newUser.geteMail());
+		user.setTel(newUser.getTel());
 	}
 
+	/**
+	 * @return the newUser
+	 */
 	public User getNewUser() {
 		return newUser;
 	}
 
-	public void setNewUser(User newUser) {
-		this.newUser = newUser;
+	/**
+	 * Létrehozza az új felhasználót. Ellenõrzi, hogy létezik-e már azonos nevû
+	 * felhasználó.
+	 * 
+	 * @return bool
+	 */
+	public boolean saveNewUser() {
+		new RunAsOperation() {
+			@Override
+			public void execute() {
+				LOGGER.debug("Registering user: " + newUser.getUserName());
+				if (identityManager.userExists(newUser.getUserName())) {
+					LOGGER.info("User " + newUser.getUserName() + " already exists!");
+					FacesMessages.instance().add("A felhasználó már létezik!");
+					return;
+				}
+				identityManager.createUser(newUser.getUserName(), newUser.getPassword(),
+						newUser.getFirstName(), newUser.getLastName());
+				LOGGER.debug("User " + newUser.getUserName() + " created!");
+				identityManager.grantRole(newUser.getUserName(), "user");
+				LOGGER.debug("User role granted!");
+			}
+		}.addRole("admin").run();
+		identity.getCredentials().setUsername(newUser.getUserName());
+		identity.getCredentials().setPassword(newUser.getPassword());
+		identity.login();
+		return true;
 	}
 
-	public boolean saveNewUser() {
-		newUser.setUserName(credentials.getUsername());
-		newUser.setPassword(credentials.getPassword());
-		//FIXME: át kell írni, csak teszthez.
-		IdentityStore identityStore = (IdentityStore) Component.getInstance(
-				JpaIdentityStore.class, true);
-		identityStore.createUser(credentials.getUsername(), credentials.getPassword(), null, null);
-//		new RunAsOperation() {
-//			@Override
-//			public void execute() {
-//				addRole("admin");
-//				if (identityManager.userExists(credentials.getUsername())) {
-//					FacesMessages.instance().add("A felhasználó már létezik!");
-//					return;
-//				}
-//				if (identityManager.createUser(newUser.getUserName(),
-//						newUser.getPassword(), newUser.getFirstName(),
-//						newUser.getLastName())) {
-//					User user = userDao.getUser(newUser.getUserName());
-//					user.seteMail(newUser.geteMail());
-//					user.setTel(newUser.getTel());
-//					LOGGER.info("Sikeres mentés!");
-//					identity.login();
-//				}
-//			}
-//		}.run();
-		return true;
+	/**
+	 * @param newUser
+	 *            set the newUser
+	 */
+	public void setNewUser(User newUser) {
+		this.newUser = newUser;
 	}
 
 }
