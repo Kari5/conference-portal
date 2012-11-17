@@ -1,6 +1,7 @@
 package hu.bme.dtt.conferenceportal.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -261,6 +262,115 @@ public class Article implements Serializable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + Arrays.hashCode(data);
+		result = prime * result
+				+ ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((length == null) ? 0 : length.hashCode());
+		result = prime * result + ((mime == null) ? 0 : mime.hashCode());
+		result = prime * result + ((pdfPath == null) ? 0 : pdfPath.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Article)) {
+			return false;
+		}
+		Article other = (Article) obj;
+		if (author == null) {
+			if (other.author != null) {
+				return false;
+			}
+		} else if (!author.equals(other.author)) {
+			return false;
+		}
+		if (!Arrays.equals(data, other.data)) {
+			return false;
+		}
+		if (fileName == null) {
+			if (other.fileName != null) {
+				return false;
+			}
+		} else if (!fileName.equals(other.fileName)) {
+			return false;
+		}
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (length == null) {
+			if (other.length != null) {
+				return false;
+			}
+		} else if (!length.equals(other.length)) {
+			return false;
+		}
+		if (mime == null) {
+			if (other.mime != null) {
+				return false;
+			}
+		} else if (!mime.equals(other.mime)) {
+			return false;
+		}
+		if (pdfPath == null) {
+			if (other.pdfPath != null) {
+				return false;
+			}
+		} else if (!pdfPath.equals(other.pdfPath)) {
+			return false;
+		}
+		if (title == null) {
+			if (other.title != null) {
+				return false;
+			}
+		} else if (!title.equals(other.title)) {
+			return false;
+		}
+		if (url == null) {
+			if (other.url != null) {
+				return false;
+			}
+		} else if (!url.equals(other.url)) {
+			return false;
+		}
+		if (user == null) {
+			if (other.user != null) {
+				return false;
+			}
+		} else if (!user.equals(other.user)) {
+			return false;
+		}
+		return true;
 	}
 
 }

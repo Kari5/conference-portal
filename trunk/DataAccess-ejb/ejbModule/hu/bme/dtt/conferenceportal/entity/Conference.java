@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Egy Konferenciát reprezentáló entitás.
@@ -29,8 +33,9 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferenciához tartozó cikkek listája.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE })
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_Article", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "ARTICLE_ID"))
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Article> articles;
 	/**
 	 * A Konferencia leírása.
@@ -52,33 +57,36 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia helye.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class)
+	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "LOCATION_ID")
 	private Location location;
 	/**
 	 * A Konferenciát felvevõ felhasználó.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
+	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID"/* , nullable = false */)
 	// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell tölteni!
 	private User owner;
 	/**
 	 * A Konferencia résztvevõi.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE })
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_User", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<User> participants;
 	/**
 	 * A Konferencia program pontjai.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class, cascade = { CascadeType.ALL })
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PROGRAM_ID")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Program> programs;
 	/**
 	 * A Konferencia kérdései.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class, cascade = { CascadeType.ALL })
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinColumn(name = "QUESTION_ID")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Question> questions;
 	/**
 	 * A Konferencia rövid címe.
@@ -98,8 +106,9 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia kulcsszavai.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class, cascade = { CascadeType.MERGE })
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_Tags", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Tag> tags;
 	/**
 	 * A Konferencia címe.
@@ -362,6 +371,158 @@ public class Conference implements Serializable {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((articles == null) ? 0 : articles.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result
+				+ ((participants == null) ? 0 : participants.hashCode());
+		result = prime * result
+				+ ((programs == null) ? 0 : programs.hashCode());
+		result = prime * result
+				+ ((questions == null) ? 0 : questions.hashCode());
+		result = prime * result
+				+ ((shortTitle == null) ? 0 : shortTitle.hashCode());
+		result = prime * result
+				+ ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
+		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Conference)) {
+			return false;
+		}
+		Conference other = (Conference) obj;
+		if (articles == null) {
+			if (other.articles != null) {
+				return false;
+			}
+		} else if (!articles.equals(other.articles)) {
+			return false;
+		}
+		if (description == null) {
+			if (other.description != null) {
+				return false;
+			}
+		} else if (!description.equals(other.description)) {
+			return false;
+		}
+		if (endDate == null) {
+			if (other.endDate != null) {
+				return false;
+			}
+		} else if (!endDate.equals(other.endDate)) {
+			return false;
+		}
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (location == null) {
+			if (other.location != null) {
+				return false;
+			}
+		} else if (!location.equals(other.location)) {
+			return false;
+		}
+		if (owner == null) {
+			if (other.owner != null) {
+				return false;
+			}
+		} else if (!owner.equals(other.owner)) {
+			return false;
+		}
+		if (participants == null) {
+			if (other.participants != null) {
+				return false;
+			}
+		} else if (!participants.equals(other.participants)) {
+			return false;
+		}
+		if (programs == null) {
+			if (other.programs != null) {
+				return false;
+			}
+		} else if (!programs.equals(other.programs)) {
+			return false;
+		}
+		if (questions == null) {
+			if (other.questions != null) {
+				return false;
+			}
+		} else if (!questions.equals(other.questions)) {
+			return false;
+		}
+		if (shortTitle == null) {
+			if (other.shortTitle != null) {
+				return false;
+			}
+		} else if (!shortTitle.equals(other.shortTitle)) {
+			return false;
+		}
+		if (startDate == null) {
+			if (other.startDate != null) {
+				return false;
+			}
+		} else if (!startDate.equals(other.startDate)) {
+			return false;
+		}
+		if (summary == null) {
+			if (other.summary != null) {
+				return false;
+			}
+		} else if (!summary.equals(other.summary)) {
+			return false;
+		}
+		if (tags == null) {
+			if (other.tags != null) {
+				return false;
+			}
+		} else if (!tags.equals(other.tags)) {
+			return false;
+		}
+		if (title == null) {
+			if (other.title != null) {
+				return false;
+			}
+		} else if (!title.equals(other.title)) {
+			return false;
+		}
+		return true;
 	}
 
 }

@@ -233,4 +233,104 @@ public class User implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eMail == null) ? 0 : eMail.hashCode());
+		result = prime * result
+				+ ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
+		result = prime * result
+				+ ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (eMail == null) {
+			if (other.eMail != null) {
+				return false;
+			}
+		} else if (!eMail.equals(other.eMail)) {
+			return false;
+		}
+		if (firstName == null) {
+			if (other.firstName != null) {
+				return false;
+			}
+		} else if (!firstName.equals(other.firstName)) {
+			return false;
+		}
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (lastName == null) {
+			if (other.lastName != null) {
+				return false;
+			}
+		} else if (!lastName.equals(other.lastName)) {
+			return false;
+		}
+		if (password == null) {
+			if (other.password != null) {
+				return false;
+			}
+		} else if (!password.equals(other.password)) {
+			return false;
+		}
+		if (roles == null) {
+			if (other.roles != null) {
+				return false;
+			}
+		} else if (!roles.equals(other.roles)) {
+			return false;
+		}
+		if (tel == null) {
+			if (other.tel != null) {
+				return false;
+			}
+		} else if (!tel.equals(other.tel)) {
+			return false;
+		}
+		if (userName == null) {
+			if (other.userName != null) {
+				return false;
+			}
+		} else if (!userName.equals(other.userName)) {
+			return false;
+		}
+		return true;
+	}
 }
