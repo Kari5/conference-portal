@@ -2,6 +2,7 @@ package hu.bme.dtt.conferenceportal.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,28 +29,33 @@ public class AccountPermission implements Serializable {
 	 * Az engedélyezett cselekvés.
 	 */
 	@PermissionAction
+	@Column(name = "ACTION")
 	private String action;
 	/**
 	 * Ez adja meg, hogy felhasználói, vagy szerepkör engedélyrõl van szó.
 	 */
 	@PermissionDiscriminator
+	@Column(name = "DISCRIMINATOR")
 	private String discriminator;
 	/**
 	 * A rekord kulcs.
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	private Integer permissionId;
 	/**
 	 * Az engedély jogosultja.
 	 */
 	@PermissionUser
 	@PermissionRole
+	@Column(name = "RECIPIENT")
 	private String recipient;
 	/**
 	 * Az engedélyezett cselekvés elszenvedõje.
 	 */
 	@PermissionTarget
+	@Column(name = "TARGET")
 	private String target;
 
 	/*
