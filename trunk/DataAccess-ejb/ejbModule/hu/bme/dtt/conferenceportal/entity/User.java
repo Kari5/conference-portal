@@ -1,6 +1,7 @@
 package hu.bme.dtt.conferenceportal.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -64,9 +65,11 @@ public class User implements Serializable {
 	 * A felhasználó jogosultságai.
 	 */
 	@UserRoles
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-	private Collection<Role> roles;
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class,
+			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"),
+			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+	private Collection<Role> roles = new ArrayList<Role>();
 	/**
 	 * A felhasználó telefonszáma.
 	 */
@@ -78,185 +81,6 @@ public class User implements Serializable {
 	@UserPrincipal
 	@Column(name = "USER_NAME", nullable = false)
 	private String userName;
-
-	/**
-	 * Visszadja az objektum sztring reprezentációját.
-	 * 
-	 * <p>
-	 * Formátum:
-	 * <ul>
-	 * <li>ClassName:
-	 * <li>AttributeName1=AttributeValue1
-	 * <li>AttributeName2=AttributeValue2
-	 * <li>...
-	 * </ul>
-	 * </p>
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User :\neMail=");
-		builder.append(eMail);
-		builder.append(",\nfirstName=");
-		builder.append(firstName);
-		builder.append(",\nid=");
-		builder.append(id);
-		builder.append(",\nlastName=");
-		builder.append(lastName);
-		builder.append(",\npassword=");
-		builder.append(password);
-		builder.append(",\nroles=");
-		builder.append(roles);
-		builder.append(",\ntel=");
-		builder.append(tel);
-		builder.append(",\nuserName=");
-		builder.append(userName);
-		return builder.toString();
-	}
-
-	/**
-	 * @return the eMail
-	 */
-	public String geteMail() {
-		return eMail;
-	}
-
-	/**
-	 * @param eMail
-	 *            the eMail to set
-	 */
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
-	}
-
-	/**
-	 * @return the firstName
-	 */
-	public String getFirstName() {
-		return firstName;
-	}
-
-	/**
-	 * @param firstName
-	 *            the firstName to set
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the lastName
-	 */
-	public String getLastName() {
-		return lastName;
-	}
-
-	/**
-	 * @param lastName
-	 *            the lastName to set
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the roles
-	 */
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles
-	 *            the roles to set
-	 */
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
-
-	/**
-	 * @return the tel
-	 */
-	public String getTel() {
-		return tel;
-	}
-
-	/**
-	 * @param tel
-	 *            the tel to set
-	 */
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
-	}
-
-	/**
-	 * @param userName
-	 *            the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((eMail == null) ? 0 : eMail.hashCode());
-		result = prime * result
-				+ ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
-		return result;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -332,5 +156,180 @@ public class User implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return the eMail
+	 */
+	public String geteMail() {
+		return eMail;
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @return the roles
+	 */
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @return the tel
+	 */
+	public String getTel() {
+		return tel;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eMail == null) ? 0 : eMail.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + ((tel == null) ? 0 : tel.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	/**
+	 * @param eMail
+	 *            the eMail to set
+	 */
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	/**
+	 * @param password
+	 *            the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @param roles
+	 *            the roles to set
+	 */
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
+	/**
+	 * @param tel
+	 *            the tel to set
+	 */
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	/**
+	 * @param userName
+	 *            the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * Visszadja az objektum sztring reprezentációját.
+	 * 
+	 * <p>
+	 * Formátum:
+	 * <ul>
+	 * <li>ClassName:
+	 * <li>AttributeName1=AttributeValue1
+	 * <li>AttributeName2=AttributeValue2
+	 * <li>...
+	 * </ul>
+	 * </p>
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User :\neMail=");
+		builder.append(eMail);
+		builder.append(",\nfirstName=");
+		builder.append(firstName);
+		builder.append(",\nid=");
+		builder.append(id);
+		builder.append(",\nlastName=");
+		builder.append(lastName);
+		builder.append(",\npassword=");
+		builder.append(password);
+		builder.append(",\nroles=");
+		builder.append(roles);
+		builder.append(",\ntel=");
+		builder.append(tel);
+		builder.append(",\nuserName=");
+		builder.append(userName);
+		return builder.toString();
 	}
 }
