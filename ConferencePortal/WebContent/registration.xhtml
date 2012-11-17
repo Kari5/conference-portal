@@ -19,11 +19,11 @@
                 <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
                     <h:outputLabel for="username">Username</h:outputLabel>
                     <h:inputText id="username"
-                              value="#{credentials.username}"/>
+                              value="#{registrationBackBean.newUser.userName}"/>
                               
                     <h:outputLabel for="password">Password</h:outputLabel>
                     <h:inputSecret id="password"
-                                value="#{credentials.password}"/>
+                                value="#{registrationBackBean.newUser.password}"/>
                                 
                     <h:outputLabel for="firstName">First Name</h:outputLabel>
                     <h:inputText id="firstName"
@@ -47,7 +47,7 @@
         </rich:panel>
 
         <div class="actionButtons">
-            <h:commandButton id="submit" value="Rgistration" action="#{registrationBackBean.saveNewUser()}"/>
+            <h:commandButton id="submit" value="Register" action="#{registrationBackBean.saveNewUser()}"/>
         </div>
 
     </h:form>
