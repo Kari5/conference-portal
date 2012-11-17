@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Here you can specify the users to be loaded after deployment. If a role 
+	assigned to one of these users doesn't exist, it will be created -->
+<userlist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="init_users.xsd">
+	<user>
+		<username>Superadmin</username>
+		<password>admin</password>
+		<firstname>Super</firstname>
+		<lastname>Administrator</lastname>
+		<role>
+			<rolename>admin</rolename>
+		</role>
+	</user>
+	<user>
+		<username>TestUser</username>
+		<password>test</password>
+		<firstname>Test</firstname>
+		<lastname>User</lastname>
+		<email>test@user.test</email>
+		<tel>1234567890</tel>
+		<role>
+			<rolename>user</rolename>
+		</role>
+	</user>
+</userlist>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- definition of simple elements -->
+	<xs:element name="username" type="xs:string" />
+	<xs:element name="password" type="xs:string" />
+	<xs:element name="firstname" type="xs:string" />
+	<xs:element name="lastname" type="xs:string" />
+	<xs:element name="email" type="xs:string" />
+	<xs:element name="tel" type="xs:string" />
+
+	<xs:element name="rolename" type="xs:string" />
+
+	<!-- definition of complex elements -->
+	<xs:element name="role">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="rolename"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="user">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="username" />
+				<xs:element ref="password" />
+				<xs:element ref="firstname" minOccurs="0" />
+				<xs:element ref="lastname" minOccurs="0" />
+				<xs:element ref="email" minOccurs="0" />
+				<xs:element ref="tel" minOccurs="0" />
+				<xs:element ref="role" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="userlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="user" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

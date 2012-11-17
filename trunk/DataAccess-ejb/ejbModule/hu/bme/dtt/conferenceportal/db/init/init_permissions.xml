@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Here you can specify the permissions to be loaded after deployment. -->
+<permissionlist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="init_permissions.xsd">
+	<!-- admin permissions -->
+	<!-- seam.user -->
+	<permission>
+		<target>seam.user</target>
+		<action>read</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.user</target>
+		<action>create</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.user</target>
+		<action>update</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.user</target>
+		<action>delete</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<!-- seam.role -->
+	<permission>
+		<target>seam.role</target>
+		<action>read</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.role</target>
+		<action>create</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.role</target>
+		<action>update</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	<permission>
+		<target>seam.role</target>
+		<action>delete</action>
+		<discriminator>role</discriminator>
+		<recipient>admin</recipient>
+	</permission>
+	
+	<!-- user role permissions -->
+	<!-- seam.user -->
+	<permission>
+		<target>seam.user</target>
+		<action>update</action>
+		<discriminator>role</discriminator>
+		<recipient>user</recipient>
+	</permission>
+</permissionlist>
