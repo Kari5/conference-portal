@@ -14,12 +14,18 @@ import javax.xml.bind.JAXBException;
 
 import org.jboss.annotation.ejb.Service;
 import org.jboss.logging.Logger;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.security.management.PasswordHash;
 
 /**
  * Deploy idõben elinduló <code>Service</code> ami ellenõrzi, hogy az
  * adatbázisban a kezdeti értékek megvannak-e.
  */
 @Service
+@Name(value = "initService")
+@Scope(ScopeType.APPLICATION)
 public class ConferenceDatabaseInitService implements ConferenceDatabaseInit {
 	/**
 	 * Deploy esetén beolvasandó engedélyeket tartalmazó xml fájl.
@@ -100,6 +106,8 @@ public class ConferenceDatabaseInitService implements ConferenceDatabaseInit {
 				} else {
 					LOGGER.info("User not found!");
 					LOGGER.info(user.toString());
+					user.setPassword(new PasswordHash().generateSaltedHash(user.getPassword(),
+							user.getUserName(), PasswordHash.ALGORITHM_SHA));
 					userDao.save(user);
 					LOGGER.info("User saved!");
 				}
