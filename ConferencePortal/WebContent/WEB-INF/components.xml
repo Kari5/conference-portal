@@ -21,7 +21,8 @@
 
 	<!-- Make sure this URL pattern is the same as that used by the Faces Servlet -->
 	<web:hot-deploy-filter url-pattern="*.seam" />
-
+	<web:multipart-filter create-temp-files="false" max-request-size="8000000" url-pattern="*.seam"/>
+	
 	<persistence:managed-persistence-context
 		name="entityManager" auto-create="true"
 		persistence-unit-jndi-name="java:/ConferencePortalEntityManagerFactory" />
