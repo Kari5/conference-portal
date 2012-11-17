@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
 import org.jboss.seam.annotations.security.management.UserFirstName;
 import org.jboss.seam.annotations.security.management.UserLastName;
@@ -26,6 +29,7 @@ import org.jboss.seam.annotations.security.management.UserRoles;
  * 
  */
 @Entity(name = "User_")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User implements Serializable {
 	/**
 	 * Serialization id.
@@ -35,12 +39,14 @@ public class User implements Serializable {
 	 * A felhasználó e-mail címe.
 	 */
 	@Column(name = "USER_EMAIL")
+	@XmlElement(name = "email")
 	private String eMail;
 	/**
 	 * A felhasználó keresztneve.
 	 */
 	@UserFirstName
 	@Column(name = "USER_FIRST_NAME")
+	@XmlElement(name = "firstname")
 	private String firstName;
 	/**
 	 * A kulcs.
@@ -54,32 +60,37 @@ public class User implements Serializable {
 	 */
 	@UserLastName
 	@Column(name = "USER_LAST_NAME")
+	@XmlElement(name = "lastname")
 	private String lastName;
 	/**
 	 * A felhasználó jelszava hashelve.
 	 */
 	@UserPassword(hash = "sha")
 	@Column(name = "USER_PASSWORD", nullable = false)
+	@XmlElement(name = "password")
 	private String password;
 	/**
 	 * A felhasználó jogosultságai.
 	 */
 	@UserRoles
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class,
-			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Role.class, cascade = {
+			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.EAGER)
 	@JoinTable(name = "Role_User", joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+	@XmlElement(name = "role")
 	private Collection<Role> roles = new ArrayList<Role>();
 	/**
 	 * A felhasználó telefonszáma.
 	 */
 	@Column(name = "USER_TEL")
+	@XmlElement(name = "tel")
 	private String tel;
 	/**
 	 * A felhasználónév.
 	 */
 	@UserPrincipal
 	@Column(name = "USER_NAME", nullable = false)
+	@XmlElement(name = "username")
 	private String userName;
 
 	/*

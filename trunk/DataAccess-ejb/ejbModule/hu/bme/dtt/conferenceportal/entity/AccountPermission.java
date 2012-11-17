@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 
 import org.jboss.seam.annotations.security.permission.PermissionAction;
 import org.jboss.seam.annotations.security.permission.PermissionDiscriminator;
@@ -20,6 +23,7 @@ import org.jboss.seam.annotations.security.permission.PermissionUser;
  * 
  */
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AccountPermission implements Serializable {
 	/**
 	 * Serialization ID.
@@ -30,12 +34,14 @@ public class AccountPermission implements Serializable {
 	 */
 	@PermissionAction
 	@Column(name = "ACTION")
+	@XmlElement(name = "action")
 	private String action;
 	/**
 	 * Ez adja meg, hogy felhasználói, vagy szerepkör engedélyrõl van szó.
 	 */
 	@PermissionDiscriminator
 	@Column(name = "DISCRIMINATOR")
+	@XmlElement(name = "discriminator")
 	private String discriminator;
 	/**
 	 * A rekord kulcs.
@@ -44,18 +50,21 @@ public class AccountPermission implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Integer permissionId;
+
 	/**
 	 * Az engedély jogosultja.
 	 */
 	@PermissionUser
 	@PermissionRole
 	@Column(name = "RECIPIENT")
+	@XmlElement(name = "recipient")
 	private String recipient;
 	/**
 	 * Az engedélyezett cselekvés elszenvedõje.
 	 */
 	@PermissionTarget
 	@Column(name = "TARGET")
+	@XmlElement(name = "target")
 	private String target;
 
 	/*
@@ -203,6 +212,27 @@ public class AccountPermission implements Serializable {
 	 */
 	public void setTarget(String target) {
 		this.target = target;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Type: AccountPermission \naction=");
+		builder.append(action);
+		builder.append(",\ndiscriminator=");
+		builder.append(discriminator);
+		builder.append(",\npermissionId=");
+		builder.append(permissionId);
+		builder.append(",\nrecipient=");
+		builder.append(recipient);
+		builder.append(",\ntarget=");
+		builder.append(target);
+		return builder.toString();
 	}
 
 }
