@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 /**
@@ -48,6 +49,32 @@ public class Article implements Serializable {
 	 */
 	@Column(name = "ARTICLE_URL")
 	private String url;
+
+	/**
+	 * A feltöltött file neve.
+	 */
+	@Column(name = "ARTICLE_FILE_NAME")
+	private String fileName;
+
+	/**
+	 * A feltöltött fájl típustá adja meg. Alapvetõen application/pdf lesz.
+	 */
+	@Column(name = "ARTICLE_MIME")
+	private String mime;
+
+	/**
+	 * A feltöltött pdf byte[] formában.
+	 */
+	@Lob
+	@Column(name = "ARTICLE_BYTES")
+	private byte[] data;
+
+	/**
+	 * A cikk hossza.
+	 */
+	@Column(name = "ARTICLE_LENGTH")
+	private Long length;
+
 	/**
 	 * A cikket feltöltõ user.
 	 */
@@ -159,6 +186,66 @@ public class Article implements Serializable {
 	 */
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	/**
+	 * @return the fileName
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * @param fileName
+	 *            the fileName to set
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * @return the mime
+	 */
+	public String getMime() {
+		return mime;
+	}
+
+	/**
+	 * @param mime
+	 *            the mime to set
+	 */
+	public void setMime(String mime) {
+		this.mime = mime;
+	}
+
+	/**
+	 * @return the data
+	 */
+	public byte[] getData() {
+		return data;
+	}
+
+	/**
+	 * @param data
+	 *            the data to set
+	 */
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	/**
+	 * @return the length
+	 */
+	public Long getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length
+	 *            the length to set
+	 */
+	public void setLength(Long length) {
+		this.length = length;
 	}
 
 	/**
