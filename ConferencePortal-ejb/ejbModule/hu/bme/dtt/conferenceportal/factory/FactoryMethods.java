@@ -4,6 +4,7 @@ import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
+import hu.bme.dtt.conferenceportal.util.SimplePdf;
 import hu.bme.dtt.conferenceportal.util.StateContainer;
 import hu.bme.dtt.conferenceportal.util.StateHolder;
 
@@ -41,6 +42,11 @@ public class FactoryMethods {
 	@Factory(value = "selectedProgramStateHolder", scope = ScopeType.PAGE)
 	public StateHolder<Program> selectedProgramStateHolder() {
 		return new StateHolder<Program>();
+	}
+
+	@Factory(value = "simplePdfStateHolder", scope = ScopeType.PAGE)
+	public StateHolder<SimplePdf> simplePdfStateHolder() {
+		return new StateHolder<SimplePdf>();
 	}
 
 }
