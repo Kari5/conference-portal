@@ -45,10 +45,12 @@
 				<rich:separator height="1" lineType="solid"/>
 				
 				</h:panelGrid>
+				<h:outputText value="#{messages['article.information']}" />
 		<rich:fileUpload fileUploadListener="#{fileUploadBean.listener}"
 					maxFilesQuantity="#{fileUploadBean.uploadsAvailable}" id="upload"
 					immediateUpload="#{fileUploadBean.autoUpload}" acceptedTypes="pdf"
-					allowFlash="false" uploadControlLabel="Feltolt">
+					allowFlash="false" uploadControlLabel="#{messages['article.upload']}" addControlLabel="#{messages['article.selectPdf']}"
+					doneLabel="#{messages['article.done']}" clearAllControlLabel="#{messages['article.clearAll']}">
 					<a4j:support event="onuploadcomplete" reRender="info" />
 				</rich:fileUpload>
 				<h:panelGroup id="info">
