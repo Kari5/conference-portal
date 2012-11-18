@@ -50,7 +50,7 @@ public class EditConferenceBackBean {
 	 * Logiaki változó, ha új konfernecia lesz mentve, akkor igaz, különben
 	 * hamis.
 	 */
-	private boolean newConfernece;
+	private boolean newConference;
 
 	/** Az összes elérhetõ tag. */
 	@In(create = true)
@@ -97,8 +97,7 @@ public class EditConferenceBackBean {
 	private Integer oldProgramIndex;
 
 	/** Logoláshoz logger. */
-	private static final Logger logger = Logger
-			.getLogger(EditConferenceBackBean.class);
+	private static final Logger logger = Logger.getLogger(EditConferenceBackBean.class);
 
 	/**
 	 * Init függvény, ami eldönti, hogy új konferncia lesz létrehozva, vagy egy
@@ -108,18 +107,17 @@ public class EditConferenceBackBean {
 	public void init() {
 		logger.info("init meghívódott");
 		if (conferenceStateHolder.getSelected() != null) {
-			conference = (Conference) conferenceStateHolder.getSelected();
+			conference = conferenceStateHolder.getSelected();
 			programs = (List<Program>) conference.getPrograms();
-			newConfernece = false;
+			newConference = false;
 		} else {
 			conference = new Conference();
 			programs = new ArrayList<Program>();
-			newConfernece = true;
+			newConference = true;
 		}
 
 		try {
-			tagDao = (TagDao) InitialContext
-					.doLookup("ConferencePortal-ear/tagDao/local");
+			tagDao = (TagDao) InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
 			conferenceDao = (ConferenceDao) InitialContext
 					.doLookup("ConferencePortal-ear/conferenceDao/local");
 		} catch (NamingException e) {
@@ -165,7 +163,7 @@ public class EditConferenceBackBean {
 		logger.info("makeTagsSelectItems meghívódott");
 		tagsSelectItems = new ArrayList<SelectItem>();
 		for (Tag t : tagsStateContainer.getList()) {
-			this.tagsSelectItems.add(new SelectItem(t.getName(), t.getName()));
+			tagsSelectItems.add(new SelectItem(t.getName(), t.getName()));
 		}
 	}
 
@@ -173,8 +171,7 @@ public class EditConferenceBackBean {
 		logger.info("makeArticleSelectItems meghívódott");
 		articlesSeletcItems = new ArrayList<SelectItem>();
 		for (Article a : articlesStateContainer.getList()) {
-			this.articlesSeletcItems
-					.add(new SelectItem(a.getId(), a.getTitle()));
+			articlesSeletcItems.add(new SelectItem(a.getId(), a.getTitle()));
 		}
 	}
 
@@ -193,12 +190,10 @@ public class EditConferenceBackBean {
 			programs.remove(program);
 			logger.info("Kiválasztott program ideiglenesen eltávolítva a listából.");
 		}
-		this.selectedProgramStateHolder.setSelected(program);
+		selectedProgramStateHolder.setSelected(program);
 		oldProgram = program.clone();
-		logger.info("Új kiválasztott program: "
-				+ this.selectedProgramStateHolder);
-		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
-				+ oldProgram);
+		logger.info("Új kiválasztott program: " + selectedProgramStateHolder);
+		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
 	}
 
 	/**
@@ -208,9 +203,8 @@ public class EditConferenceBackBean {
 		logger.info("A kiválasztott program új program lesz.");
 		oldProgramIndex = null;
 		oldProgram = null;
-		this.selectedProgramStateHolder.setSelected(new Program());
-		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
-				+ oldProgram);
+		selectedProgramStateHolder.setSelected(new Program());
+		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
 	}
 
 	/**
@@ -241,35 +235,33 @@ public class EditConferenceBackBean {
 	 */
 	public void saveConference() {
 		logger.info("saveConference meghívódott.");
-		if (conference.getTitle() == null || conference.getTitle().isEmpty()) {
+		if ((conference.getTitle() == null) || conference.getTitle().isEmpty()) {
 			FacesMessages.instance().add("Cím megadása kötelezõ!");
 			return;
 		}
-		if (conference.getShortTitle() == null
-				|| conference.getShortTitle().isEmpty()) {
+		if ((conference.getShortTitle() == null) || conference.getShortTitle().isEmpty()) {
 			FacesMessages.instance().add("Rövid cím megadása kötelezõ!");
 			// FacesMessages.instance().add(msg);
 			return;
 		}
-		if (newConfernece) {
+		if (newConference) {
 			try {
-				UserDao userDao = InitialContext
-						.doLookup("ConferencePortal-ear/userDao/local");
-				conference.setOwner(userDao.getUser(Identity.instance()
-						.getCredentials().getUsername()));
+				UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+				conference.setOwner(userDao.getUser(Identity.instance().getCredentials()
+						.getUsername()));
 			} catch (NamingException e) {
 				logger.error(e.getMessage(), e);
 			}
 			conference.setPrograms(programs);
 			conferenceDao.save(conference);
-			newConfernece = false;
+			newConference = false;
 			FacesMessages.instance().add("Sikeres mentés!");
 		} else {
 			conference.setPrograms(programs);
 			conferenceDao.updateConference(conference);
 			FacesMessages.instance().add("Sikeres módosítás!");
 		}
-		this.conferenceStateHolder.setSelected(conference);
+		conferenceStateHolder.setSelected(conference);
 	}
 
 	/**
@@ -277,14 +269,14 @@ public class EditConferenceBackBean {
 	 */
 	public void print() {
 		logger.info(conference.toString());
-		this.conferenceStateHolder.setSelected(conference);
+		conferenceStateHolder.setSelected(conference);
 	}
 
 	/**
 	 * Teszteléshez, megváltoztatja, hogy új konferenciáról van-e szó.
 	 */
 	public void changeNew() {
-		this.newConfernece = !this.newConfernece;
+		newConference = !newConference;
 	}
 
 	/**
@@ -305,16 +297,16 @@ public class EditConferenceBackBean {
 	/**
 	 * @return the newConfernece
 	 */
-	public boolean isNewConfernece() {
-		return newConfernece;
+	public boolean isNewConference() {
+		return newConference;
 	}
 
 	/**
-	 * @param newConfernece
+	 * @param newConference
 	 *            the newConfernece to set
 	 */
-	public void setNewConfernece(boolean newConfernece) {
-		this.newConfernece = newConfernece;
+	public void setNewConference(boolean newConference) {
+		this.newConference = newConference;
 	}
 
 	/**
@@ -389,7 +381,7 @@ public class EditConferenceBackBean {
 	 *            the selectedProgram to set
 	 */
 	public void setSelectedProgram(Program selectedProgram) {
-		this.selectedProgramStateHolder.setSelected(selectedProgram);
+		selectedProgramStateHolder.setSelected(selectedProgram);
 	}
 
 	/**
@@ -403,8 +395,7 @@ public class EditConferenceBackBean {
 	 * @param articlesStateContainer
 	 *            the articlesStateContainer to set
 	 */
-	public void setArticlesStateContainer(
-			StateContainer<Article> articlesStateContainer) {
+	public void setArticlesStateContainer(StateContainer<Article> articlesStateContainer) {
 		this.articlesStateContainer = articlesStateContainer;
 	}
 
