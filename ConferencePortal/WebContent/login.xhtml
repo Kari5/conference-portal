@@ -29,17 +29,12 @@
 					</h:panelGrid>
 				</div>
 
-				<p>
-					<i>Note - </i> You may login with the username 'admin' and a blank
-					password.
-				</p>
-
 			</rich:panel>
 
 			<div class="actionButtons">
 				<h:commandButton id="submit" value="Login"
-					action="#{identity.login}" />
-				<h:commandButton id="regiseter" value="Registration"
+					action="#{identity.login()}" />
+				<h:commandButton id="registerBtn" value="Register"
 					action="registration" />
 			</div>
 
