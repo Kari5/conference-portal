@@ -3,7 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:s="http://jboss.com/products/seam/taglib"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
 		<s:link id="menuHomeId" view="/home.xhtml" value="Home"
@@ -14,17 +15,24 @@
 	</rich:toolBarGroup>
 	<!-- @newMenuItem@ -->
 	<rich:toolBarGroup location="right">
-		<h:outputText id="menuWelcomeId"
-			value="Signed in as: #{credentials.username}"
-			rendered="#{identity.loggedIn}" />
-		<s:link id="menuLoginId" view="/login.xhtml" value="Log in"
-			rendered="#{not identity.loggedIn}" propagation="none" />
-		<h:outputText value="or" rendered="#{not identity.loggedIn}" />
-		<s:link id="menuRegisterId" view="/registration.xhtml"
-			value="Register" rendered="#{not identity.loggedIn}"
-			propagation="none" />
-		<s:link id="menuLogoutId" view="/home.xhtml"
-			action="#{identity.logout}" value="Logout"
-			rendered="#{identity.loggedIn}" propagation="none" />
+		<s:fragment rendered="#{identity.loggedIn}">
+			<h:outputText id="menuWelcomeId"
+				value="Signed in as: #{credentials.username}" />
+			<s:link id="menuLogoutId" view="/home.xhtml"
+				action="#{identity.logout}" value="Logout" propagation="none" />
+		</s:fragment>
+		<s:fragment rendered="#{not identity.loggedIn}">
+			<a4j:form ajaxSubmit="true">
+				<h:outputText value="User Name:" />
+				<h:inputText title="User Name" value="#{credentials.username}" />
+				<h:outputText value="Password:" />
+				<h:inputSecret title="Password" value="#{credentials.password}" />
+				<a4j:commandButton id="menuLoginId" value="Log in"
+					action="#{identity.login()}" propagation="none" />
+				<a4j:commandButton id="menuRegisterId" view="/registration.xhtml"
+					value="Register" propagation="none" />
+			</a4j:form>
+		</s:fragment>
+
 	</rich:toolBarGroup>
 </rich:toolBar>
