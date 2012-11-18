@@ -3,6 +3,7 @@ package hu.bme.dtt.conferenceportal.session;
 import hu.bme.dtt.conferenceportal.dao.ConferenceDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.dao.UserDao;
+import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
@@ -10,10 +11,8 @@ import hu.bme.dtt.conferenceportal.util.StateContainer;
 import hu.bme.dtt.conferenceportal.util.StateHolder;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -63,6 +62,16 @@ public class EditConferenceBackBean {
 	/** Kiválasztott tag-ek. */
 	private List<String> selectedTags;
 
+	/** Az összes elérhetõ cikk. */
+	@In(create = true)
+	private StateContainer<Article> articlesStateContainer;
+
+	/** Cikkek selectItem-ként. */
+	private List<SelectItem> articlesSeletcItems;
+
+	/** Kiválasztott cikk id-ik. */
+	private List<Long> selectedArticles;
+
 	/** Tag-ek kezeléséhez dao. */
 	private TagDao tagDao;
 
@@ -99,55 +108,14 @@ public class EditConferenceBackBean {
 	public void init() {
 		logger.info("init meghívódott");
 		if (conferenceStateHolder.getSelected() != null) {
-			conference = conferenceStateHolder.getSelected();
-			programs = (ArrayList<Program>) conference.getPrograms();
+			conference = (Conference) conferenceStateHolder.getSelected();
+			programs = (List<Program>) conference.getPrograms();
 			newConfernece = false;
 		} else {
 			conference = new Conference();
 			programs = new ArrayList<Program>();
 			newConfernece = true;
 		}
-
-		// TESZTHEZ:
-		Program p1 = new Program();
-		p1.setDescription("Leírása p1");
-		p1.setTitle("1. program");
-		p1.setId(1L);
-		p1.setStart(new Date());
-		p1.setEnd(new Date());
-
-		Program p2 = new Program();
-		p2.setDescription("Leírása p2 programról. Marha érdekes lesz, mindenkinek sok szeretettel ajánlom, meg még kell valami szöveg ide sa dfanmskflmnslkf lkmaf.");
-		p2.setTitle("2. program");
-		p2.setId(2L);
-		p2.setStart(new Date());
-		p2.setEnd(new Date());
-		programs.add(p1);
-		programs.add(p2);
-
-		Tag t1 = new Tag();
-		t1.setName("Tag1");
-
-		Tag t2 = new Tag();
-		t2.setName("Tag2");
-		Tag t3 = new Tag();
-		t3.setName("Tag3");
-		Tag t4 = new Tag();
-		t4.setName("Tag4");
-		Tag t5 = new Tag();
-		t5.setName("Tag5");
-		Tag t6 = new Tag();
-		t6.setName("Tag6");
-		List<Tag> tags = new ArrayList<Tag>();
-		tags.add(t1);
-		tags.add(t2);
-		tags.add(t3);
-		tags.add(t4);
-		tags.add(t5);
-		tags.add(t6);
-
-		conference.setPrograms(programs);
-		// conference.setTags(tags);
 
 		try {
 			tagDao = (TagDao) InitialContext
@@ -160,6 +128,7 @@ public class EditConferenceBackBean {
 		}
 
 		makeTagSelectItems();
+		makeArticleSelectitems();
 		selectedTags = new ArrayList<String>();
 	}
 
@@ -197,6 +166,15 @@ public class EditConferenceBackBean {
 		tagsSelectItems = new ArrayList<SelectItem>();
 		for (Tag t : tagsStateContainer.getList()) {
 			this.tagsSelectItems.add(new SelectItem(t.getName(), t.getName()));
+		}
+	}
+
+	public void makeArticleSelectitems() {
+		logger.info("makeArticleSelectItems meghívódott");
+		articlesSeletcItems = new ArrayList<SelectItem>();
+		for (Article a : articlesStateContainer.getList()) {
+			this.articlesSeletcItems
+					.add(new SelectItem(a.getId(), a.getTitle()));
 		}
 	}
 
@@ -263,27 +241,31 @@ public class EditConferenceBackBean {
 	 */
 	public void saveConference() {
 		logger.info("saveConference meghívódott.");
-		if(conference.getTitle() == null || conference.getTitle().isEmpty()){
+		if (conference.getTitle() == null || conference.getTitle().isEmpty()) {
 			FacesMessages.instance().add("Cím megadása kötelezõ!");
 			return;
 		}
-		if(conference.getShortTitle() == null || conference.getShortTitle().isEmpty()){
-			FacesMessage msg=new FacesMessage(FacesMessage.SEVERITY_ERROR,"Adatok hiányosak", "Rövid cím megadása kötelezõ!");
-			msg.notify();
-			//FacesMessages.instance().add(msg);
+		if (conference.getShortTitle() == null
+				|| conference.getShortTitle().isEmpty()) {
+			FacesMessages.instance().add("Rövid cím megadása kötelezõ!");
+			// FacesMessages.instance().add(msg);
 			return;
 		}
 		if (newConfernece) {
 			try {
-				UserDao userDao=InitialContext.doLookup("ConferencePortal-ear/userDao/local");
-				conference.setOwner(userDao.getUser(Identity.instance().getCredentials().getUsername()));
+				UserDao userDao = InitialContext
+						.doLookup("ConferencePortal-ear/userDao/local");
+				conference.setOwner(userDao.getUser(Identity.instance()
+						.getCredentials().getUsername()));
 			} catch (NamingException e) {
-				logger.error(e.getMessage(),e);
+				logger.error(e.getMessage(), e);
 			}
+			conference.setPrograms(programs);
 			conferenceDao.save(conference);
 			newConfernece = false;
 			FacesMessages.instance().add("Sikeres mentés!");
 		} else {
+			conference.setPrograms(programs);
 			conferenceDao.updateConference(conference);
 			FacesMessages.instance().add("Sikeres módosítás!");
 		}
@@ -408,6 +390,52 @@ public class EditConferenceBackBean {
 	 */
 	public void setSelectedProgram(Program selectedProgram) {
 		this.selectedProgramStateHolder.setSelected(selectedProgram);
+	}
+
+	/**
+	 * @return the articlesStateContainer
+	 */
+	public StateContainer<Article> getArticlesStateContainer() {
+		return articlesStateContainer;
+	}
+
+	/**
+	 * @param articlesStateContainer
+	 *            the articlesStateContainer to set
+	 */
+	public void setArticlesStateContainer(
+			StateContainer<Article> articlesStateContainer) {
+		this.articlesStateContainer = articlesStateContainer;
+	}
+
+	/**
+	 * @return the articlesSeletcItems
+	 */
+	public List<SelectItem> getArticlesSeletcItems() {
+		return articlesSeletcItems;
+	}
+
+	/**
+	 * @param articlesSeletcItems
+	 *            the articlesSeletcItems to set
+	 */
+	public void setArticlesSeletcItems(List<SelectItem> articlesSeletcItems) {
+		this.articlesSeletcItems = articlesSeletcItems;
+	}
+
+	/**
+	 * @return the selectedArticles
+	 */
+	public List<Long> getSelectedArticles() {
+		return selectedArticles;
+	}
+
+	/**
+	 * @param selectedArticles
+	 *            the selectedArticles to set
+	 */
+	public void setSelectedArticles(List<Long> selectedArticles) {
+		this.selectedArticles = selectedArticles;
 	}
 
 }

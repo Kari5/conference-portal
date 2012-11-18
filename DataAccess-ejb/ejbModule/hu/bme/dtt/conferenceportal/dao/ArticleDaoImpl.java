@@ -6,6 +6,8 @@ package hu.bme.dtt.conferenceportal.dao;
 import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.futurion.mt.dao.GenericDaoImpl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -46,6 +48,7 @@ public class ArticleDaoImpl extends GenericDaoImpl<Article> implements
 			UserDao userDao = InitialContext
 					.doLookup("ConferencePortal-ear/userDao/local");
 			article.setUser(userDao.findByPrimaryKey(article.getUser().getId()));
+			entityManager.persist(article);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +59,15 @@ public class ArticleDaoImpl extends GenericDaoImpl<Article> implements
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Article> getAllArticles() {
+		return (List<Article>) executeQueryMultipleResult("FROM Article");
 	}
 
 }
