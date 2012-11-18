@@ -54,3 +54,39 @@
 	vertical-align: top;
 	width: 59%;
 }
+
+.title{
+	font-size: 28px;
+	font-weight:bold;
+	font-family:arial black, sans-serif;
+	text-align: center;
+	text-shadow: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+	color:#000000;
+}
+
+.title:HOVER {
+	font-size: 29px;
+	font-weight:bold;
+	font-style:italic;
+	font-family:arial black, sans-serif;
+	text-align: center;
+	text-shadow: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+	color:#101010;
+}
+
+.title:ACTIVE {
+	font-size: 29px;
+	font-weight:bold;
+	font-style:italic;
+	font-family:arial black, sans-serif;
+	text-align: center;
+	text-shadow: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+	color:#cccccc;
+}
+
