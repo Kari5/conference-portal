@@ -25,6 +25,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.security.Identity;
 
 @Name("editConferenceBackBean")
 @Scope(ScopeType.PAGE)
@@ -275,13 +276,10 @@ public class EditConferenceBackBean {
 		if (newConfernece) {
 			try {
 				UserDao userDao=InitialContext.doLookup("ConferencePortal-ear/userDao/local");
-				conference.setOwner(userDao.getUser("Kari"));
+				conference.setOwner(userDao.getUser(Identity.instance().getCredentials().getUsername()));
 			} catch (NamingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e.getMessage(),e);
 			}
-			// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell
-			// tölteni!
 			conferenceDao.save(conference);
 			newConfernece = false;
 			FacesMessages.instance().add("Sikeres mentés!");
