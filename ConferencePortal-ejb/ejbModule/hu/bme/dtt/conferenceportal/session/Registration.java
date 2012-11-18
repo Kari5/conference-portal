@@ -66,7 +66,7 @@ public class Registration {
 	 * 
 	 * @return bool
 	 */
-	public boolean saveNewUser() {
+	public String saveNewUser() {
 		new RunAsOperation() {
 			@Override
 			public void execute() {
@@ -85,8 +85,7 @@ public class Registration {
 		}.addRole("admin").run();
 		identity.getCredentials().setUsername(newUser.getUserName());
 		identity.getCredentials().setPassword(newUser.getPassword());
-		identity.login();
-		return true;
+		return identity.login();
 	}
 
 	/**
