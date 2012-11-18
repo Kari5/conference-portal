@@ -117,7 +117,7 @@
 							action="editConference"
 							value="#{messages['conference.edit']}"
 							title="#{messages['conference.edit']}" image="/img/edit.png"
-							styleClass="myButton" rendered="#{not conferenceStateHolder.selected == null}"/>
+							styleClass="myButton" rendered="#{not (conferenceStateHolder.selected == null)}"/>
 						
 					</center>
 				</rich:panel>
