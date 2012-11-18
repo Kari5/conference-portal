@@ -273,17 +273,24 @@ public class Article implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + Arrays.hashCode(data);
 		result = prime * result
-				+ ((fileName == null) ? 0 : fileName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((length == null) ? 0 : length.hashCode());
-		result = prime * result + ((mime == null) ? 0 : mime.hashCode());
-		result = prime * result + ((pdfPath == null) ? 0 : pdfPath.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((url == null) ? 0 : url.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+				+ ((getAuthor() == null) ? 0 : getAuthor().hashCode());
+		result = prime * result + Arrays.hashCode(getData());
+		result = prime * result
+				+ ((getFileName() == null) ? 0 : getFileName().hashCode());
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		result = prime * result
+				+ ((getLength() == null) ? 0 : getLength().hashCode());
+		result = prime * result
+				+ ((getMime() == null) ? 0 : getMime().hashCode());
+		result = prime * result
+				+ ((getPdfPath() == null) ? 0 : getPdfPath().hashCode());
+		result = prime * result
+				+ ((getTitle() == null) ? 0 : getTitle().hashCode());
+		result = prime * result
+				+ ((getUrl() == null) ? 0 : getUrl().hashCode());
+		result = prime * result
+				+ ((getUser() == null) ? 0 : getUser().hashCode());
 		return result;
 	}
 
@@ -304,70 +311,70 @@ public class Article implements Serializable {
 			return false;
 		}
 		Article other = (Article) obj;
-		if (author == null) {
-			if (other.author != null) {
+		if (getAuthor() == null) {
+			if (other.getAuthor() != null) {
 				return false;
 			}
-		} else if (!author.equals(other.author)) {
+		} else if (!getAuthor().equals(other.getAuthor())) {
 			return false;
 		}
-		if (!Arrays.equals(data, other.data)) {
+		if (!Arrays.equals(getData(), other.getData())) {
 			return false;
 		}
-		if (fileName == null) {
-			if (other.fileName != null) {
+		if (getFileName() == null) {
+			if (other.getFileName() != null) {
 				return false;
 			}
-		} else if (!fileName.equals(other.fileName)) {
+		} else if (!getFileName().equals(other.getFileName())) {
 			return false;
 		}
-		if (id == null) {
-			if (other.id != null) {
+		if (getId() == null) {
+			if (other.getId() != null) {
 				return false;
 			}
-		} else if (!id.equals(other.id)) {
+		} else if (!getId().equals(other.getId())) {
 			return false;
 		}
-		if (length == null) {
-			if (other.length != null) {
+		if (getLength() == null) {
+			if (other.getLength() != null) {
 				return false;
 			}
-		} else if (!length.equals(other.length)) {
+		} else if (!getLength().equals(other.getLength())) {
 			return false;
 		}
-		if (mime == null) {
-			if (other.mime != null) {
+		if (getMime() == null) {
+			if (other.getMime() != null) {
 				return false;
 			}
-		} else if (!mime.equals(other.mime)) {
+		} else if (!getMime().equals(other.getMime())) {
 			return false;
 		}
-		if (pdfPath == null) {
-			if (other.pdfPath != null) {
+		if (getPdfPath() == null) {
+			if (other.getPdfPath() != null) {
 				return false;
 			}
-		} else if (!pdfPath.equals(other.pdfPath)) {
+		} else if (!getPdfPath().equals(other.getPdfPath())) {
 			return false;
 		}
-		if (title == null) {
-			if (other.title != null) {
+		if (getTitle() == null) {
+			if (other.getTitle() != null) {
 				return false;
 			}
-		} else if (!title.equals(other.title)) {
+		} else if (!getTitle().equals(other.getTitle())) {
 			return false;
 		}
-		if (url == null) {
-			if (other.url != null) {
+		if (getUrl() == null) {
+			if (other.getUrl() != null) {
 				return false;
 			}
-		} else if (!url.equals(other.url)) {
+		} else if (!getUrl().equals(other.getUrl())) {
 			return false;
 		}
-		if (user == null) {
-			if (other.user != null) {
+		if (getUser() == null) {
+			if (other.getUser() != null) {
 				return false;
 			}
-		} else if (!user.equals(other.user)) {
+		} else if (!getUser().equals(other.getUser())) {
 			return false;
 		}
 		return true;

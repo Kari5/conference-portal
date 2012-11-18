@@ -1,6 +1,7 @@
 package hu.bme.dtt.conferenceportal.dao;
 
 import hu.bme.dtt.conferenceportal.entity.Conference;
+import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
 import hu.futurion.mt.dao.GenericDaoImpl;
 
@@ -42,7 +43,7 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 	@Override
 	public void updateConference(Conference conference) {
 		List<Tag> tags = new ArrayList<Tag>();
-		// List<Program> programs = new ArrayList<Program>();
+		List<Program> programs = new ArrayList<Program>();
 		try {
 			TagDao tagDao = InitialContext
 					.doLookup("ConferencePortal-ear/tagDao/local");
@@ -50,11 +51,11 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 				tags.add(tagDao.findByPrimaryKey(t.getId()));
 			}
 
-			// ProgramDao programDao = InitialContext
-			// .doLookup("ConferencePortal-ear/programDao/local");
-			// for (Program p : conference.getPrograms()) {
-			// programs.add(programDao.updateOrSaveProgram(p));
-			// }
+			ProgramDao programDao = InitialContext
+					.doLookup("ConferencePortal-ear/programDao/local");
+			for (Program p : conference.getPrograms()) {
+				programs.add(programDao.updateOrSaveProgram(p));
+			}
 
 			Conference attachedConference = findByPrimaryKey(conference.getId());
 			// TODO:[Kari] valószínüleg majd a articels-t is attache-olni kell.
@@ -67,7 +68,7 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 			attachedConference.setStartDate(conference.getStartDate());
 			attachedConference.setTitle(conference.getTitle());
 			attachedConference.setShortTitle(conference.getShortTitle());
-			// attachedConference.setPrograms(conference.getPrograms());
+			attachedConference.setPrograms(programs);
 			// FIXME: Programok elmentését javítani!
 			attachedConference.setSummary(conference.getSummary());
 
@@ -87,18 +88,18 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 	@Override
 	public boolean save(Conference conference) {
 		List<Tag> tags = new ArrayList<Tag>();
-		// List<Program> programs = new ArrayList<Program>();
+		List<Program> programs = new ArrayList<Program>();
 		try {
 			TagDao tagDao = InitialContext
 					.doLookup("ConferencePortal-ear/tagDao/local");
 			for (Tag t : conference.getTags()) {
 				tags.add(tagDao.findByPrimaryKey(t.getId()));
 			}
-			// ProgramDao programDao = InitialContext
-			// .doLookup("ConferencePortal-ear/programDao/local");
-			// for (Program p : conference.getPrograms()) {
-			// programs.add(programDao.updateOrSaveProgram(p));
-			// }
+			ProgramDao programDao = InitialContext
+					.doLookup("ConferencePortal-ear/programDao/local");
+			for (Program p : conference.getPrograms()) {
+				programs.add(programDao.updateOrSaveProgram(p));
+			}
 		} catch (NamingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -107,19 +108,19 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 			e.printStackTrace();
 		}
 		conference.setTags(tags);
-		conference.setPrograms(null);
+		conference.setPrograms(programs);
 		// FIXME: Programok mentését javítani
 		entityManager.persist(conference);
 		return true;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Conference> conferences() {
-		return (List<Conference>)executeQueryMultipleResult("FROM Conference");
+		return (List<Conference>) executeQueryMultipleResult("FROM Conference");
 	}
 
 }

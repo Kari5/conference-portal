@@ -1,6 +1,8 @@
 package hu.bme.dtt.conferenceportal.factory;
 
+import hu.bme.dtt.conferenceportal.dao.ArticleDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
+import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
@@ -32,6 +34,20 @@ public class FactoryMethods {
 			TagDao tagDao = (TagDao) InitialContext
 					.doLookup("ConferencePortal-ear/tagDao/local");
 			result.setList(tagDao.getAllTags());
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Factory(value = "articlesStateContainer", scope = ScopeType.CONVERSATION)
+	public StateContainer<Article> articlesStateContainer() {
+		StateContainer<Article> result = new StateContainer<Article>();
+		try {
+			ArticleDao articleDao = (ArticleDao) InitialContext
+					.doLookup("ConferencePortal-ear/articleDao/local");
+			result.setList(articleDao.getAllArticles());
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
