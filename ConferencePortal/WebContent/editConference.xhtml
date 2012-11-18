@@ -93,8 +93,8 @@
 											</rich:panel>
 											<a4j:commandButton
 												action="#{editConferenceBackBean.changeSelectedProgram(program)}"
-												onclick="#{rich:component('program_panel')}.show()"
-												image="img/edit.png" styleClass="myButton" />
+												oncomplete="#{rich:component('program_panel')}.show()"
+												image="img/edit.png" styleClass="myButton" reRender="program_panel" />
 
 										</h:panelGrid>
 										<rich:toolTip followMouse="true" direction="top-right"
@@ -109,10 +109,10 @@
 								</rich:dataGrid>
 								<a4j:commandButton
 									action="#{editConferenceBackBean.newSelectedProgram()}"
-									onclick="#{rich:component('program_panel')}.show()"
+									oncomplete="#{rich:component('program_panel')}.show()"
 									value="#{messages['conference.add']}"
 									title="#{messages['conference.add']}" image="img/edit_add.png"
-									styleClass="myButton" />
+									styleClass="myButton" reRender="program_panel" />
 							</rich:panel>
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
@@ -167,7 +167,7 @@
 
 
 		<!-- Tag hozzaado panel -->
-		<ui:include src="layout/modalPanels/tag_modalPanel.xhtml" />
+		<ui:include src="layout/modalPanels/tag_modalPanel.xhtml"/>
 
 
 		<!-- Program hozzaado panel -->
