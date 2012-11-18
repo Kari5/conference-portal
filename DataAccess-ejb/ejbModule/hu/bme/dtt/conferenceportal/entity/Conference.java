@@ -33,8 +33,10 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferenciához tartozó cikkek listája.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Conference_Article", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "ARTICLE_ID"))
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class,
+			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Conference_Article", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
+			inverseJoinColumns = @JoinColumn(name = "ARTICLE_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Article> articles;
 	/**
@@ -57,35 +59,41 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia helye.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = { CascadeType.MERGE },
+			targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class,
+			fetch = FetchType.EAGER)
 	@JoinColumn(name = "LOCATION_ID")
 	private Location location;
 	/**
 	 * A Konferenciát felvevõ felhasználó.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "USER_ID"/* , nullable = false */)
-	// FIXME:[Kari] ha lesznek user-ek, akkor az owner mezõt ki kell tölteni!
+	@ManyToOne(cascade = { CascadeType.MERGE },
+			targetEntity = hu.bme.dtt.conferenceportal.entity.User.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "USER_ID", nullable = false)
 	private User owner;
 	/**
 	 * A Konferencia résztvevõi.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Conference_User", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class,
+			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Conference_User", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
+			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<User> participants;
 	/**
 	 * A Konferencia program pontjai.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "PROGRAM_ID")
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Program.class,
+			cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "CONFERENCE_ID")
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Program> programs;
 	/**
 	 * A Konferencia kérdései.
 	 */
-	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinColumn(name = "QUESTION_ID")
+	@OneToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Question.class,
+			cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "CONFERENCE_ID")
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Question> questions;
 	/**
@@ -106,8 +114,10 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia kulcsszavai.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class, cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "Conference_Tags", joinColumns = @JoinColumn(name = "CONFERENCE_ID"), inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class,
+			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "Conference_Tags", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
+			inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Tag> tags;
 	/**
@@ -382,25 +392,17 @@ public class Conference implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((articles == null) ? 0 : articles.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((articles == null) ? 0 : articles.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result
-				+ ((participants == null) ? 0 : participants.hashCode());
-		result = prime * result
-				+ ((programs == null) ? 0 : programs.hashCode());
-		result = prime * result
-				+ ((questions == null) ? 0 : questions.hashCode());
-		result = prime * result
-				+ ((shortTitle == null) ? 0 : shortTitle.hashCode());
-		result = prime * result
-				+ ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((participants == null) ? 0 : participants.hashCode());
+		result = prime * result + ((programs == null) ? 0 : programs.hashCode());
+		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
+		result = prime * result + ((shortTitle == null) ? 0 : shortTitle.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((tags == null) ? 0 : tags.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
