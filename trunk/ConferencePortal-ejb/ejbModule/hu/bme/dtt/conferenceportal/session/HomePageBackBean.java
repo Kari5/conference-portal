@@ -24,8 +24,7 @@ public class HomePageBackBean {
 	/**
 	 * logoláshoz logger.
 	 */
-	public static final Logger logger = Logger
-			.getLogger(HomePageBackBean.class);
+	public static final Logger logger = Logger.getLogger(HomePageBackBean.class);
 	/**
 	 * A kiválasztott konferencia stateHolder-e.
 	 */
@@ -50,8 +49,7 @@ public class HomePageBackBean {
 	public void init() {
 		conferences = new ArrayList<Conference>();
 		try {
-			conferenceDao = InitialContext
-					.doLookup("ConferencePortal-ear/conferenceDao/local");
+			conferenceDao = InitialContext.doLookup("ConferencePortal-ear/conferenceDao/local");
 
 			conferences = conferenceDao.conferences();
 			logger.info("Visszakapott konf. száma: " + conferences.size());
@@ -59,6 +57,17 @@ public class HomePageBackBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Átirányít a konferencia készítõ oldalra.
+	 * 
+	 * @return navigation string
+	 */
+	public String createConference() {
+		logger.debug("redirect to create conference page");
+		conferenceStateHolder.setSelected(null);
+		return "createConference";
 	}
 
 	// /**
@@ -84,7 +93,7 @@ public class HomePageBackBean {
 	 *            beállítíandó konferencia.
 	 */
 	public void changeSelectedConference(Conference conference) {
-		this.conferenceStateHolder.setSelected(conference);
+		conferenceStateHolder.setSelected(conference);
 	}
 
 	/**
