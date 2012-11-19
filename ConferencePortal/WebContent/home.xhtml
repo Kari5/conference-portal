@@ -145,23 +145,31 @@
 						<rich:panel id="navigationPanel">
 							<h:panelGrid columns="1">
 								<h:outputText value="Main" />
-								<a4j:commandButton value="Upload article" />
-								<a4j:commandButton value="Create conference" />
-								<a4j:commandButton value="Edit account"/>
+								<s:button value="Home" action="home" />
+								<s:button value="Upload article"
+									onclick="#{rich:component('new_article_panel')}.show(); return false;" />
+								<s:button value="Create conference"
+									action="#{homePageBackBean.createConference()}" />
+								<s:button value="Edit account" action="editAccount"
+									rendered="#{identity.loggedIn}" />
 							</h:panelGrid>
 
 							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
 								<h:panelGrid columns="1">
 									<h:outputText value="Conference" />
-									<a4j:commandButton value="Add article" />
-									<a4j:commandButton value="Edit conference" />
-									<a4j:commandButton value="Add question" />
-									<a4j:commandButton value="Sign up" />
-									<a4j:commandButton value="Contact owner"/>
+									<s:button value="Add article" />
+									<s:button value="Edit conference"
+										action="editConference" />
+									<s:button value="Add question" />
+									<s:button value="Sign up" />
+									<s:button value="Contact owner" />
 								</h:panelGrid>
 							</s:fragment>
 
 						</rich:panel>
+
+						<!-- Uj cikk feltoltes panel -->
+						<ui:include src="layout/modalPanels/newArticle_modalPanel.xhtml" />
 					</a4j:form>
 				</h:panelGrid>
 			</center>
