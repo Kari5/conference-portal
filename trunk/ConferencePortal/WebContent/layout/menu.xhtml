@@ -1,25 +1,20 @@
-<rich:toolBar xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:s="http://jboss.com/products/seam/taglib"
-	xmlns:rich="http://richfaces.org/rich"
+<rich:toolBar xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib" xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
-		<s:link id="menuHomeId" view="/home.xhtml" value="Home"
-			propagation="none" />
-		<s:link id="menuEditConferneceId" view="/editConference.xhtml"
-			value="Create Conference" propagation="none"
-			rendered="#{identity.loggedIn}" />
+		<s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none" />
+		<s:link id="menuEditConferneceId" view="/editConference.xhtml" value="Create Conference"
+			propagation="none" rendered="#{identity.loggedIn}" />
 	</rich:toolBarGroup>
 	<!-- @newMenuItem@ -->
 	<rich:toolBarGroup location="right">
 		<s:fragment rendered="#{identity.loggedIn}">
-			<h:outputText id="menuWelcomeId"
-				value="Signed in as: #{credentials.username}" />
-			<s:link id="menuLogoutId" view="/home.xhtml"
-				action="#{identity.logout}" value="Logout" propagation="none" />
+			<h:outputText id="menuWelcomeId" value="Signed in as: #{credentials.username} "
+				propagation="none" />
+			<s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout"
+				propagation="none" />
 		</s:fragment>
 		<s:fragment rendered="#{not identity.loggedIn}">
 			<a4j:form ajaxSubmit="true">
@@ -27,10 +22,9 @@
 				<h:inputText title="User Name" value="#{credentials.username}" />
 				<h:outputText value="Password:" />
 				<h:inputSecret title="Password" value="#{credentials.password}" />
-				<a4j:commandButton id="menuLoginId" value="Log in"
-					action="#{identity.login()}" propagation="none" />
-				<a4j:commandButton id="menuRegisterId" view="/registration.xhtml"
-					value="Register" propagation="none" />
+				<a4j:commandButton id="menuLoginId" value="Log in" action="#{identity.login()}"
+					propagation="none" />
+				<a4j:commandButton id="menuRegisterId" action="registration" value="Register" propagation="none" />
 			</a4j:form>
 		</s:fragment>
 
