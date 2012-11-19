@@ -19,7 +19,7 @@ import org.jboss.seam.security.management.JpaIdentityStore;
  */
 @Name("registrationBackBean")
 @Scope(ScopeType.PAGE)
-public class Registration {
+public class RegistrationBean {
 	/**
 	 * Naplózáshoz.
 	 */
