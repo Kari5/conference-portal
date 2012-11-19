@@ -1,58 +1,66 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:s="http://jboss.com/products/seam/taglib"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:rich="http://richfaces.org/rich"
-    template="layout/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+	template="layout/template.xhtml">
+	<ui:define name="body">
+		<h:form id="registrationForm">
+			<rich:panel>
+				<f:facet name="header">Registration</f:facet>
+				<div class="dialog">
+					<h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
+						<h:outputLabel for="username">Username</h:outputLabel>
+						<s:div>
+							<h:inputText label="User Name" id="username" value="#{registrationBackBean.newUser.userName}"
+								required="true" />
+							<rich:message for="username">
+								<f:facet name="errorMarker">
+									<h:graphicImage value="/img/msgerror.png" />
+								</f:facet>
+							</rich:message>
+						</s:div>
 
-<ui:define name="body">
+						<h:outputLabel for="password">Password</h:outputLabel>
+						<s:div>
+							<h:inputSecret label="Password" id="password"
+								value="#{registrationBackBean.newUser.password}" required="true" redisplay="true" />
+							<rich:message for="password">
+								<f:facet name="errorMarker">
+									<h:graphicImage value="/img/msgerror.png" />
+								</f:facet>
+							</rich:message>
+						</s:div>
 
-    <h:form id="registrationForm">
+						<h:outputLabel for="conf_password">Confirm Password</h:outputLabel>
+						<s:div>
+							<h:inputSecret label="Confirm password" id="conf_password" required="true">
+								<s:validateEquality message="Password must be identical" for="password" />
+							</h:inputSecret>
+							<rich:message for="conf_password">
+								<f:facet name="errorMarker">
+									<h:graphicImage value="/img/msgerror.png" />
+								</f:facet>
+							</rich:message>
+						</s:div>
 
-        <rich:panel>
-            <f:facet name="header">Registration</f:facet>
-
-            <div class="dialog">
-                <h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-                    <h:outputLabel for="username">Username</h:outputLabel>
-                    <h:inputText id="username"
-                              value="#{registrationBackBean.newUser.userName}"/>
-                              
-                    <h:outputLabel for="password">Password</h:outputLabel>
-                    <h:inputSecret id="password"
-                                value="#{registrationBackBean.newUser.password}"/>
-                                
-                    <h:outputLabel for="firstName">First Name</h:outputLabel>
-                    <h:inputText id="firstName"
-                              value="#{registrationBackBean.newUser.firstName}"/>
-                              
-                     <h:outputLabel for="lastName">Last Name</h:outputLabel>
-                    <h:inputText id="lastName"
-                              value="#{registrationBackBean.newUser.lastName}"/>
-                              
-                      <h:outputLabel for="email">E-mail</h:outputLabel>
-                    <h:inputText id="email"
-                              value="#{registrationBackBean.newUser.eMail}"/>
-                              
-                      <h:outputLabel for="tel">Tel</h:outputLabel>
-                    <h:inputText id="tel"
-                              value="#{registrationBackBean.newUser.tel}"/>
-                </h:panelGrid>
-            </div>
-
-
-        </rich:panel>
-
-        <div class="actionButtons">
-            <h:commandButton id="submit" value="Register" action="#{registrationBackBean.saveNewUser()}"/>
-        </div>
-
-    </h:form>
-<script type="text/javascript">
+						<h:outputLabel for="firstName">First Name</h:outputLabel>
+						<h:inputText id="firstName" value="#{registrationBackBean.newUser.firstName}" />
+						<h:outputLabel for="lastName">Last Name</h:outputLabel>
+						<h:inputText id="lastName" value="#{registrationBackBean.newUser.lastName}" />
+						<h:outputLabel for="email">E-mail</h:outputLabel>
+						<h:inputText id="email" value="#{registrationBackBean.newUser.eMail}" />
+						<h:outputLabel for="tel">Tel</h:outputLabel>
+						<h:inputText id="tel" value="#{registrationBackBean.newUser.tel}" />
+					</h:panelGrid>
+				</div>
+			</rich:panel>
+			<div class="actionButtons">
+				<h:commandButton id="submit" value="Register" action="#{registrationBackBean.saveNewUser()}" />
+			</div>
+		</h:form>
+		<script type="text/javascript">
 			document.getElementById("registrationForm:username").focus();
 		</script>
- </ui:define>
+	</ui:define>
 </ui:composition>
