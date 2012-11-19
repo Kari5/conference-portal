@@ -5,24 +5,35 @@
 	no-conversation-view-id="/home.xhtml" login-view-id="/login.xhtml">
 
 	<page view-id="/home.xhtml">
-		<begin-conversation />
-		<navigation>
+		<begin-conversation join="true"/>
+		<navigation from-action="#{identity.login()}">
 			<rule if="#{identity.loggedIn}">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if="#{not identity.loggedIn}">
 				<redirect view-id="/login.xhtml" />
 			</rule>
+		</navigation>
+		<navigation from-action="#{identity.logout()}">
+			<rule>
+				<redirect view-id="/home.xhtml" />
+			</rule>
+		</navigation>
+		<navigation>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="registration">
 				<redirect view-id="/registration.xhtml" />
 			</rule>
-			<rule if-outcome="editConfernce">
+			<rule if-outcome="editConference">
 				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="editAccount">
+				<redirect view-id="/editAccount.xhtml" />
 			</rule>
 		</navigation>
 	</page>
@@ -31,11 +42,9 @@
 		<begin-conversation join="true" />
 		<navigation>
 			<rule if-outcome="loggedIn">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="registration">
@@ -51,7 +60,6 @@
 		<begin-conversation join="true" />
 		<navigation>
 			<rule if-outcome="loggedIn">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="home">
@@ -63,8 +71,19 @@
 			</rule>
 		</navigation>
 	</page>
+	
+	<page view-id="/editAccount.xhtml" login-required="true">
+		<begin-conversation join="true" />
+		<navigation>
+			<rule if-outcome="home">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/home.xhtml" />
+			</rule>
+		</navigation>
+	</page>
 
-	<page view-id="/editConference.xhtml">
+	<page view-id="/editConference.xhtml" login-required="true">
+		<begin-conversation join="true" />
 		<navigation>
 			<rule if-outcome="home">
 				<end-conversation before-redirect="true" />
