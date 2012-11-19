@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+	template="layout/template.xhtml">
+	<ui:define name="body">
+		<rich:panel>
+			<f:facet name="header">Edit Account Settings</f:facet>
+			<h:panelGrid columns="3">
+				<s:div styleClass="dialog">
+					<h:form>
+						<h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
+							<h:outputLabel for="username">Username</h:outputLabel>
+							<h:inputText label="User Name" id="username" value="#{editAccountBean.user.userName}"
+								disabled="true" />
+							<h:outputLabel for="firstName">First Name</h:outputLabel>
+							<h:inputText id="firstName" value="#{editAccountBean.user.firstName}" />
+							<h:outputLabel for="lastName">Last Name</h:outputLabel>
+							<h:inputText id="lastName" value="#{editAccountBean.user.lastName}" />
+							<h:outputLabel for="email">E-mail</h:outputLabel>
+							<h:inputText id="email" value="#{editAccountBean.user.eMail}" />
+							<h:outputLabel for="tel">Tel</h:outputLabel>
+							<h:inputText id="tel" value="#{editAccountBean.user.tel}" />
+						</h:panelGrid>
+						<s:div styleClass="actionButtons">
+							<h:commandButton id="changeSettings" value="Save"
+								action="#{editAccountBean.changeAccountSettings()}" />
+						</s:div>
+					</h:form>
+				</s:div>
+				<s:div style="width: 100px;" />
+				<s:div styleClass="dialog">
+					<h:form>
+						<h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
+							<h:outputLabel for="password">Old Password</h:outputLabel>
+							<s:div>
+								<h:inputSecret label="Old Password" id="old_password" value="#{editAccountBean.oldPassword}"
+									required="true" redisplay="true" />
+								<rich:message for="password">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/img/msgerror.png" />
+									</f:facet>
+								</rich:message>
+							</s:div>
+
+							<h:outputLabel for="password">New Password</h:outputLabel>
+							<s:div>
+								<h:inputSecret label="New Password" id="new_password" value="#{editAccountBean.newPassword}"
+									required="true" redisplay="true" />
+								<rich:message for="password">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/img/msgerror.png" />
+									</f:facet>
+								</rich:message>
+							</s:div>
+
+							<h:outputLabel for="conf_password">Confirm New Password</h:outputLabel>
+							<s:div>
+								<h:inputSecret label="Confirm password" id="conf_password" required="true">
+									<s:validateEquality message="Password must be identical" for="new_password" />
+								</h:inputSecret>
+								<rich:message for="conf_password">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/img/msgerror.png" />
+									</f:facet>
+								</rich:message>
+							</s:div>
+						</h:panelGrid>
+						<s:div styleClass="actionButtons">
+							<h:commandButton id="changePassword" value="Change password"
+								action="#{editAccountBean.changePassword()}" />
+						</s:div>
+					</h:form>
+				</s:div>
+			</h:panelGrid>
+			<s:div styleClass="actionButtons">
+				<s:button id="changePassword" value="Home" action="home" />
+			</s:div>
+		</rich:panel>
+	</ui:define>
+</ui:composition>
