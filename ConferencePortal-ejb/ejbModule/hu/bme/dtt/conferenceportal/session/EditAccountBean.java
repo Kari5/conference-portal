@@ -3,6 +3,9 @@ package hu.bme.dtt.conferenceportal.session;
 import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.User;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
@@ -13,21 +16,49 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.security.Identity;
+import org.jboss.seam.security.RunAsOperation;
 import org.jboss.seam.security.management.IdentityManager;
 import org.jboss.seam.security.management.PasswordHash;
 
+/**
+ * A háttérlogikát tartalmazza felhasználó adatainak megváltoztatására.
+ */
 @Name(value = "editAccountBean")
 public class EditAccountBean {
+	/**
+	 * Naplózáshoz.
+	 */
 	private static final Logger LOGGER = Logger.getLogger(EditAccountBean.class);
+	/**
+	 * @see UserDao
+	 */
 	private UserDao userDao;
+	/**
+	 * ...
+	 */
 	@In
 	private IdentityManager identityManager;
+	/**
+	 * ...
+	 */
 	@In
 	private Identity identity;
+	/**
+	 * A megadott régi jelszó.
+	 */
 	private String oldPassword;
+	/**
+	 * A megadott új jelszó.
+	 */
 	private String newPassword;
+	/**
+	 * A felhasználó adatait tárolóobjektum.
+	 */
 	private User user;
 
+	/**
+	 * Inicializáló függvény. Lekérdezi a bejelentkezett felhasználó adatait.
+	 */
 	@Create
 	public void init() {
 		try {
@@ -38,6 +69,9 @@ public class EditAccountBean {
 		}
 	}
 
+	/**
+	 * Ellenõrzi a régi jelszó helyességét, és megváltoztatja az újra.
+	 */
 	public void changePassword() {
 		LOGGER.debug("Changing password!");
 		if ((user != null) && identity.isLoggedIn()) {
@@ -45,8 +79,22 @@ public class EditAccountBean {
 					.getCredentials().getUsername(), PasswordHash.ALGORITHM_SHA);
 			if (user.getPassword().equals(olPasswordHash)) {
 				LOGGER.debug("Old password match!");
-				identityManager
-						.changePassword(identity.getCredentials().getUsername(), newPassword);
+				// FIXME: rájönni miért nem megy csak simán az authentikált
+				// user-el elvégezni
+				new RunAsOperation() {
+
+					@Override
+					public void execute() {
+						List<String> grantedRoles = identityManager.getGrantedRoles(identity
+								.getCredentials().getUsername());
+						LOGGER.debug("GrantedRoles: " + Arrays.toString(grantedRoles.toArray()));
+						for (String role : grantedRoles) {
+							addRole(role);
+						}
+						identityManager.changePassword(identity.getCredentials().getUsername(),
+								newPassword);
+					}
+				}.run();
 			} else {
 				LOGGER.debug("Old password invalid!");
 				FacesContext.getCurrentInstance().addMessage(null,
@@ -57,6 +105,9 @@ public class EditAccountBean {
 		}
 	}
 
+	/**
+	 * Elmenti a változtatásokat az adatbázisba.
+	 */
 	public void changeAccountSettings() {
 		LOGGER.debug("Changing account settings!");
 		if ((user != null) && identity.isLoggedIn()) {
