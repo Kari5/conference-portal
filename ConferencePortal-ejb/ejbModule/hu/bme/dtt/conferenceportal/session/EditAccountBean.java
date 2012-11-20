@@ -12,9 +12,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.RunAsOperation;
 import org.jboss.seam.security.management.IdentityManager;
@@ -24,6 +27,7 @@ import org.jboss.seam.security.management.PasswordHash;
  * A háttérlogikát tartalmazza felhasználó adatainak megváltoztatására.
  */
 @Name(value = "editAccountBean")
+@Scope(ScopeType.EVENT)
 public class EditAccountBean {
 	/**
 	 * Naplózáshoz.
@@ -95,6 +99,7 @@ public class EditAccountBean {
 								newPassword);
 					}
 				}.run();
+				FacesMessages.instance().add("Password changed!");
 			} else {
 				LOGGER.debug("Old password invalid!");
 				FacesContext.getCurrentInstance().addMessage(null,
@@ -103,6 +108,8 @@ public class EditAccountBean {
 		} else {
 			LOGGER.debug("Not logged in or user is NULL!");
 		}
+		oldPassword = null;
+		newPassword = null;
 	}
 
 	/**
@@ -113,6 +120,7 @@ public class EditAccountBean {
 		if ((user != null) && identity.isLoggedIn()) {
 			try {
 				userDao.update(user);
+				FacesMessages.instance().add("User settings updated!");
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
 			}
