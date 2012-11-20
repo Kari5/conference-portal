@@ -19,9 +19,9 @@
 		<s:fragment rendered="#{not identity.loggedIn}">
 			<a4j:form ajaxSubmit="true">
 				<h:outputText value="User Name:" />
-				<h:inputText title="User Name" value="#{credentials.username}" />
+				<h:inputText title="User Name" value="#{authenticator.userName}" />
 				<h:outputText value="Password:" />
-				<h:inputSecret title="Password" value="#{credentials.password}" />
+				<h:inputSecret title="Password" value="#{authenticator.password}" />
 				<a4j:commandButton id="menuLoginId" value="Log in" action="#{identity.login()}"
 					propagation="none" />
 				<a4j:commandButton id="menuRegisterId" action="registration" value="Register" propagation="none" />
