@@ -12,9 +12,11 @@
 	<rich:toolBarGroup location="right">
 		<s:fragment rendered="#{identity.loggedIn}">
 			<h:outputText id="menuWelcomeId" value="Signed in as: #{credentials.username} "
-				propagation="none" />
+				propagation="none" style="margin: 0px 10px" />
+			<s:link id="editLink" value="Edit" view="/editAccount.xhtml" propagation="none"
+				style="margin: 0px 10px" />
 			<s:link id="menuLogoutId" view="/home.xhtml" action="#{identity.logout}" value="Logout"
-				propagation="none" />
+				propagation="none" style="margin: 0px 10px" />
 		</s:fragment>
 		<s:fragment rendered="#{not identity.loggedIn}">
 			<a4j:form ajaxSubmit="true">
