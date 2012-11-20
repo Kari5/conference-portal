@@ -33,22 +33,22 @@
 				<s:div styleClass="dialog">
 					<h:form>
 						<h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-							<h:outputLabel for="password">Old Password</h:outputLabel>
+							<h:outputLabel for="old_password">Old Password</h:outputLabel>
 							<s:div>
 								<h:inputSecret label="Old Password" id="old_password" value="#{editAccountBean.oldPassword}"
 									required="true" redisplay="true" />
-								<rich:message for="password">
+								<rich:message for="old_password">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/img/msgerror.png" />
 									</f:facet>
 								</rich:message>
 							</s:div>
 
-							<h:outputLabel for="password">New Password</h:outputLabel>
+							<h:outputLabel for="new_password">New Password</h:outputLabel>
 							<s:div>
 								<h:inputSecret label="New Password" id="new_password" value="#{editAccountBean.newPassword}"
 									required="true" redisplay="true" />
-								<rich:message for="password">
+								<rich:message for="new_password">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/img/msgerror.png" />
 									</f:facet>
