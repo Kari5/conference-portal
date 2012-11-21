@@ -117,7 +117,7 @@
 							</h:panelGrid>
 							<a4j:commandButton action="editConference" value="#{messages['conference.edit']}"
 								title="#{messages['conference.edit']}" image="/img/edit.png" styleClass="myButton"
-								rendered="#{(conferenceStateHolder.selected != null)}" />
+								rendered="#{(conferenceStateHolder.selected != null) and homePageBackBean.checkOwner()}" />
 
 						</rich:panel>
 					</a4j:form>
@@ -137,14 +137,11 @@
 									<h:outputText value="Conference" />
 									<s:button value="Add article"
 										onclick="#{rich:component('article_panel')}.show(); return false;" />
-									<s:button value="Edit conference" action="editConference" />
-									<s:button value="Add question" />
-									<s:fragment rendered="#{not homePageBackBean.checkSubscription()}">
-										<s:button value="Subscribe" action="#{homePageBackBean.subscribe()}" />
-									</s:fragment>
-									<s:fragment rendered="#{homePageBackBean.checkSubscription()}">
-										<s:button value="Unsubscribe" action="#{homePageBackBean.unsubscribe()}" />
-									</s:fragment>
+									<s:button value="Edit conference" action="editConference"
+										rendered="#{homePageBackBean.checkOwner()}" />
+									<s:button value="Add question" />						
+										<s:button value="Subscribe" action="#{homePageBackBean.subscribe()}" rendered="#{not homePageBackBean.checkSubscription()}"/>	
+										<s:button value="Unsubscribe" action="#{homePageBackBean.unsubscribe()}" rendered="#{homePageBackBean.checkSubscription()}"/>									
 								</h:panelGrid>
 							</s:fragment>
 

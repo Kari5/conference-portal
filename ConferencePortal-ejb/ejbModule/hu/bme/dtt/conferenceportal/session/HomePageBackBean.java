@@ -79,6 +79,23 @@ public class HomePageBackBean {
 	}
 
 	/**
+	 * Visszadja, hogy a bejelentkezett felhasználó a tulajdonosa a kiválasztott
+	 * konferenciának.
+	 * 
+	 * @return true ha igen, false ha nem.
+	 */
+	public boolean checkOwner() {
+		boolean result = false;
+		if (Identity.instance().isLoggedIn()) {
+			if (conferenceStateHolder.getSelected().getOwner().getUserName()
+					.equals(Identity.instance().getCredentials().getUsername())) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * Visszadja, hogy a felhasználó jelentkezett-e a konferenciára.
 	 * 
 	 * @return true ha igen, false ha nem
