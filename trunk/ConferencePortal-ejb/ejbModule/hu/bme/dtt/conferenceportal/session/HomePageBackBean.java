@@ -1,12 +1,16 @@
 package hu.bme.dtt.conferenceportal.session;
 
 import hu.bme.dtt.conferenceportal.dao.ConferenceDao;
+import hu.bme.dtt.conferenceportal.dao.UserDao;
 import hu.bme.dtt.conferenceportal.entity.Conference;
+import hu.bme.dtt.conferenceportal.entity.User;
 import hu.bme.dtt.conferenceportal.util.StateHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -16,6 +20,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.security.Identity;
 
 @Name("homePageBackBean")
 @Scope(ScopeType.PAGE)
@@ -40,6 +45,10 @@ public class HomePageBackBean {
 	 * Konferenciák adatbázisának kezeléséhez dao.
 	 */
 	ConferenceDao conferenceDao;
+	/**
+	 * Felhasználó lekérdezéséhez.
+	 */
+	UserDao userDao;
 
 	/**
 	 * Inicializáló függvény. Adatbázisból behúzza az elérhetõ konferncia
@@ -50,12 +59,12 @@ public class HomePageBackBean {
 		conferences = new ArrayList<Conference>();
 		try {
 			conferenceDao = InitialContext.doLookup("ConferencePortal-ear/conferenceDao/local");
+			userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
 
 			conferences = conferenceDao.conferences();
 			logger.info("Visszakapott konf. száma: " + conferences.size());
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -68,6 +77,72 @@ public class HomePageBackBean {
 		logger.debug("redirect to create conference page");
 		conferenceStateHolder.setSelected(null);
 		return "createConference";
+	}
+
+	/**
+	 * Visszadja, hogy a felhasználó jelentkezett-e a konferenciára.
+	 * 
+	 * @return true ha igen, false ha nem
+	 */
+	public boolean checkSubscription() {
+		logger.debug("Check if user subscribed for conference");
+		boolean result = false;
+		if (Identity.instance().isLoggedIn()) {
+			logger.debug("Current user " + Identity.instance().getCredentials().getUsername());
+			for (User user : conferenceStateHolder.getSelected().getParticipants()) {
+				logger.debug("Check against " + user.getUserName());
+				if (user.getUserName().equals(Identity.instance().getCredentials().getUsername())) {
+					logger.debug("match");
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Feliratkoztatja a felhasználót a konferenciára.
+	 * 
+	 * @return navigációs érték
+	 */
+	public String subscribe() {
+		logger.debug("Subscribe to conference!");
+		if (Identity.instance().isLoggedIn()) {
+			Conference conference = conferenceDao.addParticipant(conferenceStateHolder
+					.getSelected().getId(), Identity.instance().getCredentials().getUsername());
+			if (conference != null) {
+				conferenceStateHolder.setSelected(conference);
+			}
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Subscribed to conference " + conference.getShortTitle()));
+			return "home";
+		} else {
+			return "login";
+		}
+	}
+
+	/**
+	 * Leiratkoztatja a felhasználót a konferenciáról.
+	 * 
+	 * @return navigációs érték
+	 */
+	public String unsubscribe() {
+		logger.debug("Subscribe from conference!");
+		if (Identity.instance().isLoggedIn()) {
+			conferences.remove(conferenceStateHolder.getSelected());
+			Conference conference = conferenceDao.removeParticipant(conferenceStateHolder
+					.getSelected().getId(), Identity.instance().getCredentials().getUsername());
+			if (conference != null) {
+				conferenceStateHolder.setSelected(conference);
+			}
+			conferences.add(conferenceStateHolder.getSelected());
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Unsubscribed from conference " + conference.getShortTitle()));
+			return "home";
+		} else {
+			return "login";
+		}
 	}
 
 	// /**
