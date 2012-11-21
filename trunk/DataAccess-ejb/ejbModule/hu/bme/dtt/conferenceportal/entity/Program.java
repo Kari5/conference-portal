@@ -19,10 +19,10 @@ public class Program implements Serializable {
 	 * Serialization id.
 	 */
 	private static final long serialVersionUID = 7705315014604055395L;
-	@Column(name = "PROGRAM_DESCRIPTION")
 	/**
 	 * A program pont leírása.
 	 */
+	@Column(name = "PROGRAM_DESCRIPTION")
 	private String description;
 	/**
 	 * A program pont vége.
@@ -61,8 +61,7 @@ public class Program implements Serializable {
 	 * @param title
 	 *            cím
 	 */
-	public Program(String description, Date end, Long id, Date start,
-			String title) {
+	public Program(String description, Date end, Long id, Date start, String title) {
 		super();
 		this.description = description;
 		this.end = end;
@@ -185,6 +184,7 @@ public class Program implements Serializable {
 	/**
 	 * Klónozó függvény.
 	 */
+	@Override
 	public Program clone() {
 		return new Program(description, end, id, start, title);
 	}
@@ -198,8 +198,7 @@ public class Program implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((end == null) ? 0 : end.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((start == null) ? 0 : start.hashCode());
