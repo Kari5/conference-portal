@@ -3,7 +3,6 @@ package hu.bme.dtt.conferenceportal.entity;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -79,7 +78,7 @@ public class Article implements Serializable {
 	/**
 	 * A cikket feltöltõ user.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE }, targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
+	@ManyToOne(targetEntity = hu.bme.dtt.conferenceportal.entity.User.class)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User user;
 
@@ -273,24 +272,16 @@ public class Article implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((getAuthor() == null) ? 0 : getAuthor().hashCode());
+		result = prime * result + ((getAuthor() == null) ? 0 : getAuthor().hashCode());
 		result = prime * result + Arrays.hashCode(getData());
-		result = prime * result
-				+ ((getFileName() == null) ? 0 : getFileName().hashCode());
+		result = prime * result + ((getFileName() == null) ? 0 : getFileName().hashCode());
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-		result = prime * result
-				+ ((getLength() == null) ? 0 : getLength().hashCode());
-		result = prime * result
-				+ ((getMime() == null) ? 0 : getMime().hashCode());
-		result = prime * result
-				+ ((getPdfPath() == null) ? 0 : getPdfPath().hashCode());
-		result = prime * result
-				+ ((getTitle() == null) ? 0 : getTitle().hashCode());
-		result = prime * result
-				+ ((getUrl() == null) ? 0 : getUrl().hashCode());
-		result = prime * result
-				+ ((getUser() == null) ? 0 : getUser().hashCode());
+		result = prime * result + ((getLength() == null) ? 0 : getLength().hashCode());
+		result = prime * result + ((getMime() == null) ? 0 : getMime().hashCode());
+		result = prime * result + ((getPdfPath() == null) ? 0 : getPdfPath().hashCode());
+		result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+		result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
+		result = prime * result + ((getUser() == null) ? 0 : getUser().hashCode());
 		return result;
 	}
 

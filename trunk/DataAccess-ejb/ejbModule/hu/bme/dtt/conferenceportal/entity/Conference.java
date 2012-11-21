@@ -34,7 +34,7 @@ public class Conference implements Serializable {
 	 * A Konferenciához tartozó cikkek listája.
 	 */
 	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class,
-			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+			fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_Article", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ARTICLE_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -59,23 +59,22 @@ public class Conference implements Serializable {
 	/**
 	 * A Konferencia helye.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE },
-			targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class,
+	@ManyToOne(targetEntity = hu.bme.dtt.conferenceportal.entity.Location.class,
 			fetch = FetchType.EAGER)
 	@JoinColumn(name = "LOCATION_ID")
 	private Location location;
 	/**
 	 * A Konferenciát felvevõ felhasználó.
 	 */
-	@ManyToOne(cascade = { CascadeType.MERGE },
-			targetEntity = hu.bme.dtt.conferenceportal.entity.User.class, fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = hu.bme.dtt.conferenceportal.entity.User.class,
+			fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID", nullable = false)
 	private User owner;
 	/**
 	 * A Konferencia résztvevõi.
 	 */
-	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Article.class,
-			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.User.class,
+			fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_User", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -115,7 +114,7 @@ public class Conference implements Serializable {
 	 * A Konferencia kulcsszavai.
 	 */
 	@ManyToMany(targetEntity = hu.bme.dtt.conferenceportal.entity.Tag.class,
-			cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
+			fetch = FetchType.EAGER)
 	@JoinTable(name = "Conference_Tags", joinColumns = @JoinColumn(name = "CONFERENCE_ID"),
 			inverseJoinColumns = @JoinColumn(name = "TAG_ID"))
 	@Fetch(value = FetchMode.SUBSELECT)
