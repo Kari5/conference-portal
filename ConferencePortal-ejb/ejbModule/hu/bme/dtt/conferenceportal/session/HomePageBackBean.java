@@ -9,8 +9,6 @@ import hu.bme.dtt.conferenceportal.util.StateHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -20,6 +18,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.security.Identity;
 
 @Name("homePageBackBean")
@@ -85,14 +84,10 @@ public class HomePageBackBean {
 	 * @return true ha igen, false ha nem
 	 */
 	public boolean checkSubscription() {
-		logger.debug("Check if user subscribed for conference");
 		boolean result = false;
 		if (Identity.instance().isLoggedIn()) {
-			logger.debug("Current user " + Identity.instance().getCredentials().getUsername());
 			for (User user : conferenceStateHolder.getSelected().getParticipants()) {
-				logger.debug("Check against " + user.getUserName());
 				if (user.getUserName().equals(Identity.instance().getCredentials().getUsername())) {
-					logger.debug("match");
 					result = true;
 					break;
 				}
@@ -114,8 +109,7 @@ public class HomePageBackBean {
 			if (conference != null) {
 				conferenceStateHolder.setSelected(conference);
 			}
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Subscribed to conference " + conference.getShortTitle()));
+			FacesMessages.instance().add("Subscribed to conference " + conference.getShortTitle());
 			return "home";
 		} else {
 			return "login";
@@ -137,8 +131,8 @@ public class HomePageBackBean {
 				conferenceStateHolder.setSelected(conference);
 			}
 			conferences.add(conferenceStateHolder.getSelected());
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Unsubscribed from conference " + conference.getShortTitle()));
+			FacesMessages.instance().add(
+					"Unsubscribed from conference " + conference.getShortTitle());
 			return "home";
 		} else {
 			return "login";
