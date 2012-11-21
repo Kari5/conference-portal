@@ -5,11 +5,13 @@ import hu.futurion.mt.dao.GenericDaoImpl;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
+@Stateless(name = "locationDao")
 public class LocationDaoImpl extends GenericDaoImpl<Location> implements LocationDao {
 	private static final Logger LOGGER = Logger.getLogger(ArticleDaoImpl.class);
 	@PersistenceContext(name = "ConferencePortal")
