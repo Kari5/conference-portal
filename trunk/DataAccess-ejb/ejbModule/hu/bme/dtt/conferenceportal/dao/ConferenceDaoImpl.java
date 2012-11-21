@@ -2,6 +2,7 @@ package hu.bme.dtt.conferenceportal.dao;
 
 import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
+import hu.bme.dtt.conferenceportal.entity.Location;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
 import hu.bme.dtt.conferenceportal.entity.User;
@@ -49,34 +50,52 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements Con
 		List<Article> articles = new ArrayList<Article>();
 		List<User> participants = new ArrayList<User>();
 		try {
-			LOGGER.debug("Attaching tags");
-			TagDao tagDao = InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
-			for (Tag t : conference.getTags()) {
-				tags.add(tagDao.findByPrimaryKey(t.getId()));
+			if ((conference.getTags() != null) && !conference.getTags().isEmpty()) {
+				LOGGER.debug("Attaching tags");
+				TagDao tagDao = InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
+				for (Tag t : conference.getTags()) {
+					tags.add(tagDao.findByPrimaryKey(t.getId()));
+				}
 			}
-			LOGGER.debug("Attaching programs");
-			ProgramDao programDao = InitialContext
-					.doLookup("ConferencePortal-ear/programDao/local");
-			for (Program p : conference.getPrograms()) {
-				programs.add(programDao.updateOrSaveProgram(p));
+
+			if ((conference.getPrograms() != null) && !conference.getPrograms().isEmpty()) {
+				LOGGER.debug("Attaching programs");
+				ProgramDao programDao = InitialContext
+						.doLookup("ConferencePortal-ear/programDao/local");
+				for (Program p : conference.getPrograms()) {
+					programs.add(programDao.updateOrSaveProgram(p));
+				}
 			}
-			LOGGER.debug("Attaching articles");
-			ArticleDao articleDao = InitialContext
-					.doLookup("ConferencePortal-ear/articleDao/local");
-			for (Article article : conference.getArticles()) {
-				articles.add(articleDao.findByPrimaryKey(article.getId()));
+
+			if ((conference.getArticles() != null) && !conference.getArticles().isEmpty()) {
+				LOGGER.debug("Attaching articles");
+				ArticleDao articleDao = InitialContext
+						.doLookup("ConferencePortal-ear/articleDao/local");
+				for (Article article : conference.getArticles()) {
+					articles.add(articleDao.findByPrimaryKey(article.getId()));
+				}
 			}
-			LOGGER.debug("Attaching participants");
-			UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
-			for (User user : conference.getParticipants()) {
-				participants.add(userDao.findByPrimaryKey(user.getId()));
+
+			if ((conference.getParticipants() != null) && !conference.getParticipants().isEmpty()) {
+				LOGGER.debug("Attaching participants");
+				UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+				for (User user : conference.getParticipants()) {
+					participants.add(userDao.findByPrimaryKey(user.getId()));
+				}
+			}
+
+			Location location = null;
+			if (conference.getLocation() != null) {
+				LOGGER.debug("Attaching location");
+				LocationDao locationDao = InitialContext
+						.doLookup("ConferencePortal-ear/locationDao/local");
+				location = locationDao.findByPrimaryKey(conference.getLocation().getId());
 			}
 
 			LOGGER.debug("Updating conference!");
 			Conference attachedConference = findByPrimaryKey(conference.getId());
 			attachedConference.setArticles(articles);
-			// TODO:[Kari] valószínüleg majd a location-t is attache-olni kell.
-			attachedConference.setLocation(conference.getLocation());
+			attachedConference.setLocation(location);
 			attachedConference.setTags(tags);
 			attachedConference.setDescription(conference.getDescription());
 			attachedConference.setEndDate(conference.getEndDate());
