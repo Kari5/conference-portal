@@ -1,11 +1,14 @@
 package hu.bme.dtt.conferenceportal.dao;
 
+import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
 import hu.bme.dtt.conferenceportal.entity.Tag;
+import hu.bme.dtt.conferenceportal.entity.User;
 import hu.futurion.mt.dao.GenericDaoImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -17,11 +20,9 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 @Stateless(name = "conferenceDao")
-public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
-		ConferenceDao {
+public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements ConferenceDao {
 
-	public static final Logger logger = Logger
-			.getLogger(ConferenceDaoImpl.class);
+	public static final Logger LOGGER = Logger.getLogger(ConferenceDaoImpl.class);
 
 	/**
 	 * ...
@@ -42,24 +43,38 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 	 */
 	@Override
 	public void updateConference(Conference conference) {
+		LOGGER.debug("updateConference method called id=" + conference.getId());
 		List<Tag> tags = new ArrayList<Tag>();
 		List<Program> programs = new ArrayList<Program>();
+		List<Article> articles = new ArrayList<Article>();
+		List<User> participants = new ArrayList<User>();
 		try {
-			TagDao tagDao = InitialContext
-					.doLookup("ConferencePortal-ear/tagDao/local");
+			LOGGER.debug("Attaching tags");
+			TagDao tagDao = InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
 			for (Tag t : conference.getTags()) {
 				tags.add(tagDao.findByPrimaryKey(t.getId()));
 			}
-
+			LOGGER.debug("Attaching programs");
 			ProgramDao programDao = InitialContext
 					.doLookup("ConferencePortal-ear/programDao/local");
 			for (Program p : conference.getPrograms()) {
 				programs.add(programDao.updateOrSaveProgram(p));
 			}
+			LOGGER.debug("Attaching articles");
+			ArticleDao articleDao = InitialContext
+					.doLookup("ConferencePortal-ear/articleDao/local");
+			for (Article article : conference.getArticles()) {
+				articles.add(articleDao.findByPrimaryKey(article.getId()));
+			}
+			LOGGER.debug("Attaching participants");
+			UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+			for (User user : conference.getParticipants()) {
+				participants.add(userDao.findByPrimaryKey(user.getId()));
+			}
 
+			LOGGER.debug("Updating conference!");
 			Conference attachedConference = findByPrimaryKey(conference.getId());
-			// TODO:[Kari] valószínüleg majd a articels-t is attache-olni kell.
-			attachedConference.setArticles(conference.getArticles());
+			attachedConference.setArticles(articles);
 			// TODO:[Kari] valószínüleg majd a location-t is attache-olni kell.
 			attachedConference.setLocation(conference.getLocation());
 			attachedConference.setTags(tags);
@@ -71,15 +86,58 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 			attachedConference.setPrograms(programs);
 			// FIXME: Programok elmentését javítani!
 			attachedConference.setSummary(conference.getSummary());
-
-		} catch (NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			attachedConference.setParticipants(participants);
+			entityManager.flush();
+			LOGGER.debug("Update finished!");
+		} catch (NamingException e) {
+			LOGGER.error(e.getMessage(), e);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e.getMessage(), e);
 		}
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Conference addParticipant(Long conferenceId, String userName) {
+		LOGGER.debug("Adding participant: " + userName);
+		Conference conference = null;
+		try {
+			UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+			User user = userDao.getUser(userName);
+			conference = findByPrimaryKey(conferenceId);
+			Collection<User> participants = conference.getParticipants();
+			participants.add(user);
+			conference.setParticipants(participants);
+			entityManager.flush();
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		LOGGER.debug("Participant added!");
+		return conference;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Conference removeParticipant(Long conferenceId, String userName) {
+		LOGGER.debug("Removing participant: " + userName);
+		Conference conference = null;
+		try {
+			UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
+			User user = userDao.getUser(userName);
+			conference = findByPrimaryKey(conferenceId);
+			Collection<User> participants = conference.getParticipants();
+			participants.remove(user);
+			conference.setParticipants(participants);
+			entityManager.flush();
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		LOGGER.debug("Participant removed!");
+		return conference;
 	}
 
 	/**
@@ -90,8 +148,7 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements
 		List<Tag> tags = new ArrayList<Tag>();
 		List<Program> programs = new ArrayList<Program>();
 		try {
-			TagDao tagDao = InitialContext
-					.doLookup("ConferencePortal-ear/tagDao/local");
+			TagDao tagDao = InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
 			for (Tag t : conference.getTags()) {
 				tags.add(tagDao.findByPrimaryKey(t.getId()));
 			}
