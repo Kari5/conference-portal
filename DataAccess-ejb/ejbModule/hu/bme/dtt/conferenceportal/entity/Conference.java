@@ -429,8 +429,12 @@ public class Conference implements Serializable {
 			if (other.articles != null) {
 				return false;
 			}
-		} else if (!articles.equals(other.articles)) {
-			return false;
+		} else {
+			for (Article article : articles) {
+				if (!other.articles.contains(article)) {
+					return false;
+				}
+			}
 		}
 		if (description == null) {
 			if (other.description != null) {
@@ -471,22 +475,34 @@ public class Conference implements Serializable {
 			if (other.participants != null) {
 				return false;
 			}
-		} else if (!participants.equals(other.participants)) {
-			return false;
+		} else {
+			for (User participant : participants) {
+				if (!other.participants.contains(participant)) {
+					return false;
+				}
+			}
 		}
 		if (programs == null) {
 			if (other.programs != null) {
 				return false;
 			}
-		} else if (!programs.equals(other.programs)) {
-			return false;
+		} else {
+			for (Program program : programs) {
+				if (!other.programs.contains(program)) {
+					return false;
+				}
+			}
 		}
 		if (questions == null) {
 			if (other.questions != null) {
 				return false;
 			}
-		} else if (!questions.equals(other.questions)) {
-			return false;
+		} else {
+			for (Question question : questions) {
+				if (!other.questions.contains(question)) {
+					return false;
+				}
+			}
 		}
 		if (shortTitle == null) {
 			if (other.shortTitle != null) {
@@ -513,8 +529,12 @@ public class Conference implements Serializable {
 			if (other.tags != null) {
 				return false;
 			}
-		} else if (!tags.equals(other.tags)) {
-			return false;
+		} else {
+			for (Tag tag : tags) {
+				if (!other.tags.contains(tag)) {
+					return false;
+				}
+			}
 		}
 		if (title == null) {
 			if (other.title != null) {
