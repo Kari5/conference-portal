@@ -20,9 +20,9 @@
 					<h:panelGrid columns="2" rowClasses="prop"
 						columnClasses="name,value">
 						<h:outputLabel for="username">Username</h:outputLabel>
-						<h:inputText id="username" value="#{authenticator.userName}" />
+						<h:inputText id="username" value="#{credentials.username}" />
 						<h:outputLabel for="password">Password</h:outputLabel>
-						<h:inputSecret id="password" value="#{authenticator.password}" />
+						<h:inputSecret id="password" value="#{credentials.password}" />
 						<h:outputLabel for="rememberMe">Remember me</h:outputLabel>
 						<h:selectBooleanCheckbox id="rememberMe"
 							value="#{rememberMe.enabled}" />
@@ -34,7 +34,7 @@
 			<div class="actionButtons">
 				<h:commandButton id="submit" value="Login"
 					action="#{identity.login()}" />
-				<h:commandButton id="registerBtn" value="Register"
+				<s:button id="registerBtn" value="Register"
 					action="registration" />
 			</div>
 

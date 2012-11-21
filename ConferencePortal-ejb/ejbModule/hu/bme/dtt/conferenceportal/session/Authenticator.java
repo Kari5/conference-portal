@@ -1,8 +1,10 @@
 package hu.bme.dtt.conferenceportal.session;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.security.management.IdentityManager;
 
@@ -10,6 +12,7 @@ import org.jboss.seam.security.management.IdentityManager;
  * Komponens felhasználó authentikálásra.
  */
 @Name("authenticator")
+@Scope(ScopeType.EVENT)
 public class Authenticator {
 	/**
 	 * Naplózáshoz.
@@ -26,14 +29,6 @@ public class Authenticator {
 	 */
 	@In
 	private IdentityManager identityManager;
-	/**
-	 * A fehasználónév.
-	 */
-	private String userName;
-	/**
-	 * A jelszó.
-	 */
-	private String password;
 
 	/**
 	 * Az authentikációt elvégzõ függvény.
@@ -41,45 +36,14 @@ public class Authenticator {
 	 * @return sikeresség
 	 */
 	public boolean authenticate() {
-		LOGGER.info("authenticating " + userName);
+		LOGGER.info("authenticating " + identity.getCredentials().getUsername());
 
-		if (identityManager.authenticate(userName, password)) {
+		if (identityManager.authenticate(identity.getCredentials().getUsername(), identity
+				.getCredentials().getPassword())) {
 			LOGGER.info("authentication successful");
-			identity.getCredentials().setUsername(userName);
-			identity.getCredentials().setPassword(password);
 			return true;
 		}
 		LOGGER.info("authentication failed");
 		return false;
-	}
-
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param userName
-	 *            the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
 	}
 }
