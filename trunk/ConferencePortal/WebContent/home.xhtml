@@ -1,25 +1,19 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:s="http://jboss.com/products/seam/taglib"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:rich="http://richfaces.org/rich"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml">
 
 	<ui:define name="body">
 		<a4j:form ajaxSubmit="true">
 			<center>
-				<h:panelGrid columns="3" columnClasses="top20,top60,top20"
-					style="width:100%">
+				<h:panelGrid columns="3" columnClasses="top20,top60,top20" style="width:100%">
 					<rich:panel>
-						<rich:dataGrid value="#{homePageBackBean.conferences}"
-							var="conference" columns="1" rowKeyVar="row"
-							columnClasses="noBorder" style="border:0px">
+						<rich:dataGrid value="#{homePageBackBean.conferences}" var="conference" columns="1"
+							rowKeyVar="row" columnClasses="noBorder" style="border:0px">
 							<center>
-								<a4j:commandLink value=""
-									action="#{homePageBackBean.changeSelectedConference(conference)}"
+								<a4j:commandLink value="" action="#{homePageBackBean.changeSelectedConference(conference)}"
 									reRender="conferencePanel,navigationPanel" styleClass="title">
 									<h:outputText value="#{row+1} " />
 									<h:outputText value="#{conference.shortTitle} " />
@@ -34,21 +28,17 @@
 					<a4j:form ajaxSubmit="true">
 						<rich:panel style="width:100%" id="conferencePanel"
 							header="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}">
-							<h:panelGrid columns="2"
-								rendered="#{not (conferenceStateHolder.selected == null)}"
+							<h:panelGrid columns="2" rendered="#{not (conferenceStateHolder.selected == null)}"
 								style="width:100%;">
 								<h:outputText value="#{messages['conference.short_title']}:" />
-								<h:outputText
-									value="#{conferenceStateHolder.selected.shortTitle}"
-									style="width:100%;" />
+								<h:outputText value="#{conferenceStateHolder.selected.shortTitle}" style="width:100%;" />
 								<rich:separator height="1" lineType="solid" />
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.tags']}:" />
 								<rich:panel>
-									<rich:dataGrid value="#{conferenceStateHolder.selected.tags}"
-										var="tag" columns="5" style="border:0px;width:100%"
-										columnClasses="noBorder" id="tag_dataGrid">
+									<rich:dataGrid value="#{conferenceStateHolder.selected.tags}" var="tag" columns="5"
+										style="border:0px;width:100%" columnClasses="noBorder" id="tag_dataGrid">
 										<h:outputText value="#{tag.name}" />
 									</rich:dataGrid>
 								</rich:panel>
@@ -63,22 +53,19 @@
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.description']}:" />
-								<h:outputText
-									value="#{conferenceStateHolder.selected.description}"
-									style="width:100%;" />
+								<h:outputText value="#{conferenceStateHolder.selected.description}" style="width:100%;" />
 								<rich:separator height="1" lineType="solid" />
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.start_date']}:" />
-								<rich:calendar
-									value="#{conferenceStateHolder.selected.startDate}"
-									popup="false" datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
+								<rich:calendar value="#{conferenceStateHolder.selected.startDate}" popup="false"
+									datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
 								<rich:separator height="1" lineType="solid" />
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.end_date']}:" />
-								<rich:calendar value="#{conferenceStateHolder.selected.endDate}"
-									popup="false" datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
+								<rich:calendar value="#{conferenceStateHolder.selected.endDate}" popup="false"
+									datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
 								<rich:separator height="1" lineType="solid" />
 								<rich:separator height="1" lineType="solid" />
 
@@ -89,10 +76,8 @@
 
 								<h:outputText value="#{messages['conference.programs']}:" />
 								<rich:panel>
-									<rich:dataGrid id="program_dataGrid"
-										value="#{conferenceStateHolder.selected.programs}"
-										var="program" columns="1" style="border:0px;width:100%"
-										columnClasses="noBorder">
+									<rich:dataGrid id="program_dataGrid" value="#{conferenceStateHolder.selected.programs}"
+										var="program" columns="1" style="border:0px;width:100%" columnClasses="noBorder">
 										<rich:panel style="border:0px">
 											<h:panelGrid columns="2">
 												<rich:panel style="border:0px;width:100%">
@@ -113,19 +98,16 @@
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.summary']}:" />
-								<h:outputText value="#{conferenceStateHolder.selected.summary}"
-									style="width:100%;" />
+								<h:outputText value="#{conferenceStateHolder.selected.summary}" style="width:100%;" />
 								<rich:separator height="1" lineType="solid" />
 								<rich:separator height="1" lineType="solid" />
 
 								<h:outputText value="#{messages['conference.articles']}:" />
-								<rich:dataGrid columns="1"
-									value="#{conferenceStateHolder.selected.articles}"
-									var="article" style="width:100%;">
+								<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.articles}" var="article"
+									style="width:100%;">
 									<rich:dataGrid columns="1">
 										<h:outputText value="#{article.author}: #{article.title}" />
-										<h:outputLink value="#{article.url}"
-											rendered="#{not article.url ==  null}"> Megtekintentes </h:outputLink>
+										<h:outputLink value="#{article.url}" rendered="#{not article.url ==  null}"> Megtekintentes </h:outputLink>
 										<rich:separator height="1" lineType="solid" />
 									</rich:dataGrid>
 								</rich:dataGrid>
@@ -133,10 +115,8 @@
 								<rich:separator height="1" lineType="solid" />
 
 							</h:panelGrid>
-							<a4j:commandButton action="editConference"
-								value="#{messages['conference.edit']}"
-								title="#{messages['conference.edit']}" image="/img/edit.png"
-								styleClass="myButton"
+							<a4j:commandButton action="editConference" value="#{messages['conference.edit']}"
+								title="#{messages['conference.edit']}" image="/img/edit.png" styleClass="myButton"
 								rendered="#{(conferenceStateHolder.selected != null)}" />
 
 						</rich:panel>
@@ -148,21 +128,23 @@
 								<s:button value="Home" action="home" />
 								<s:button value="Upload article"
 									onclick="#{rich:component('new_article_panel')}.show(); return false;" />
-								<s:button value="Create conference"
-									action="#{homePageBackBean.createConference()}" />
-								<s:button value="Edit account" action="editAccount"
-									rendered="#{identity.loggedIn}" />
+								<s:button value="Create conference" action="#{homePageBackBean.createConference()}" />
+								<s:button value="Edit account" action="editAccount" rendered="#{identity.loggedIn}" />
 							</h:panelGrid>
 
 							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
 								<h:panelGrid columns="1">
 									<h:outputText value="Conference" />
-									<s:button value="Add article" />
-									<s:button value="Edit conference"
-										action="editConference" />
+									<s:button value="Add article"
+										onclick="#{rich:component('article_panel')}.show(); return false;" />
+									<s:button value="Edit conference" action="editConference" />
 									<s:button value="Add question" />
-									<s:button value="Sign up" />
-									<s:button value="Contact owner" />
+									<s:fragment rendered="#{not homePageBackBean.checkSubscription()}">
+										<s:button value="Subscribe" action="#{homePageBackBean.subscribe()}" />
+									</s:fragment>
+									<s:fragment rendered="#{homePageBackBean.checkSubscription()}">
+										<s:button value="Unsubscribe" action="#{homePageBackBean.unsubscribe()}" />
+									</s:fragment>
 								</h:panelGrid>
 							</s:fragment>
 
@@ -170,6 +152,9 @@
 
 						<!-- Uj cikk feltoltes panel -->
 						<ui:include src="layout/modalPanels/newArticle_modalPanel.xhtml" />
+
+						<!-- Cikk hozzaadasa panel -->
+						<ui:include src="layout/modalPanels/article_modalPanel.xhtml" />
 					</a4j:form>
 				</h:panelGrid>
 			</center>
