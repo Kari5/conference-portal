@@ -130,8 +130,7 @@ public class Question implements Serializable {
 		int result = 1;
 		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((question == null) ? 0 : question.hashCode());
+		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		return result;
 	}
 
@@ -156,8 +155,12 @@ public class Question implements Serializable {
 			if (other.answers != null) {
 				return false;
 			}
-		} else if (!answers.equals(other.answers)) {
-			return false;
+		} else {
+			for (String answer : answers) {
+				if (!other.answers.contains(answer)) {
+					return false;
+				}
+			}
 		}
 		if (id == null) {
 			if (other.id != null) {
