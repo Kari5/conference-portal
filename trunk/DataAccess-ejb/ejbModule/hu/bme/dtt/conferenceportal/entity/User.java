@@ -149,8 +149,12 @@ public class User implements Serializable {
 			if (other.roles != null) {
 				return false;
 			}
-		} else if (!roles.equals(other.roles)) {
-			return false;
+		} else {
+			for (Role role : roles) {
+				if (!other.roles.contains(role)) {
+					return false;
+				}
+			}
 		}
 		if (tel == null) {
 			if (other.tel != null) {
