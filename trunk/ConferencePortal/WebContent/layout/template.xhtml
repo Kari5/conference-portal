@@ -65,7 +65,8 @@
 										onclick="#{rich:component('article_panel')}.show(); return false;" />
 									<s:button value="Edit conference" action="editConference"
 										rendered="#{homePageBackBean.checkOwner()}" />
-									<s:button value="Add question" />
+									<s:button value="Add question"
+										onclick="#{rich:component('question_panel')}.show(); return false;" />
 									<s:button value="Subscribe" action="#{homePageBackBean.subscribe()}"
 										rendered="#{not homePageBackBean.checkSubscription()}" />
 									<s:button value="Unsubscribe" action="#{homePageBackBean.unsubscribe()}"
@@ -77,19 +78,23 @@
 				</s:div>
 			</h:panelGrid>
 		</center>
-		<a:form ajaxSubmit="true">
-			<!-- Tag hozzaado panel -->
-			<ui:include src="modalPanels/tag_modalPanel.xhtml" />
+		<!-- Tag hozzaado panel -->
+		<ui:include src="modalPanels/tag_modalPanel.xhtml" />
 
-			<!-- Program hozzaado panel -->
-			<ui:include src="modalPanels/program_modalPanel.xhtml" />
+		<!-- Program hozzaado panel -->
+		<ui:include src="modalPanels/program_modalPanel.xhtml" />
 
-			<!-- Uj cikk feltoltes panel -->
-			<ui:include src="modalPanels/newArticle_modalPanel.xhtml" />
+		<!-- Uj cikk feltoltes panel -->
+		<ui:include src="modalPanels/newArticle_modalPanel.xhtml" />
 
-			<!-- Cikk hozzaadasa panel -->
-			<ui:include src="modalPanels/article_modalPanel.xhtml" />
-		</a:form>
+		<!-- Cikk hozzaadasa panel -->
+		<ui:include src="modalPanels/article_modalPanel.xhtml" />
+
+		<!-- Kerdes hozzaadasa panel -->
+		<ui:include src="modalPanels/question_modalPanel.xhtml" />
+
+		<!-- Kerdes megvalaszolasa panel -->
+		<ui:include src="modalPanels/answer_modalPanel.xhtml" />
 	</div>
 	<div class="footer">
 		<p>

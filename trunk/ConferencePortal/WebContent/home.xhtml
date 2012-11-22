@@ -86,11 +86,29 @@
 						<h:outputText value="#{messages['conference.articles']}:" />
 						<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.articles}" var="article"
 							style="width:100%;">
-							<rich:dataGrid columns="1">
+							<h:panelGrid columns="1">
 								<h:outputText value="#{article.author}: #{article.title}" />
 								<h:outputLink value="#{article.url}" rendered="#{not article.url ==  null}"> Megtekintentes </h:outputLink>
 								<rich:separator height="1" lineType="solid" />
-							</rich:dataGrid>
+							</h:panelGrid>
+						</rich:dataGrid>
+						<rich:separator height="1" lineType="solid" />
+						<rich:separator height="1" lineType="solid" />
+						<h:outputText value="Questions:" />
+						<rich:dataGrid columns="2" value="#{conferenceStateHolder.selected.questions}" var="qs"
+							style="width:100%;">
+							<h:panelGrid columns="2">
+								<h:outputText value="Question:" />
+								<h:outputText value="#{qs.question}" />
+								<rich:dataGrid columns="2" value="#{qs.answers}" var="answer" style="width:100%;">
+									<h:outputText value="Answer:" />
+									<h:outputText value="#{answer.toString()}" />
+								</rich:dataGrid>
+							</h:panelGrid>
+							<a4j:commandButton action="#{questionBean.changeSelectedQuestion(qs)}"
+								oncomplete="#{rich:component('answer_panel')}.show()" image="img/edit.png"
+								styleClass="myButton" reRender="conferencePanel" rendered="#{homePageBackBean.checkOwner()}"/>
+							<rich:separator height="1" lineType="solid" />
 						</rich:dataGrid>
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
