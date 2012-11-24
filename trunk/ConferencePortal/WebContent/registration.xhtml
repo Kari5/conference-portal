@@ -7,13 +7,16 @@
 	<ui:define name="body">
 		<h:form id="registrationForm">
 			<rich:panel>
-				<f:facet name="header">Registration</f:facet>
+				<f:facet name="header">
+					<h:outputText value="#{messages['login.tag.register']}" />
+				</f:facet>
 				<div class="dialog">
 					<h:panelGrid columns="2" rowClasses="prop" columnClasses="name,value">
-						<h:outputLabel for="username">Username</h:outputLabel>
+						<h:outputLabel for="username" value="#{messages['login.tag.username']}" />
 						<s:div>
-							<h:inputText label="User Name" id="username" value="#{registrationBackBean.newUser.userName}"
-								required="true" />
+							<h:inputText label="#{messages['login.tag.username']}" id="username"
+								value="#{registrationBackBean.newUser.userName}" required="true"
+								title="#{messages['login.tag.username']}" />
 							<rich:message for="username">
 								<f:facet name="errorMarker">
 									<h:graphicImage value="/img/msgerror.png" />
@@ -21,10 +24,11 @@
 							</rich:message>
 						</s:div>
 
-						<h:outputLabel for="password">Password</h:outputLabel>
+						<h:outputLabel for="password" value="#{messages['login.tag.password']}" />
 						<s:div>
-							<h:inputSecret label="Password" id="password"
-								value="#{registrationBackBean.newUser.password}" required="true" redisplay="true" />
+							<h:inputSecret label="#{messages['login.tag.password']}" id="password"
+								title="#{messages['login.tag.password']}" value="#{registrationBackBean.newUser.password}"
+								required="true" redisplay="true" />
 							<rich:message for="password">
 								<f:facet name="errorMarker">
 									<h:graphicImage value="/img/msgerror.png" />
@@ -32,9 +36,10 @@
 							</rich:message>
 						</s:div>
 
-						<h:outputLabel for="conf_password">Confirm Password</h:outputLabel>
+						<h:outputLabel for="conf_password" value="#{messages['login.tag.confirmpassword']}" />
 						<s:div>
-							<h:inputSecret label="Confirm password" id="conf_password" required="true">
+							<h:inputSecret label="#{messages['login.tag.confirmpassword']}" id="conf_password"
+								required="true" title="#{messages['login.tag.confirmpassword']}">
 								<s:validateEquality message="Password must be identical" for="password" />
 							</h:inputSecret>
 							<rich:message for="conf_password">
@@ -44,20 +49,25 @@
 							</rich:message>
 						</s:div>
 
-						<h:outputLabel for="firstName">First Name</h:outputLabel>
-						<h:inputText id="firstName" value="#{registrationBackBean.newUser.firstName}" />
-						<h:outputLabel for="lastName">Last Name</h:outputLabel>
-						<h:inputText id="lastName" value="#{registrationBackBean.newUser.lastName}" />
-						<h:outputLabel for="email">E-mail</h:outputLabel>
-						<h:inputText id="email" value="#{registrationBackBean.newUser.eMail}" />
-						<h:outputLabel for="tel">Tel</h:outputLabel>
-						<h:inputText id="tel" value="#{registrationBackBean.newUser.tel}" />
+						<h:outputLabel for="firstName" value="#{messages['login.tag.firstname']}" />
+						<h:inputText id="firstName" value="#{registrationBackBean.newUser.firstName}"
+							title="#{messages['login.tag.firstname']}" />
+						<h:outputLabel for="lastName" value="#{messages['login.tag.lastname']}" />
+						<h:inputText id="lastName" value="#{registrationBackBean.newUser.lastName}"
+							title="#{messages['login.tag.lastname']}" />
+						<h:outputLabel for="email" value="#{messages['login.tag.email']}" />
+						<h:inputText id="email" value="#{registrationBackBean.newUser.eMail}"
+							title="#{messages['login.tag.email']}" />
+						<h:outputLabel for="tel" value="#{messages['login.tag.tel']}" />
+						<h:inputText id="tel" value="#{registrationBackBean.newUser.tel}"
+							title="#{messages['login.tag.tel']}" />
 					</h:panelGrid>
 				</div>
 			</rich:panel>
 			<div class="actionButtons">
-				<h:commandButton id="submit" value="Register" action="#{registrationBackBean.saveNewUser()}" />
-				<s:button id="home" value="Home" action="home" />
+				<h:commandButton id="submit" value="#{messages['login.tag.register']}"
+					action="#{registrationBackBean.saveNewUser()}" />
+				<s:button id="home" value="#{messages['menu.tag.home']}" action="home" />
 			</div>
 		</h:form>
 		<script type="text/javascript">

@@ -4,29 +4,32 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
-		<s:link id="menuHomeId" view="/home.xhtml" value="Home" propagation="none" />
-		<s:link id="menuEditConferneceId" view="/editConference.xhtml" value="Create Conference"
-			propagation="none" rendered="#{identity.loggedIn}" />
+		<s:link id="menuHomeId" view="/home.xhtml" value="#{messages['menu.tag.home']}" propagation="none" />
+		<s:link id="menuEditConferneceId" view="/editConference.xhtml"
+			value="#{messages['menu.tag.createconference']}" propagation="none"
+			rendered="#{identity.loggedIn}" />
 	</rich:toolBarGroup>
 	<!-- @newMenuItem@ -->
 	<rich:toolBarGroup location="right">
 		<s:fragment rendered="#{identity.loggedIn}">
-			<h:outputText id="menuWelcomeId" value="Signed in as: #{credentials.username} "
-				propagation="none" style="margin: 0px 10px" />
-			<s:link id="editLink" value="Edit" view="/editAccount.xhtml" propagation="none"
+			<h:outputText id="menuWelcomeId"
+				value="#{messages['login.tag.loggedIn']} #{credentials.username} " propagation="none"
 				style="margin: 0px 10px" />
-			<s:link id="menuLogoutId" action="#{identity.logout}" value="Logout"
+			<s:link id="editLink" value="#{messages['menu.tag.editaccount']}" view="/editAccount.xhtml"
+				propagation="none" style="margin: 0px 10px" />
+			<s:link id="menuLogoutId" action="#{identity.logout}" value="#{messages['login.tag.logout']}"
 				propagation="none" style="margin: 0px 10px" />
 		</s:fragment>
 		<s:fragment rendered="#{not identity.loggedIn}">
 			<a4j:form ajaxSubmit="true">
-				<h:outputText value="User Name:" />
-				<h:inputText title="User Name" value="#{credentials.username}" />
-				<h:outputText value="Password:" />
-				<h:inputSecret title="Password" value="#{credentials.password}" />
-				<a4j:commandButton id="menuLoginId" value="Log in" action="#{identity.login()}"
-					propagation="none" />
-				<a4j:commandButton id="menuRegisterId" action="registration" value="Register" propagation="none" />
+				<h:outputText value="#{messages['login.tag.username']}:" />
+				<h:inputText title="#{messages['login.tag.username']}" value="#{credentials.username}" />
+				<h:outputText value="#{messages['login.tag.password']}:" />
+				<h:inputSecret title="#{messages['login.tag.password']}" value="#{credentials.password}" />
+				<a4j:commandButton id="menuLoginId" value="#{messages['login.tag.login']}"
+					action="#{identity.login()}" propagation="none" />
+				<a4j:commandButton id="menuRegisterId" action="registration"
+					value="#{messages['login.tag.register']}" propagation="none" />
 			</a4j:form>
 		</s:fragment>
 

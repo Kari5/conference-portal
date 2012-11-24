@@ -9,13 +9,13 @@
 	<rich:modalPanel id="answer_panel" autosized="true" domElementAttachment="form">
 		<f:facet name="header">
 			<h:panelGroup>
-				<h:outputText value="Question Panel" />
+				<h:outputText value="#{messages['panel.addanswer.title']}" />
 			</h:panelGroup>
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
 				<h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink_program"
-					style="cursor:pointer" title="cancel" />
+					style="cursor:pointer" title="#{messages['global.close']}" />
 				<rich:componentControl for="answer_panel" attachTo="hidelink_program" operation="hide"
 					event="onclick">
 				</rich:componentControl>
@@ -23,19 +23,20 @@
 		</f:facet>
 		<h:form>
 			<h:panelGrid columns="2">
-				<h:outputText value="Question: " />
+				<h:outputText value="#{messages['conference.question']}:" />
 				<h:outputText value="#{selectedQuestionStateHolder.selected.question}" />
-				<h:outputText value="Answer: " />
-				<h:inputTextarea value="#{questionBean.answer}" />
+				<h:outputText value="#{messages['conference.answer']}: " />
+				<h:inputTextarea value="#{questionBean.answer}" title="#{messages['conference.answer']}" />
 			</h:panelGrid>
 			<rich:toolBar>
 				<rich:toolBarGroup location="left">
-					<a4j:commandButton action="#{questionBean.saveAnswer()}" value="OK" image="/img/save.png"
-						title="OK" styleClass="myButton" oncomplete="#{rich:component('answer_panel')}.hide()"
-						reRender="conferencePanel" />
+					<a4j:commandButton action="#{questionBean.saveAnswer()}" value="#{messages['global.ok']}"
+						image="/img/save.png" title="#{messages['global.ok']}" styleClass="myButton"
+						oncomplete="#{rich:component('answer_panel')}.hide()" reRender="conferencePanel" />
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
-					<a4j:commandButton value="OK" image="/img/delete.png" title="Delete" styleClass="myButton"
+					<a4j:commandButton value="#{messages['global.cancel']}" image="/img/delete.png"
+						title="#{messages['global.cancel']}" styleClass="myButton"
 						onclick="#{rich:component('answer_panel')}.hide(); return false;" />
 				</rich:toolBarGroup>
 			</rich:toolBar>
