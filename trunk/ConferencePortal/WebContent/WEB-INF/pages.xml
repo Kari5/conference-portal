@@ -5,7 +5,7 @@
 	no-conversation-view-id="/home.xhtml" login-view-id="/login.xhtml">
 
 	<page view-id="/home.xhtml">
-		<begin-conversation join="true"/>
+		<begin-conversation join="true" />
 		<navigation from-action="#{identity.login()}">
 			<rule if="#{identity.loggedIn}">
 				<redirect view-id="/home.xhtml" />
@@ -66,7 +66,6 @@
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 			<rule if-outcome="editConfernce">
@@ -74,12 +73,11 @@
 			</rule>
 		</navigation>
 	</page>
-	
+
 	<page view-id="/editAccount.xhtml" login-required="true">
 		<begin-conversation join="true" />
 		<navigation>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 		</navigation>
@@ -89,14 +87,13 @@
 		<begin-conversation join="true" />
 		<navigation>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
 				<redirect view-id="/home.xhtml" />
 			</rule>
 		</navigation>
 	</page>
 
 	<exception log="true">
-		<redirect view-id="/error.xhtml"/>
+		<redirect view-id="/error.xhtml" />
 	</exception>
 
 </pages>
