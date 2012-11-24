@@ -20,6 +20,8 @@
    PATH="/editAccount.xhtml" TARGET="#xeditAccount.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
   <output ID="/login.xhtml" NAME="output8" PATH="/login.xhtml"
    TARGET="#xlogin.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/listSubscriptions.xhtml" NAME="output9"
+   PATH="/listSubscriptions.xhtml" TARGET="#xlistSubscriptions.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item NAME="exception:" SHAPE="24,745,0,0" TYPE="exception" model-entity="SeamPagesDiagramItem">
   <output ID="/error.xhtml" NAME="output" PATH="/error.xhtml"
@@ -35,6 +37,8 @@
    PATH="/registration.xhtml" TARGET="#xregistration.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
   <output ID="/editConference.xhtml" NAME="output3"
    PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output4"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item NAME="#xerror.xhtml" PATH="/error.xhtml" SHAPE="472,121,0,0"
   TYPE="page" model-entity="SeamPagesDiagramItem"/>
@@ -46,15 +50,40 @@
    TARGET="#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
   <output ID="/editConference.xhtml" NAME="output2"
    PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output3"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item ID="#editConference.xhtml" NAME="#xeditConference.xhtml"
   PATH="/editConference.xhtml" SHAPE="24,1081,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
   <output ID="/home.xhtml" NAME="output" PATH="/home.xhtml"
    TARGET="#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output1"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editAccount.xhtml" NAME="output2"
+   PATH="/editAccount.xhtml" TARGET="#xeditAccount.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/listSubscriptions.xhtml" NAME="output3"
+   PATH="/listSubscriptions.xhtml" TARGET="#xlistSubscriptions.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item ID="#editAccount.xhtml" NAME="#xeditAccount.xhtml"
   PATH="/editAccount.xhtml" SHAPE="600,17,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
   <output ID="/home.xhtml" NAME="output" PATH="/home.xhtml"
    TARGET="#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output1"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output2"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/listSubscriptions.xhtml" NAME="output3"
+   PATH="/listSubscriptions.xhtml" TARGET="#xlistSubscriptions.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#listSubscriptions.xhtml" NAME="#xlistSubscriptions.xhtml"
+  PATH="/listSubscriptions.xhtml" SHAPE="24,1089,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/home.xhtml" NAME="output" PATH="/home.xhtml"
+   TARGET="#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output1"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editConference.xhtml" NAME="output2"
+   PATH="/editConference.xhtml" TARGET="#xeditConference.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/editAccount.xhtml" NAME="output3"
+   PATH="/editAccount.xhtml" TARGET="#xeditAccount.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
 </diagram>
