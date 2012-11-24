@@ -6,7 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:modalPanel id="question_panel" autosized="true" domElementAttachment="form">
+	<rich:modalPanel id="answer_panel" autosized="true" domElementAttachment="form">
 		<f:facet name="header">
 			<h:panelGroup>
 				<h:outputText value="Question Panel" />
@@ -16,27 +16,27 @@
 			<h:panelGroup>
 				<h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink_program"
 					style="cursor:pointer" title="cancel" />
-				<rich:componentControl for="program_panel" attachTo="hidelink_program" operation="hide"
+				<rich:componentControl for="answer_panel" attachTo="hidelink_program" operation="hide"
 					event="onclick">
 				</rich:componentControl>
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
 			<h:panelGrid columns="2">
-				<h:outputText value="Question" />
-				<h:outputText value="#{questionBean.question}" />
-				<h:outputText value="Answer" />
+				<h:outputText value="Question: " />
+				<h:outputText value="#{selectedQuestionStateHolder.selected.question}" />
+				<h:outputText value="Answer: " />
 				<h:inputTextarea value="#{questionBean.answer}" />
 			</h:panelGrid>
 			<rich:toolBar>
 				<rich:toolBarGroup location="left">
 					<a4j:commandButton action="#{questionBean.saveAnswer()}" value="OK" image="/img/save.png"
-						title="OK" styleClass="myButton" oncomplete="#{rich:component('question_panel')}.hide()"
+						title="OK" styleClass="myButton" oncomplete="#{rich:component('answer_panel')}.hide()"
 						reRender="conferencePanel" />
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
-					<a4j:commandButton action="#" value="OK" image="/img/delete.png" title="Delete"
-						styleClass="myButton" onclick="#{rich:component('question_panel')}.hide()" reRender="" />
+					<a4j:commandButton value="OK" image="/img/delete.png" title="Delete" styleClass="myButton"
+						onclick="#{rich:component('answer_panel')}.hide(); return false;" />
 				</rich:toolBarGroup>
 			</rich:toolBar>
 		</h:form>

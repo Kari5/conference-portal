@@ -4,6 +4,7 @@ import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Location;
 import hu.bme.dtt.conferenceportal.entity.Program;
+import hu.bme.dtt.conferenceportal.entity.Question;
 import hu.bme.dtt.conferenceportal.entity.Tag;
 import hu.bme.dtt.conferenceportal.entity.User;
 import hu.futurion.mt.dao.GenericDaoImpl;
@@ -49,6 +50,7 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements Con
 		List<Program> programs = new ArrayList<Program>();
 		List<Article> articles = new ArrayList<Article>();
 		List<User> participants = new ArrayList<User>();
+		List<Question> questions = new ArrayList<Question>();
 		try {
 			if ((conference.getTags() != null) && !conference.getTags().isEmpty()) {
 				LOGGER.debug("Attaching tags");
@@ -84,6 +86,15 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements Con
 				}
 			}
 
+			if ((conference.getQuestions() != null) && !conference.getQuestions().isEmpty()) {
+				LOGGER.debug("Attaching questions");
+				QuestionDao questionDao = InitialContext
+						.doLookup("ConferencePortal-ear/questionDao/local");
+				for (Question question : conference.getQuestions()) {
+					questions.add(questionDao.findByPrimaryKey(question.getId()));
+				}
+			}
+
 			Location location = null;
 			if (conference.getLocation() != null) {
 				LOGGER.debug("Attaching location");
@@ -106,6 +117,7 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements Con
 			// FIXME: Programok elmentését javítani!
 			attachedConference.setSummary(conference.getSummary());
 			attachedConference.setParticipants(participants);
+			attachedConference.setQuestions(questions);
 			entityManager.flush();
 			LOGGER.debug("Update finished!");
 		} catch (NamingException e) {

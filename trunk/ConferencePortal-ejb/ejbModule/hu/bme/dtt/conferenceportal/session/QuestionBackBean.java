@@ -31,7 +31,9 @@ public class QuestionBackBean {
 	private String question;
 	private String answer;
 	private QuestionDao questionDao;
-	private Question selectedQuestion;
+	/** Szerkesztésre kiválasztott kérdés. */
+	@In(create = true)
+	private StateHolder<Question> selectedQuestionStateHolder;
 	private ConferenceDao conferenceDao;
 
 	@Create
@@ -64,27 +66,20 @@ public class QuestionBackBean {
 		LOGGER.debug("Saving answer");
 		ArrayList<String> answers = new ArrayList<String>();
 		answers.add(answer);
-		selectedQuestion.setAnswers(answers);
-		questionDao.update(selectedQuestion);
+		selectedQuestionStateHolder.getSelected().setAnswers(answers);
+		questionDao.update(selectedQuestionStateHolder.getSelected());
+		selectedQuestionStateHolder.setSelected(null);
+		answer = null;
 	}
 
 	public void changeSelectedQuestion(Question question) {
-		selectedQuestion = question;
-	}
-
-	/**
-	 * @return the selectedQuestion
-	 */
-	public Question getSelectedQuestion() {
-		return selectedQuestion;
-	}
-
-	/**
-	 * @param selectedQuestion
-	 *            the selectedQuestion to set
-	 */
-	public void setSelectedQuestion(Question selectedQuestion) {
-		this.selectedQuestion = selectedQuestion;
+		LOGGER.debug("Selected question changed! id=" + question.getId());
+		selectedQuestionStateHolder.setSelected(question);
+		if ((selectedQuestionStateHolder.getSelected() != null)
+				&& (selectedQuestionStateHolder.getSelected().getAnswers() != null)
+				&& !selectedQuestionStateHolder.getSelected().getAnswers().isEmpty()) {
+			answer = (String) selectedQuestionStateHolder.getSelected().getAnswers().toArray()[0];
+		}
 	}
 
 	/**
