@@ -9,30 +9,31 @@
 	<rich:modalPanel id="question_panel" autosized="true" domElementAttachment="form">
 		<f:facet name="header">
 			<h:panelGroup>
-				<h:outputText value="Question Panel" />
+				<h:outputText value="#{messages['panel.addquestion.title']}" />
 			</h:panelGroup>
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
 				<h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink_program"
-					style="cursor:pointer" title="cancel" />
+					style="cursor:pointer" title="#{messages['global.close']}" />
 				<rich:componentControl for="question_panel" attachTo="hidelink_program" operation="hide"
 					event="onclick">
 				</rich:componentControl>
 			</h:panelGroup>
 		</f:facet>
 		<a4j:form ajaxSubmit="true">
-			<h:outputText value="Question" />
+			<h:outputText value="#{messages['conference.question']}:" />
 			<h:inputTextarea value="#{questionBean.question}" />
 			<rich:toolBar>
 				<rich:toolBarGroup location="left">
-					<a4j:commandButton action="#{questionBean.saveQuestion()}" value="OK" image="/img/save.png"
-						title="OK" styleClass="myButton" oncomplete="#{rich:component('question_panel')}.hide()"
-						reRender="conferencePanel" />
+					<a4j:commandButton action="#{questionBean.saveQuestion()}" value="#{messages['global.ok']}}"
+						image="/img/save.png" title="#{messages['global.ok']}}" styleClass="myButton"
+						oncomplete="#{rich:component('question_panel')}.hide()" reRender="conferencePanel" />
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
-					<a4j:commandButton action="#" value="OK" image="/img/delete.png" title="Delete"
-						styleClass="myButton" onclick="#{rich:component('question_panel')}.hide()" />
+					<a4j:commandButton action="#" value="#{messages['global.cancel']}}" image="/img/delete.png"
+						title="#{messages['global.cancel']}}" styleClass="myButton"
+						onclick="#{rich:component('question_panel')}.hide()" />
 				</rich:toolBarGroup>
 			</rich:toolBar>
 		</a4j:form>
