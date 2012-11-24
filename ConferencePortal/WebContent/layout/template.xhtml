@@ -58,6 +58,8 @@
 									action="#{homePageBackBean.createConference()}" />
 								<s:button value="#{messages['menu.tag.editaccount']}" action="editAccount"
 									rendered="#{identity.loggedIn}" />
+								<s:button value="#{messages['menu.tag.listsubscriptions']}" action="listSubs"
+										rendered="#{identity.loggedIn}" />
 							</h:panelGrid>
 
 							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
@@ -75,8 +77,6 @@
 									<s:button value="#{messages['menu.tag.unsubscribe']}"
 										action="#{homePageBackBean.unsubscribe()}"
 										rendered="#{homePageBackBean.checkSubscription()}" />
-									<s:button value="#{messages['menu.tag.listsubscriptions']}" 
-										rendered="#{identity.loggedIn}" />
 								</h:panelGrid>
 							</s:fragment>
 						</rich:panel>

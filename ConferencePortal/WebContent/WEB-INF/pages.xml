@@ -38,6 +38,9 @@
 			<rule if-outcome="login">
 				<redirect view-id="/login.xhtml" />
 			</rule>
+			<rule if-outcome="listSubs">
+				<redirect view-id="/listSubscriptions.xhtml"/>
+			</rule>
 		</navigation>
 	</page>
 
@@ -53,7 +56,10 @@
 			<rule if-outcome="registration">
 				<redirect view-id="/registration.xhtml" />
 			</rule>
-			<rule if-outcome="editConfernce">
+			<rule if-outcome="editConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
 				<redirect view-id="/editConference.xhtml" />
 			</rule>
 		</navigation>
@@ -68,7 +74,10 @@
 			<rule if-outcome="home">
 				<redirect view-id="/home.xhtml" />
 			</rule>
-			<rule if-outcome="editConfernce">
+			<rule if-outcome="editConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
 				<redirect view-id="/editConference.xhtml" />
 			</rule>
 		</navigation>
@@ -80,6 +89,15 @@
 			<rule if-outcome="home">
 				<redirect view-id="/home.xhtml" />
 			</rule>
+			<rule if-outcome="editConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="listSubs">
+				<redirect view-id="/listSubscriptions.xhtml"/>
+			</rule>
 		</navigation>
 	</page>
 
@@ -88,6 +106,33 @@
 		<navigation>
 			<rule if-outcome="home">
 				<redirect view-id="/home.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="editAccount">
+				<redirect view-id="/editAccount.xhtml" />
+			</rule>
+			<rule if-outcome="listSubs">
+				<redirect view-id="/listSubscriptions.xhtml"/>
+			</rule>
+		</navigation>
+	</page>
+	
+	<page view-id="/listSubscriptions.xhtml" login-required="true">
+		<begin-conversation join="true" />
+		<navigation>
+			<rule if-outcome="home">
+				<redirect view-id="/home.xhtml" />
+			</rule>
+			<rule if-outcome="editConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="createConference">
+				<redirect view-id="/editConference.xhtml" />
+			</rule>
+			<rule if-outcome="editAccount">
+				<redirect view-id="/editAccount.xhtml" />
 			</rule>
 		</navigation>
 	</page>

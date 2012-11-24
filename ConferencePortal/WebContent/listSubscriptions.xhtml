@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+	xmlns:a="http://richfaces.org/a4j" template="layout/template.xhtml">
+
+	<ui:define name="body">
+		<h:form id="loginForm">
+			<rich:panel>
+				<f:facet name="header">
+					<h:outputText value="#{messages['listsub.tag.title']}" />
+				</f:facet>
+				<a:form ajaxSubmit="true">
+					<rich:panel>
+						<rich:dataGrid value="#{listSubs.subbedConferences}" var="conference" columns="1"
+							rowKeyVar="row" columnClasses="noBorder" style="border:0px">
+							<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
+								reRender="conferencePanel,navigationPanel" styleClass="title">
+								<h:outputText value="#{row+1} " />
+								<h:outputText value="#{conference.shortTitle} " />
+								<br />
+								<rich:calendar value="#{conference.startDate}" popup="true"
+									datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
+							</a:commandLink>
+							<rich:separator height="1" lineType="solid" />
+						</rich:dataGrid>
+					</rich:panel>
+				</a:form>
+			</rich:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
