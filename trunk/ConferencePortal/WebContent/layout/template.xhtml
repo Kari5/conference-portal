@@ -59,7 +59,8 @@
 								<s:button value="#{messages['menu.tag.editaccount']}" action="editAccount"
 									rendered="#{identity.loggedIn}" />
 								<s:button value="#{messages['menu.tag.listsubscriptions']}" action="listSubs"
-										rendered="#{identity.loggedIn}" />
+									rendered="#{identity.loggedIn}" />
+								<s:button value="#{messages['search.tag.btn']}" action="searchConf" />
 							</h:panelGrid>
 
 							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
