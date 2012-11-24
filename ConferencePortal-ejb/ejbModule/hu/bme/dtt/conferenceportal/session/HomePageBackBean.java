@@ -102,7 +102,8 @@ public class HomePageBackBean {
 	 */
 	public boolean checkSubscription() {
 		boolean result = false;
-		if (Identity.instance().isLoggedIn()) {
+		if (Identity.instance().isLoggedIn() && (conferenceStateHolder.getSelected() != null)
+				&& (conferenceStateHolder.getSelected().getParticipants() != null)) {
 			for (User user : conferenceStateHolder.getSelected().getParticipants()) {
 				if (user.getUserName().equals(Identity.instance().getCredentials().getUsername())) {
 					result = true;

@@ -6,28 +6,26 @@
 	xmlns:a="http://richfaces.org/a4j" template="layout/template.xhtml">
 
 	<ui:define name="body">
-		<h:form id="loginForm">
-			<rich:panel>
-				<f:facet name="header">
-					<h:outputText value="#{messages['listsub.tag.title']}" />
-				</f:facet>
-				<a:form ajaxSubmit="true">
-					<rich:panel>
-						<rich:dataGrid value="#{listSubs.subbedConferences}" var="conference" columns="1"
-							rowKeyVar="row" columnClasses="noBorder" style="border:0px">
-							<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
-								reRender="conferencePanel,navigationPanel" styleClass="title">
-								<h:outputText value="#{row+1} " />
-								<h:outputText value="#{conference.shortTitle} " />
-								<br />
-								<rich:calendar value="#{conference.startDate}" popup="true"
-									datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
-							</a:commandLink>
-							<rich:separator height="1" lineType="solid" />
-						</rich:dataGrid>
-					</rich:panel>
-				</a:form>
-			</rich:panel>
-		</h:form>
+		<rich:panel>
+			<f:facet name="header">
+				<h:outputText value="#{messages['listsub.tag.title']}" />
+			</f:facet>
+			<a:form ajaxSubmit="true">
+				<rich:panel>
+					<rich:dataGrid value="#{listSubs.subbedConferences}" var="conference" columns="1"
+						rowKeyVar="row" columnClasses="noBorder" style="border:0px">
+						<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
+							reRender="conferencePanel,navigationPanel" styleClass="title">
+							<h:outputText value="#{row+1} " />
+							<h:outputText value="#{conference.shortTitle} " />
+							<br />
+							<rich:calendar value="#{conference.startDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
+								disabled="true" />
+						</a:commandLink>
+						<rich:separator height="1" lineType="solid" />
+					</rich:dataGrid>
+				</rich:panel>
+			</a:form>
+		</rich:panel>
 	</ui:define>
 </ui:composition>
