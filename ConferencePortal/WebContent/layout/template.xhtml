@@ -29,7 +29,7 @@
 							<rich:dataGrid value="#{homePageBackBean.conferences}" var="conference" columns="1"
 								rowKeyVar="row" columnClasses="noBorder" style="border:0px">
 								<center>
-									<a:commandLink value="" action="#{homePageBackBean.changeSelectedConference(conference)}"
+									<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
 										reRender="conferencePanel,navigationPanel" styleClass="title">
 										<h:outputText value="#{row+1} " />
 										<h:outputText value="#{conference.shortTitle} " />
