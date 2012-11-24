@@ -34,7 +34,7 @@ public class Question implements Serializable {
 	@JoinTable(name = "Answer", joinColumns = @JoinColumn(name = "QUESTION_ID"))
 	@IndexColumn(name = "ANSWER_ID", base = 1)
 	@Fetch(FetchMode.JOIN)
-	@Column(name = "ANSWER", nullable = false)
+	@Column(name = "ANSWER")
 	private Collection<String> answers;
 	/**
 	 * A kulcs.

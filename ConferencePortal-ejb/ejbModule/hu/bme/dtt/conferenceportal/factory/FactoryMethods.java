@@ -5,6 +5,7 @@ import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.entity.Conference;
 import hu.bme.dtt.conferenceportal.entity.Program;
+import hu.bme.dtt.conferenceportal.entity.Question;
 import hu.bme.dtt.conferenceportal.entity.Tag;
 import hu.bme.dtt.conferenceportal.util.SimplePdf;
 import hu.bme.dtt.conferenceportal.util.StateContainer;
@@ -31,8 +32,7 @@ public class FactoryMethods {
 	public StateContainer<Tag> tagsStateContainer() {
 		StateContainer<Tag> result = new StateContainer<Tag>();
 		try {
-			TagDao tagDao = (TagDao) InitialContext
-					.doLookup("ConferencePortal-ear/tagDao/local");
+			TagDao tagDao = (TagDao) InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
 			result.setList(tagDao.getAllTags());
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
@@ -58,6 +58,11 @@ public class FactoryMethods {
 	@Factory(value = "selectedProgramStateHolder", scope = ScopeType.PAGE)
 	public StateHolder<Program> selectedProgramStateHolder() {
 		return new StateHolder<Program>();
+	}
+
+	@Factory(value = "selectedQuestionStateHolder", scope = ScopeType.PAGE)
+	public StateHolder<Question> selectedQuestionStateHolder() {
+		return new StateHolder<Question>();
 	}
 
 	@Factory(value = "simplePdfStateHolder", scope = ScopeType.PAGE)
