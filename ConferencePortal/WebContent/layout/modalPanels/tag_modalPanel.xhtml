@@ -35,7 +35,7 @@
 					<h:inputText id="tag_name"
 						value="#{editConferenceBackBean.tagName}" />
 					<a4j:commandButton action="#{editConferenceBackBean.saveNewTag()}"
-						value="Add" reRender="tag_select" />
+						title="Add" image="/img/add.png" reRender="tag_select" styleClass="myButton"/>
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
 					<a4j:commandButton action="#{editConferenceBackBean.changeTags()}"

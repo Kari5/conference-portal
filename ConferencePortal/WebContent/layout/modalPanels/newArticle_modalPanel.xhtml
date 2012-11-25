@@ -14,7 +14,7 @@
 		domElementAttachment="form">
 		<f:facet name="header">
 			<h:panelGroup>
-				<h:outputText value="uj Cikk Panel" />
+				<h:outputText value="#{messages['article.upload_new']}" />
 			</h:panelGroup>
 		</f:facet>
 		<f:facet name="controls">
@@ -25,32 +25,34 @@
 					attachTo="hidelink_program" operation="hide" event="onclick" />
 			</h:panelGroup>
 		</f:facet>
-	<a4j:form>
-	<h:panelGrid columns="1" columnClasses="top">
-				<h:panelGrid columns="2">
-				
-				<h:outputText value="#{messages['article.author']}"/>
-				<h:inputText value="" />
-				<rich:separator height="1" lineType="solid"/>
-				<rich:separator height="1" lineType="solid"/>
-				
-				<h:outputText value="#{messages['article.title']}"/>
-				<h:inputText value="" />
-				<rich:separator height="1" lineType="solid"/>
-				<rich:separator height="1" lineType="solid"/>
-				
-				<h:outputText value="#{messages['article.url']}"/>
-				<h:inputText value="" />
-				<rich:separator height="1" lineType="solid"/>
-				<rich:separator height="1" lineType="solid"/>
-				
+		<a4j:form>
+			<h:panelGrid columns="1" columnClasses="top">
+				<h:panelGrid columns="2" width="100%" columnClasses="top40,top60">
+
+					<h:outputText value="#{messages['article.author']}" />
+					<h:inputText value="#{fileUploadBean.newArticle.author}" style="width:100%" />
+					<rich:separator height="1" lineType="solid" />
+					<rich:separator height="1" lineType="solid" />
+
+					<h:outputText value="#{messages['article.title']}" />
+					<h:inputText value="#{fileUploadBean.newArticle.title}" style="width:100%" />
+					<rich:separator height="1" lineType="solid" />
+					<rich:separator height="1" lineType="solid" />
+
+					<h:outputText value="#{messages['article.url']}" />
+					<h:inputText value="#{fileUploadBean.newArticle.url}" style="width:100%" />
+					<rich:separator height="1" lineType="solid" />
+					<rich:separator height="1" lineType="solid" />
+
 				</h:panelGrid>
 				<h:outputText value="#{messages['article.information']}" />
-		<rich:fileUpload fileUploadListener="#{fileUploadBean.listener}"
-					maxFilesQuantity="#{fileUploadBean.uploadsAvailable}" id="upload"
-					immediateUpload="#{fileUploadBean.autoUpload}" acceptedTypes="pdf"
-					allowFlash="false" uploadControlLabel="#{messages['article.upload']}" addControlLabel="#{messages['article.selectPdf']}"
-					doneLabel="#{messages['article.done']}" clearAllControlLabel="#{messages['article.clearAll']}">
+				<rich:fileUpload fileUploadListener="#{fileUploadBean.listener}"
+					id="upload" immediateUpload="true" acceptedTypes="pdf"
+					allowFlash="false"
+					uploadControlLabel="#{messages['article.upload']}"
+					addControlLabel="#{messages['article.selectPdf']}"
+					doneLabel="#{messages['article.done']}"
+					cleanButtonClassDisabled="true">
 					<a4j:support event="onuploadcomplete" reRender="info" />
 				</rich:fileUpload>
 				<h:panelGroup id="info">
@@ -59,24 +61,37 @@
 							<h:outputText value="Uploaded Files Info" />
 						</f:facet>
 						<rich:panel bodyClass="rich-laguna-panel-no-header">
-						
-							<h:panelGrid columns="2">
+
+							<h:panelGrid columns="4">
 								<h:outputText value="File Name:" />
 								<h:outputText value="#{simplePdfStateHolder.selected.name}" />
-								<h:outputText value="File Length(bytes):" />
-								<h:outputText value="#{simplePdfStateHolder.selected.length}" />
+								<rich:spacer width="15px"/>
+								<a4j:commandButton action="#{fileUploadBean.clearUploadData}"
+						reRender="info, upload" value="#{messages['article.clearAll']}" image="/img/edit_trash.png" styleClass="myButton"
+						rendered="#{not (fileUploadBean.file==null)}" />
 								<!-- </h:panelGrid>  -->
 							</h:panelGrid>
 						</rich:panel>
 					</rich:panel>
 					<rich:spacer height="3" />
 					<br />
-					<a4j:commandButton action="#{fileUploadBean.clearUploadData}"
-						reRender="info, upload" value="Clear Uploaded Data"
-						rendered="#{fileUploadBean.size>0}" />
 				</h:panelGroup>
-				</h:panelGrid>
-				</a4j:form>
+			</h:panelGrid>
+
+			<rich:toolBar>
+				<rich:toolBarGroup location="left">
+					<a4j:commandButton action="#{fileUploadBean.save()}"
+						title="#{messages['conference.save']}" image="/img/save.png"
+						styleClass="myButton" onclick="#{rich:component('new_article_panel')}.hide()" reRender="article_select"/>
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right">
+					<a4j:commandButton action="#" title="#{messages['global.cancel']}"
+						image="/img/delete.png" styleClass="myButton"
+						onclick="#{rich:component('new_article_panel')}.hide()" />
+				</rich:toolBarGroup>
+			</rich:toolBar>
+
+		</a4j:form>
 
 
 	</rich:modalPanel>

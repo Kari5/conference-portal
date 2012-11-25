@@ -1,13 +1,12 @@
 package hu.bme.dtt.conferenceportal.session;
 
 import hu.bme.dtt.conferenceportal.dao.ArticleDao;
+import hu.bme.dtt.conferenceportal.dao.UserDao;
+import hu.bme.dtt.conferenceportal.entity.Article;
 import hu.bme.dtt.conferenceportal.util.SimplePdf;
 import hu.bme.dtt.conferenceportal.util.StateHolder;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -18,6 +17,7 @@ import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.security.Credentials;
 import org.richfaces.event.UploadEvent;
 import org.richfaces.model.UploadItem;
 
@@ -30,19 +30,22 @@ import org.richfaces.model.UploadItem;
 public class FileUploadBean implements Serializable {
 
 	private static final long serialVersionUID = 3792763850205269555L;
-	private ArrayList<SimplePdf> files = new ArrayList<SimplePdf>();
-	private int uploadsAvailable = 1;
-	private boolean autoUpload = false;
-	private boolean useFlash = false;
+	private SimplePdf file;
+	private Article newArticle;
 	private ArticleDao articleDao;
 
 	@In(create = true)
 	StateHolder<SimplePdf> simplePdfStateHolder;
 
+	@In
+	Credentials credentials;
+
 	private static final Logger logger = Logger.getLogger(FileUploadBean.class);
 
 	@Create
 	public void init() {
+		file = null;
+		newArticle = new Article();
 		try {
 			articleDao = InitialContext
 					.doLookup("ConferencePortal-ear/articleDao/local");
@@ -52,36 +55,28 @@ public class FileUploadBean implements Serializable {
 		}
 	}
 
-	public int getSize() {
-		if (getFiles().size() > 0) {
-			return getFiles().size();
-		} else {
-			return 0;
-		}
-	}
-
 	public FileUploadBean() {
 	}
 
-	public void createPdf(OutputStream stream, Object object)
-			throws IOException {
-		logger.info("createPdf elindult.");
-		// stream.write(getFiles().get((Integer) object).getData());
-		// Object restoredData=SessionDataHelper.getDataByKey(object);
-		if (null != stream && null != object) {
-			logger.info("inside generatePdf method for pdf");
-			byte[] buf = ((SimplePdf) object).getData();
-			if (null != buf && buf.length > 0) {
-				try {
-					stream.write(buf);
-					stream.close();
-					stream.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+	// public void createPdf(OutputStream stream, Object object)
+	// throws IOException {
+	// logger.info("createPdf elindult.");
+	// // stream.write(getFiles().get((Integer) object).getData());
+	// // Object restoredData=SessionDataHelper.getDataByKey(object);
+	// if (null != stream && null != object) {
+	// logger.info("inside generatePdf method for pdf");
+	// byte[] buf = ((SimplePdf) object).getData();
+	// if (null != buf && buf.length > 0) {
+	// try {
+	// stream.write(buf);
+	// stream.close();
+	// stream.flush();
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// }
 
 	public void listener(UploadEvent event) throws Exception {
 		logger.info("listener elindult, event is null: " + (event == null));
@@ -94,14 +89,13 @@ public class FileUploadBean implements Serializable {
 		pdf.setLength((long) data.length);
 		logger.info("length: " + pdf.getLength());
 		pdf.setName(item.getFileName());
-		files.add(pdf);
+		file = pdf;
 		simplePdfStateHolder.setSelected(pdf);
-		uploadsAvailable--;
 	}
 
 	public String clearUploadData() {
-		files.clear();
-		setUploadsAvailable(1);
+		file = null;
+		simplePdfStateHolder.setSelected(null);
 		return null;
 	}
 
@@ -110,46 +104,59 @@ public class FileUploadBean implements Serializable {
 	}
 
 	public void save() {
-		// articleDao.save(getPdf());
-	}
-
-	public ArrayList<SimplePdf> getFiles() {
-		return files;
-	}
-
-	public void setFiles(ArrayList<SimplePdf> files) {
-		this.files = files;
-	}
-
-	public SimplePdf getPdf() {
-		if (files.size() > 0) {
-			return files.get(0);
+		logger.info("Cikk mentés elkezdõdött.");
+		if (this.file != null) {
+			logger.info("Cikk pdf-ként (is) fel lett töltve.");
+			this.newArticle.setData(this.file.getData());
+			this.newArticle.setFileName(this.file.getName());
+			this.newArticle.setLength(this.file.getLength());
+			this.newArticle.setMime(SimplePdf.getMime());
 		}
-		return null;
+
+		UserDao userDao = null;
+		try {
+			userDao = InitialContext
+					.doLookup("ConferencePortal-ear/userDao/local");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.newArticle.setUser(userDao.getUser(credentials.getUsername()));
+		if (articleDao.save(newArticle)) {
+			logger.info("Cikk mentés befejezõdött.");
+		} else {
+			logger.info("Valami hiba történt a mentés közben!");
+		}
 	}
 
-	public int getUploadsAvailable() {
-		return uploadsAvailable;
+	/**
+	 * @return the file
+	 */
+	public SimplePdf getFile() {
+		return file;
 	}
 
-	public void setUploadsAvailable(int uploadsAvailable) {
-		this.uploadsAvailable = uploadsAvailable;
+	/**
+	 * @param file
+	 *            the file to set
+	 */
+	public void setFile(SimplePdf file) {
+		this.file = file;
 	}
 
-	public boolean isAutoUpload() {
-		return autoUpload;
+	/**
+	 * @return the newArticle
+	 */
+	public Article getNewArticle() {
+		return newArticle;
 	}
 
-	public void setAutoUpload(boolean autoUpload) {
-		this.autoUpload = autoUpload;
-	}
-
-	public boolean isUseFlash() {
-		return useFlash;
-	}
-
-	public void setUseFlash(boolean useFlash) {
-		this.useFlash = useFlash;
+	/**
+	 * @param newArticle
+	 *            the newArticle to set
+	 */
+	public void setNewArticle(Article newArticle) {
+		this.newArticle = newArticle;
 	}
 
 }

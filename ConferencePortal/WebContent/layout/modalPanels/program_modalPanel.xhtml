@@ -67,7 +67,11 @@
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
 			<a4j:commandButton action="#"
-				value="OK" image="/img/delete.png" title="Delete" styleClass="myButton"
+				value="OK" image="/img/edit_trash.png" title="Delete" styleClass="myButton"
+				onclick="#{rich:component('program_panel')}.hide()"
+				reRender="program_dataGrid" />
+			<a4j:commandButton action="#{editConferenceBackBean.rollBackProgram()}"
+				value="OK" image="/img/delete.png" title="#{messages['global.cancel']}" styleClass="myButton"
 				onclick="#{rich:component('program_panel')}.hide()"
 				reRender="program_dataGrid" />
 			</rich:toolBarGroup>

@@ -1,5 +1,6 @@
 package hu.bme.dtt.conferenceportal.session;
 
+import hu.bme.dtt.conferenceportal.dao.ArticleDao;
 import hu.bme.dtt.conferenceportal.dao.ConferenceDao;
 import hu.bme.dtt.conferenceportal.dao.TagDao;
 import hu.bme.dtt.conferenceportal.dao.UserDao;
@@ -69,8 +70,8 @@ public class EditConferenceBackBean {
 	/** Cikkek selectItem-ként. */
 	private List<SelectItem> articlesSeletcItems;
 
-	/** Kiválasztott cikk id-ik. */
-	private List<Long> selectedArticles;
+	/** Kiválasztott cikk id-ik stringként. */
+	private List<String> selectedArticles;
 
 	/** Tag-ek kezeléséhez dao. */
 	private TagDao tagDao;
@@ -97,7 +98,8 @@ public class EditConferenceBackBean {
 	private Integer oldProgramIndex;
 
 	/** Logoláshoz logger. */
-	private static final Logger logger = Logger.getLogger(EditConferenceBackBean.class);
+	private static final Logger logger = Logger
+			.getLogger(EditConferenceBackBean.class);
 
 	/**
 	 * Init függvény, ami eldönti, hogy új konferncia lesz létrehozva, vagy egy
@@ -105,7 +107,7 @@ public class EditConferenceBackBean {
 	 */
 	@Create
 	public void init() {
-		logger.info("init meghívódott");
+		logger.debug("init meghívódott");
 		if (conferenceStateHolder.getSelected() != null) {
 			conference = conferenceStateHolder.getSelected();
 			programs = (List<Program>) conference.getPrograms();
@@ -117,7 +119,8 @@ public class EditConferenceBackBean {
 		}
 
 		try {
-			tagDao = (TagDao) InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
+			tagDao = (TagDao) InitialContext
+					.doLookup("ConferencePortal-ear/tagDao/local");
 			conferenceDao = (ConferenceDao) InitialContext
 					.doLookup("ConferencePortal-ear/conferenceDao/local");
 		} catch (NamingException e) {
@@ -128,6 +131,7 @@ public class EditConferenceBackBean {
 		makeTagSelectItems();
 		makeArticleSelectitems();
 		selectedTags = new ArrayList<String>();
+		selectedArticles = new ArrayList<String>();
 	}
 
 	/**
@@ -144,7 +148,7 @@ public class EditConferenceBackBean {
 	 * õket.
 	 */
 	public void changeTags() {
-		logger.info("changeTags meghívódott");
+		logger.debug("changeTags meghívódott");
 		List<Tag> tags = new ArrayList<Tag>();
 
 		for (String tagNames : selectedTags) {
@@ -154,13 +158,13 @@ public class EditConferenceBackBean {
 				e.printStackTrace();
 			}
 		}
-		logger.info(tags.size() + " db. tag hozzáadva.");
+		logger.debug(tags.size() + " db. tag hozzáadva.");
 		conference.setTags(tags);
 	}
 
 	/** A tagStateContainer-bõl összeállítja a tagsSelectItems listát. */
 	public void makeTagSelectItems() {
-		logger.info("makeTagsSelectItems meghívódott");
+		logger.debug("makeTagsSelectItems meghívódott");
 		tagsSelectItems = new ArrayList<SelectItem>();
 		for (Tag t : tagsStateContainer.getList()) {
 			tagsSelectItems.add(new SelectItem(t.getName(), t.getName()));
@@ -184,27 +188,29 @@ public class EditConferenceBackBean {
 	 *            az új kiválasztott program
 	 */
 	public void changeSelectedProgram(Program program) {
-		logger.info("changeSelected program meghívódott.");
+		logger.debug("changeSelected program meghívódott.");
 		if (programs.contains(program)) {
 			oldProgramIndex = programs.indexOf(program);
 			programs.remove(program);
-			logger.info("Kiválasztott program ideiglenesen eltávolítva a listából.");
+			logger.debug("Kiválasztott program ideiglenesen eltávolítva a listából.");
 		}
 		selectedProgramStateHolder.setSelected(program);
 		oldProgram = program.clone();
-		logger.info("Új kiválasztott program: " + selectedProgramStateHolder);
-		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
+		logger.debug("Új kiválasztott program: " + selectedProgramStateHolder);
+		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
 	 * A kiválasztott program új program lesz.
 	 */
 	public void newSelectedProgram() {
-		logger.info("A kiválasztott program új program lesz.");
+		logger.debug("A kiválasztott program új program lesz.");
 		oldProgramIndex = null;
 		oldProgram = null;
 		selectedProgramStateHolder.setSelected(new Program());
-		logger.info("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
+		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
@@ -229,6 +235,13 @@ public class EditConferenceBackBean {
 	}
 
 	/**
+	 * Elmenti az újonnan kiválasztott cikkeket.
+	 */
+	public void saveArticles() {
+		conference.setArticles(selectedArticlesFromDb());
+	}
+
+	/**
 	 * Elmenti a szerkesztés alatt álló konferenciát. Kezeli, hogy új
 	 * konferenciáról van-e szó, vagy egy régit kell-e updatelni. Végül
 	 * beállítja a conferenceStateHolder-be az elmentett konferenciát.
@@ -239,16 +252,19 @@ public class EditConferenceBackBean {
 			FacesMessages.instance().add("Cím megadása kötelezõ!");
 			return;
 		}
-		if ((conference.getShortTitle() == null) || conference.getShortTitle().isEmpty()) {
+		if ((conference.getShortTitle() == null)
+				|| conference.getShortTitle().isEmpty()) {
 			FacesMessages.instance().add("Rövid cím megadása kötelezõ!");
 			// FacesMessages.instance().add(msg);
 			return;
 		}
+
 		if (newConference) {
 			try {
-				UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
-				conference.setOwner(userDao.getUser(Identity.instance().getCredentials()
-						.getUsername()));
+				UserDao userDao = InitialContext
+						.doLookup("ConferencePortal-ear/userDao/local");
+				conference.setOwner(userDao.getUser(Identity.instance()
+						.getCredentials().getUsername()));
 			} catch (NamingException e) {
 				logger.error(e.getMessage(), e);
 			}
@@ -265,6 +281,40 @@ public class EditConferenceBackBean {
 	}
 
 	/**
+	 * A selectedArticles listán végigiterál, és adatbázisból lekéri az id-khoz
+	 * tartozó cikkeket.
+	 * 
+	 * @return a lekérdezett cikkek.
+	 */
+	private List<Article> selectedArticlesFromDb() {
+		logger.info("Cikkek lekérdezése adatbázisból! SelectedArticles száma: "
+				+ selectedArticles.size());
+		List<Article> result = new ArrayList<Article>();
+		ArticleDao articleDao;
+		try {
+			articleDao = InitialContext
+					.doLookup("ConferencePortal-ear/articleDao/local");
+		} catch (NamingException e) {
+			logger.error(e.getMessage(), e);
+			return result;
+		}
+		logger.info("selectedArticles.get(0)=" + selectedArticles.get(0));
+		logger.info("selectedArticles.get(0)="
+				+ selectedArticles.get(0).getClass());
+		for (String id : selectedArticles) {
+			logger.info(id.toString() + ". azonosítójú cikk keresése!");
+			Long id_Long = Long.parseLong(id);
+			try {
+				result.add(articleDao.findByPrimaryKey(id_Long));
+			} catch (Exception e) {
+				logger.error(id + ". azonosítóju cikk nem található!");
+			}
+		}
+		logger.info(result.size() + " db. cikk lekérdezve!");
+		return result;
+	}
+
+	/**
 	 * Teszteléshez. Kilogolja az elmentendõ konferencia részleteit.
 	 */
 	public void print() {
@@ -277,6 +327,16 @@ public class EditConferenceBackBean {
 	 */
 	public void changeNew() {
 		newConference = !newConference;
+	}
+
+	/**
+	 * Teszthez, kiírja, ha változott a kiválasztott cikkek.
+	 */
+	public void articleChange() {
+		logger.info(selectedArticles.size() + " db. cikk van kiválasztva!");
+		// if (selectedArticles.size() > 0) {
+		// logger.info("selectedArticles.get(0)=" + selectedArticles.get(0));
+		// }
 	}
 
 	/**
@@ -395,7 +455,8 @@ public class EditConferenceBackBean {
 	 * @param articlesStateContainer
 	 *            the articlesStateContainer to set
 	 */
-	public void setArticlesStateContainer(StateContainer<Article> articlesStateContainer) {
+	public void setArticlesStateContainer(
+			StateContainer<Article> articlesStateContainer) {
 		this.articlesStateContainer = articlesStateContainer;
 	}
 
@@ -417,7 +478,7 @@ public class EditConferenceBackBean {
 	/**
 	 * @return the selectedArticles
 	 */
-	public List<Long> getSelectedArticles() {
+	public List<String> getSelectedArticles() {
 		return selectedArticles;
 	}
 
@@ -425,7 +486,7 @@ public class EditConferenceBackBean {
 	 * @param selectedArticles
 	 *            the selectedArticles to set
 	 */
-	public void setSelectedArticles(List<Long> selectedArticles) {
+	public void setSelectedArticles(List<String> selectedArticles) {
 		this.selectedArticles = selectedArticles;
 	}
 

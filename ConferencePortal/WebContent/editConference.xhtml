@@ -1,8 +1,11 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:a4j="http://richfaces.org/a4j"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich" template="layout/template.xhtml">
 
 
@@ -14,24 +17,30 @@
 					<center>
 						<h:panelGrid columns="2">
 							<h:outputText value="#{messages['conference.title']}:" />
-							<h:inputText value="#{editConferenceBackBean.conference.title}" size="100" />
+							<h:inputText value="#{editConferenceBackBean.conference.title}"
+								size="100" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.short_title']}:" />
-							<h:inputText value="#{editConferenceBackBean.conference.shortTitle}" size="100" />
+							<h:inputText
+								value="#{editConferenceBackBean.conference.shortTitle}"
+								size="100" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.tags']}:" />
 							<rich:panel>
-								<rich:dataGrid value="#{editConferenceBackBean.conference.tags}" var="tag" columns="5"
-									style="border:0px" columnClasses="noBorder" id="tag_dataGrid">
+								<rich:dataGrid value="#{editConferenceBackBean.conference.tags}"
+									var="tag" columns="5" style="border:0px"
+									columnClasses="noBorder" id="tag_dataGrid">
 									<h:outputText value="#{tag.name}" />
 								</rich:dataGrid>
-								<h:commandButton action="#" onclick="#{rich:component('tag_panel')}.show()"
-									value="#{messages['conference.add']}" title="#{messages['conference.add']}"
-									image="img/edit_add.png" styleClass="myButton">
+								<h:commandButton action="#"
+									onclick="#{rich:component('tag_panel')}.show()"
+									value="#{messages['conference.add']}"
+									title="#{messages['conference.add']}" image="img/edit_add.png"
+									styleClass="myButton">
 
 								</h:commandButton>
 								<rich:messages />
@@ -40,20 +49,26 @@
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.description']}:" />
-							<h:inputTextarea value="#{editConferenceBackBean.conference.description}" rows="10" cols="73" />
+							<h:inputTextarea
+								value="#{editConferenceBackBean.conference.description}"
+								rows="10" cols="73" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.start_date']}:" />
-							<rich:calendar value="#{editConferenceBackBean.conference.startDate}" popup="true"
-								datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" cellWidth="24px" cellHeight="22px"
+							<rich:calendar
+								value="#{editConferenceBackBean.conference.startDate}"
+								popup="true" datePattern="yyyy. MM. dd. HH:mm"
+								showApplyButton="true" cellWidth="24px" cellHeight="22px"
 								style="width:200px" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.end_date']}:" />
-							<rich:calendar value="#{editConferenceBackBean.conference.endDate}" popup="true"
-								datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" cellWidth="24px" cellHeight="22px"
+							<rich:calendar
+								value="#{editConferenceBackBean.conference.endDate}"
+								popup="true" datePattern="yyyy. MM. dd. HH:mm"
+								showApplyButton="true" cellWidth="24px" cellHeight="22px"
 								style="width:200px" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
@@ -65,8 +80,9 @@
 
 							<h:outputText value="#{messages['conference.programs']}:" />
 							<rich:panel>
-								<rich:dataGrid id="program_dataGrid" value="#{editConferenceBackBean.programs}"
-									var="program" columns="1" style="border:0px" columnClasses="noBorder">
+								<rich:dataGrid id="program_dataGrid"
+									value="#{editConferenceBackBean.programs}" var="program"
+									columns="1" style="border:0px" columnClasses="noBorder">
 									<rich:panel style="border:0px">
 										<h:panelGrid columns="2">
 											<rich:panel style="border:0px">
@@ -75,44 +91,65 @@
 												<h:outputText
 													value="#{program.start.toLocaleString()} - #{program.end.toLocaleString()}" />
 											</rich:panel>
-											<a4j:commandButton action="#{editConferenceBackBean.changeSelectedProgram(program)}"
-												oncomplete="#{rich:component('program_panel')}.show()" image="img/edit.png"
-												styleClass="myButton" reRender="program_panel" />
+											<a4j:commandButton
+												action="#{editConferenceBackBean.changeSelectedProgram(program)}"
+												oncomplete="#{rich:component('program_panel')}.show()"
+												image="img/edit.png" styleClass="myButton"
+												reRender="program_panel" />
 
 										</h:panelGrid>
-										<rich:toolTip followMouse="true" direction="top-right" showDelay="250"
-											styleClass="tooltip">
-											<span style="white-space: nowrap"> <h:outputText value="#{program.description}" />
+										<rich:toolTip followMouse="true" direction="top-right"
+											showDelay="250" styleClass="tooltip">
+											<span style="white-space: nowrap"> <h:outputText
+													value="#{program.description}" />
 											</span>
 										</rich:toolTip>
 
 									</rich:panel>
 									<rich:separator height="1" lineType="solid" />
 								</rich:dataGrid>
-								<a4j:commandButton action="#{editConferenceBackBean.newSelectedProgram()}"
+								<a4j:commandButton
+									action="#{editConferenceBackBean.newSelectedProgram()}"
 									oncomplete="#{rich:component('program_panel')}.show()"
-									value="#{messages['conference.add']}" title="#{messages['conference.add']}"
-									image="img/edit_add.png" styleClass="myButton" reRender="program_panel" />
+									value="#{messages['conference.add']}"
+									title="#{messages['conference.add']}" image="img/edit_add.png"
+									styleClass="myButton" reRender="program_panel" />
 							</rich:panel>
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.summary']}:" />
-							<h:inputTextarea value="#{editConferenceBackBean.conference.summary}" rows="10" cols="73" />
+							<h:inputTextarea
+								value="#{editConferenceBackBean.conference.summary}" rows="10"
+								cols="73" />
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.articles']}:" />
-							<a4j:commandButton action="#" onclick="#{rich:component('article_panel')}.show()"
-								value="#{messages['conference.add']}" title="#{messages['conference.add']}"
-								image="img/edit_add.png" styleClass="myButton" />
+							<rich:panel style="border:0px">
+							<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.articles}" var="article"
+							style="width:100%;" id="article_dataGrid">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{article.author}: #{article.title}" />
+									<h:outputLink value="#{article.url}"
+										rendered="#{(article.url.length()>4)}"> #{messages['article.viewing']} </h:outputLink>
+								</h:panelGrid>
+								</rich:dataGrid>
+								<a4j:commandButton action="#"
+									onclick="#{rich:component('article_panel')}.show()"
+									value="#{messages['conference.add']}"
+									title="#{messages['conference.add']}" image="img/edit_add.png"
+									styleClass="myButton" />
+							</rich:panel>
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 
 						</h:panelGrid>
-						<a4j:commandButton action="#{editConferenceBackBean.saveConference()}"
-							value="#{messages['conference.save']}" title="#{messages['conference.save']}"
-							image="/img/save.png" styleClass="myButton" />
+						<a4j:commandButton
+							action="#{editConferenceBackBean.saveConference()}"
+							value="#{messages['conference.save']}"
+							title="#{messages['conference.save']}" image="/img/save.png"
+							styleClass="myButton" />
 						<s:div id="state_message" styleClass="state_message">
 							<rich:spacer height="5px" />
 							<rich:messages>
@@ -133,7 +170,8 @@
 						</s:div>
 					</center>
 				</rich:panel>
-				<a4j:commandButton action="#{editConferenceBackBean.changeNew()}" value="change new" />
+				<a4j:commandButton action="#{editConferenceBackBean.changeNew()}"
+					value="change new" />
 			</a4j:form>
 		</center>
 	</ui:define>
