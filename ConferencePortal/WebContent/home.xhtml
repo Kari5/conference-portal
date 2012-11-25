@@ -8,8 +8,10 @@
 	<ui:define name="body">
 		<center>
 			<a4j:form ajaxSubmit="true">
-				<rich:panel style="width:100%" id="conferencePanel"
-					header="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}">
+				<rich:panel style="width:100%" id="conferencePanel">
+					<f:facet name="header">
+					<h:outputText value="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}" styleClass="specTitle"/>
+					</f:facet>
 				<h:graphicImage value="/img/logo.png" rendered="#{(conferenceStateHolder.selected == null)}"/>
 					<h:panelGrid columns="2" rendered="#{not (conferenceStateHolder.selected == null)}"
 						style="width:100%;">
