@@ -25,13 +25,14 @@
 			<h:outputText value="Select location:" />
 			<h:selectOneListbox value="#{editConferenceBackBean.selectedLocationId}">
 				<f:selectItems value="#{editConferenceBackBean.locationSelectItems}"  />
+				<a4j:support event="onclick" action="#{editConferenceBackBean.locationChange()}"/>
 			</h:selectOneListbox>
-			<s:button value="Add new"
-				onclick="#{rich:component('location_panel')}.hide(); #{rich:component('newlocation_panel')}.show(); return false" />
+			<s:button value="#{messages['location.new']}"
+				onclick="#{rich:component('location_panel')}.hide(); #{rich:component('newlocation_panel')}.show(); return false" styleClass="myButton"/>
 			<rich:toolBar>
 				<rich:toolBarGroup location="left">
-					<a4j:commandButton action="#{editConferenceBackBean.setLocation()}"
-						value="#{messages['global.ok']}}" image="/img/save.png" title="#{messages['global.ok']}}"
+					<a4j:commandButton action="#{editConferenceBackBean.changeLocation()}"
+						value="#{messages['global.ok']}}" image="/img/save.png" title="#{messages['global.ok']}"
 						styleClass="myButton" oncomplete="#{rich:component('location_panel')}.hide()"
 						reRender="editconferencepanel" />
 				</rich:toolBarGroup>

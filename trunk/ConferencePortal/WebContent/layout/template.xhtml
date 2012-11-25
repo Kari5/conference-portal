@@ -66,6 +66,9 @@
 									<s:button value="#{messages['menu.tag.uploadarticle']}"
 										onclick="#{rich:component('new_article_panel')}.show(); return false;"
 										styleClass="myButton" style="width:100%" />
+									<s:button value="#{messages['location.new']}"
+										onclick="#{rich:component('newlocation_panel')}.show(); return false;"
+										styleClass="myButton" style="width:100%" />
 									<s:button value="#{messages['menu.tag.createconference']}"
 										action="#{homePageBackBean.createConference()}"
 										styleClass="myButton" style="width:100%" />
@@ -109,23 +112,28 @@
 				</s:div>
 			</h:panelGrid>
 		</center>
-		<!-- Tag hozzaado panel -->
-		<ui:include src="modalPanels/tag_modalPanel.xhtml" />
-
-		<!-- Program hozzaado panel -->
-		<ui:include src="modalPanels/program_modalPanel.xhtml" />
 
 		<!-- Uj cikk feltoltes panel -->
 		<ui:include src="modalPanels/newArticle_modalPanel.xhtml" />
-
-		<!-- Cikk hozzaadasa panel -->
-		<ui:include src="modalPanels/article_modalPanel.xhtml" />
 
 		<!-- Kerdes hozzaadasa panel -->
 		<ui:include src="modalPanels/question_modalPanel.xhtml" />
 
 		<!-- Kerdes megvalaszolasa panel -->
 		<ui:include src="modalPanels/answer_modalPanel.xhtml" />
+		
+		<!-- Uj helyszin felvetele panel -->
+		<ui:include src="modalPanels/newLocation_modalPanel.xhtml" />
+				
+		<!-- Tag hozzaado panel -->
+		<ui:include src="modalPanels/tag_modalPanel.xhtml" />
+		
+		<!-- Program hozzaado panel -->
+		<ui:include src="modalPanels/program_modalPanel.xhtml" />
+		
+		<!-- Cikk hozzaadasa panel -->
+		<ui:include src="modalPanels/article_modalPanel.xhtml" />
+		
 	</div>
 	<div class="footer">
 		<rich:separator width="100%" height="1" lineType="solid" />
