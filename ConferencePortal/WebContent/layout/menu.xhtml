@@ -27,9 +27,9 @@
 				<h:outputText value="#{messages['login.tag.password']}:" />
 				<h:inputSecret title="#{messages['login.tag.password']}" value="#{credentials.password}" />
 				<a4j:commandButton id="menuLoginId" value="#{messages['login.tag.login']}"
-					action="#{identity.login()}" propagation="none" />
+					action="#{identity.login()}" propagation="none"  styleClass="myButton"/>
 				<a4j:commandButton id="menuRegisterId" action="registration"
-					value="#{messages['login.tag.register']}" propagation="none" />
+					value="#{messages['login.tag.register']}" propagation="none" styleClass="myButton"/>
 			</a4j:form>
 		</s:fragment>
 
