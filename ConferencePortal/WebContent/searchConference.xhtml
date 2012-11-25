@@ -17,17 +17,37 @@
 						<h:panelGrid columns="2">
 							<h:outputText value="#{messages['search.tag.bytitle']}:" />
 							<h:inputText value="#{searchConference.searchTitle}" />
+							<h:outputText value="#{messages['search.tag.bytags']}:" />
+							<rich:panel>
+								<h:outputText value="#{searchConference.concatSelectedTags()}" style="font-size:2.5em;" />
+								<s:button value="#{messages['search.tag.addtags']}"
+									onclick="#{rich:component('searchtag_panel')}.show(); return false;" />
+							</rich:panel>
+							<h:outputText value="Keresés időpont alapján:" />
+							<rich:panel>
+								<h:panelGrid columns="2">
+									<h:outputText value="Kezdet:" />
+									<rich:calendar value="#{searchConference.startDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
+										showApplyButton="true" />
+									<h:outputText value="Vég:" />
+									<rich:calendar value="#{searchConference.endDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
+										showApplyButton="true" />
+								</h:panelGrid>
+							</rich:panel>
+							<h:outputText value="Keresés hely alapján:" />
+							<h:inputText value="#{searchConference.location}" />
 						</h:panelGrid>
-						<a:commandButton value="#{messages['search.tag.btn']}" action="#{searchConference.executeSearch()}" reRender="searchForm"/>
+						<a:commandButton value="#{messages['search.tag.btn']}"
+							action="#{searchConference.executeSearch()}" reRender="searchForm" />
 					</a:form>
 
 				</rich:panel>
 
 				<a:form ajaxSubmit="true">
 					<rich:panel>
-					<f:facet name="header">
-						<h:outputText value="#{messages['search.tag.resulttitle']}" />
-					</f:facet>
+						<f:facet name="header">
+							<h:outputText value="#{messages['search.tag.resulttitle']}" />
+						</f:facet>
 						<rich:dataGrid value="#{searchConference.searchResults}" var="conference" columns="1"
 							rowKeyVar="row" columnClasses="noBorder" style="border:0px">
 							<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
@@ -44,5 +64,8 @@
 				</a:form>
 			</rich:panel>
 		</h:form>
+
+		<!-- Kulccsszó hozzáadása panel -->
+		<ui:include src="/layout/modalPanels/searchtag_modalPanel.xhtml" />
 	</ui:define>
 </ui:composition>

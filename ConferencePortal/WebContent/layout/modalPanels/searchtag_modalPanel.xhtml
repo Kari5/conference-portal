@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<f:subview xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:modalPanel id="searchtag_panel" autosized="true" domElementAttachment="form">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Tag Panel" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink"
+					style="cursor:pointer" />
+				<rich:componentControl for="searchtag_panel" attachTo="hidelink" operation="hide"
+					event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form>
+			<rich:pickList value="#{searchConference.selectedTags}" id="tag_select">
+				<f:selectItems value="#{searchConference.tagsSelectItems}" />
+			</rich:pickList>
+			<rich:toolBar>
+				<rich:toolBarGroup location="left">
+					<a4j:commandButton value="#{messages['global.ok']}" image="/img/save.png"
+						title="#{messages['global.ok']}" styleClass="myButton"
+						onclick="#{rich:component('searchtag_panel')}.hide()" reRender="searchForm" />
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right">
+					<a4j:commandButton action="#" value="#{messages['global.cancel']}}" image="/img/delete.png"
+						title="#{messages['global.cancel']}}" styleClass="myButton"
+						onclick="#{rich:component('searchtag_panel')}.hide()" />
+				</rich:toolBarGroup>
+			</rich:toolBar>
+		</h:form>
+	</rich:modalPanel>
+</f:subview>
