@@ -12,7 +12,7 @@
 	<ui:define name="body">
 		<center>
 			<a4j:form ajaxSubmit="true">
-				<rich:panel style="width:800px"
+				<rich:panel style="width:800px" id="editconferencepanel"
 					header="#{editConferenceBackBean.newConference ? messages['confernece.new_confernece'] : messages['conference.edit_conference']}">
 					<center>
 						<h:panelGrid columns="2">
@@ -178,5 +178,8 @@
 					value="change new" />
 			</a4j:form>
 		</center>
+		
+		<ui:include src="/layout/modalPanels/location_modalPanel.xhtml" />
+		<ui:include src="/layout/modalPanels/newLocation_modalPanel.xhtml" />
 	</ui:define>
 </ui:composition>
