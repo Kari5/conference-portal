@@ -24,4 +24,9 @@ public class LocationDaoImpl extends GenericDaoImpl<Location> implements Locatio
 		return entityManager;
 	}
 
+	public Location saveLocation(Location location) {
+		save(location);
+		return location;
+	}
+
 }
