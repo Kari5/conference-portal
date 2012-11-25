@@ -23,18 +23,18 @@
 								<s:button value="#{messages['search.tag.addtags']}"
 									onclick="#{rich:component('searchtag_panel')}.show(); return false;" />
 							</rich:panel>
-							<h:outputText value="Keresés időpont alapján:" />
+							<h:outputText value="#{messages['search.tag.bydate']}:" />
 							<rich:panel>
 								<h:panelGrid columns="2">
-									<h:outputText value="Kezdet:" />
-									<rich:calendar value="#{searchConference.startDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
-										showApplyButton="true" />
-									<h:outputText value="Vég:" />
-									<rich:calendar value="#{searchConference.endDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
-										showApplyButton="true" />
+									<h:outputText value="#{messages['search.tag.bydate.start']}:" />
+									<rich:calendar value="#{searchConference.startDate}" popup="true"
+										datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
+									<h:outputText value="#{messages['search.tag.bydate.end']}:" />
+									<rich:calendar value="#{searchConference.endDate}" popup="true"
+										datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
 								</h:panelGrid>
 							</rich:panel>
-							<h:outputText value="Keresés hely alapján:" />
+							<h:outputText value="#{messages['search.tag.bylocation']}:" />
 							<h:inputText value="#{searchConference.location}" />
 						</h:panelGrid>
 						<a:commandButton value="#{messages['search.tag.btn']}"
