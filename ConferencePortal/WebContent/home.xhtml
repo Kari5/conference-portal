@@ -58,7 +58,8 @@
 						<rich:separator height="1" lineType="solid" />
 
 						<h:outputText value="#{messages['conference.location']}:" />
-						<rich:spacer />
+						<h:outputText
+									value="#{editConferenceBackBean.conference.location.name} (#{editConferenceBackBean.conference.location.address})" rendered="#{editConferenceBackBean.conference.location!=null}"/>
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 
