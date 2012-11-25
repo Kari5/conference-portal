@@ -180,6 +180,7 @@ public class HomePageBackBean {
 	 *            beállítíandó konferencia.
 	 */
 	public String changeSelectedConference(Conference conference) {
+		logger.debug("Changing selected conference id=" + conference.getId());
 		conferenceStateHolder.setSelected(conference);
 		return "home";
 	}
