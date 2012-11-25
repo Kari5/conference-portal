@@ -1,8 +1,11 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
-	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j" template="layout/template.xhtml">
 
 	<ui:define name="body">
@@ -10,20 +13,30 @@
 			<a4j:form ajaxSubmit="true">
 				<rich:panel style="width:100%" id="conferencePanel">
 					<f:facet name="header">
-					<h:outputText value="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}" styleClass="specTitle"/>
+						<h:outputText
+							value="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}"
+							styleClass="specTitle" />
 					</f:facet>
-				<h:graphicImage value="/img/logo.png" rendered="#{(conferenceStateHolder.selected == null)}"/>
-					<h:panelGrid columns="2" rendered="#{not (conferenceStateHolder.selected == null)}"
+					<h:graphicImage value="/img/logo.png"
+						rendered="#{(conferenceStateHolder.selected == null)}" />
+					<h:outputText
+						value="#{conferenceStateHolder.selected.startDate.toLocaleString()} - #{conferenceStateHolder.selected.endDate.toLocaleString()}"
+						styleClass="date"
+						rendered="#{not (conferenceStateHolder.selected == null)}" />
+					<h:panelGrid columns="2"
+						rendered="#{not (conferenceStateHolder.selected == null)}"
 						style="width:100%;">
 						<h:outputText value="#{messages['conference.short_title']}:" />
-						<h:outputText value="#{conferenceStateHolder.selected.shortTitle}" style="width:100%;" />
+						<h:outputText value="#{conferenceStateHolder.selected.shortTitle}"
+							style="width:100%;" />
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 
 						<h:outputText value="#{messages['conference.tags']}:" />
 						<rich:panel>
-							<rich:dataGrid value="#{conferenceStateHolder.selected.tags}" var="tag" columns="5"
-								style="border:0px;width:100%" columnClasses="noBorder" id="tag_dataGrid">
+							<rich:dataGrid value="#{conferenceStateHolder.selected.tags}"
+								var="tag" columns="5" style="border:0px;width:100%"
+								columnClasses="noBorder" id="tag_dataGrid">
 								<h:outputText value="#{tag.name}" />
 							</rich:dataGrid>
 						</rich:panel>
@@ -38,19 +51,9 @@
 						<rich:separator height="1" lineType="solid" />
 
 						<h:outputText value="#{messages['conference.description']}:" />
-						<h:outputText value="#{conferenceStateHolder.selected.description}" style="width:100%;" />
-						<rich:separator height="1" lineType="solid" />
-						<rich:separator height="1" lineType="solid" />
-
-						<h:outputText value="#{messages['conference.start_date']}:" />
-						<rich:calendar value="#{conferenceStateHolder.selected.startDate}" popup="false"
-							datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
-						<rich:separator height="1" lineType="solid" />
-						<rich:separator height="1" lineType="solid" />
-
-						<h:outputText value="#{messages['conference.end_date']}:" />
-						<rich:calendar value="#{conferenceStateHolder.selected.endDate}" popup="false"
-							datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
+						<h:outputText
+							value="#{conferenceStateHolder.selected.description}"
+							style="width:100%;" />
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 
@@ -61,14 +64,17 @@
 
 						<h:outputText value="#{messages['conference.programs']}:" />
 						<rich:panel>
-							<rich:dataGrid id="program_dataGrid" value="#{conferenceStateHolder.selected.programs}"
-								var="program" columns="1" style="border:0px;width:100%" columnClasses="noBorder">
+							<rich:dataGrid id="program_dataGrid"
+								value="#{conferenceStateHolder.selected.programs}" var="program"
+								columns="1" style="border:0px;width:100%"
+								columnClasses="noBorder">
 								<rich:panel style="border:0px">
 									<h:panelGrid columns="2">
 										<rich:panel style="border:0px;width:100%">
 											<h:outputText value="#{program.title}" />
 											<rich:spacer width="5px" />
-											<h:outputText value="#{program.start.toLocaleString()} - #{program.end.toLocaleString()}"
+											<h:outputText
+												value="#{program.start.toLocaleString()} - #{program.end.toLocaleString()}"
 												style="width:100%;" />
 										</rich:panel>
 									</h:panelGrid>
@@ -82,31 +88,40 @@
 						<rich:separator height="1" lineType="solid" />
 
 						<h:outputText value="#{messages['conference.summary']}:" />
-						<h:outputText value="#{conferenceStateHolder.selected.summary}" style="width:100%;" />
+						<h:outputText value="#{conferenceStateHolder.selected.summary}"
+							style="width:100%;" />
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 
 						<h:outputText value="#{messages['conference.articles']}:" />
-						<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.articles}" var="article"
-							style="width:100%;">
+						<rich:dataGrid columns="1"
+							value="#{conferenceStateHolder.selected.articles}" var="article"
+							style="width:100%;border:0px" columnClasses="noBorder">
 							<h:panelGrid columns="2">
 								<h:outputText value="#{article.author}: #{article.title}" />
-								<h:outputLink value="#{article.url}" rendered="#{(article.url.length()>4)}" target="_blank"> #{messages['article.viewing']} </h:outputLink>
+								<h:outputLink value="#{article.url}"
+									rendered="#{(article.url.length()>4)}" target="_blank"> #{messages['article.viewing']} </h:outputLink>
 							</h:panelGrid>
 						</rich:dataGrid>
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 						<h:outputText value="#{messages['conference.questions']}:" />
-						<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.questions}" var="qs"
-							style="width:100%;">
-							<h:outputText value="#{messages['conference.question']}: #{qs.question}" />
+						<rich:dataGrid columns="1"
+							value="#{conferenceStateHolder.selected.questions}" var="qs"
+							style="width:100%;border:0px" columnClasses="noBorder">
+							<h:outputText
+								value="#{messages['conference.question']}: #{qs.question}" />
 							<h:panelGrid columns="2">
-								<rich:dataGrid columns="1" value="#{qs.answers}" var="answer" style="width:100%;">
-									<h:outputText value="#{messages['conference.answer']}: #{answer.toString()}" />
+								<rich:dataGrid columns="1" value="#{qs.answers}" var="answer"
+									style="width:100%;border:0px" columnClasses="noBorder">
+									<h:outputText
+										value="#{messages['conference.answer']}: #{answer.toString()}" />
 								</rich:dataGrid>
-								<a4j:commandButton action="#{questionBean.changeSelectedQuestion(qs)}"
-									oncomplete="#{rich:component('answer_panel')}.show()" image="img/edit.png"
-									styleClass="myButton" reRender="answer_panel" title="#{messages['conference.edit']}"
+								<a4j:commandButton
+									action="#{questionBean.changeSelectedQuestion(qs)}"
+									oncomplete="#{rich:component('answer_panel')}.show()"
+									image="img/edit.png" styleClass="myButton"
+									reRender="answer_panel" title="#{messages['conference.edit']}"
 									rendered="#{homePageBackBean.checkOwner()}" />
 							</h:panelGrid>
 							<rich:separator height="1" lineType="solid" />
@@ -114,9 +129,24 @@
 						<rich:separator height="1" lineType="solid" />
 						<rich:separator height="1" lineType="solid" />
 
+						<h:outputText value="#{messages['conference.participants']}" />
+						<rich:panel style="border:0px">
+							<rich:dataGrid
+								value="#{conferenceStateHolder.selected.participants}"
+								var="participant" columns="1" style="border:0px"
+								columnClasses="noBorder">
+								<h:outputText
+									value="#{participant.firstName} #{participant.lastName}" />
+							</rich:dataGrid>
+
+						</rich:panel>
+						<rich:separator height="1" lineType="solid" />
+						<rich:separator height="1" lineType="solid" />
 					</h:panelGrid>
-					<a4j:commandButton action="editConference" value="#{messages['conference.edit']}"
-						title="#{messages['conference.edit']}" image="/img/edit.png" styleClass="myButton"
+					<a4j:commandButton action="editConference"
+						value="#{messages['conference.edit']}"
+						title="#{messages['conference.edit']}" image="/img/edit.png"
+						styleClass="myButton"
 						rendered="#{(conferenceStateHolder.selected != null) and homePageBackBean.checkOwner()}" />
 
 				</rich:panel>
