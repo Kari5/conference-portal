@@ -34,17 +34,16 @@
 							<rich:dataGrid value="#{homePageBackBean.conferences}"
 								var="conference" columns="1" rowKeyVar="row"
 								columnClasses="noBorder" style="border:0px">
-								<center>
+								
 									<a:commandLink
 										action="#{homePageBackBean.changeSelectedConference(conference)}"
-										reRender="conferencePanel,navigationPanel" styleClass="title">
-										<h:outputText value="#{row+1} " />
-										<h:outputText value="#{conference.shortTitle} " />
+										reRender="conferencePanel,navigationPanel">
+										<h:outputText value="#{conference.startDate.toLocaleString()}" styleClass="smallHeadLine"/>
 										<br />
-										<rich:calendar value="#{conference.startDate}" popup="true"
-											datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
+										<h:outputText value="#{conference.shortTitle} " styleClass="title" />
 									</a:commandLink>
-								</center>
+								
+								<rich:spacer height="5px"/>
 								<rich:separator height="1" lineType="solid" />
 							</rich:dataGrid>
 						</rich:panel>
