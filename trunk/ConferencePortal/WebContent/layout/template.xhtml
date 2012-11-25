@@ -37,16 +37,17 @@
 
 								<a:commandLink
 									action="#{homePageBackBean.changeSelectedConference(conference)}"
-									reRender="conferencePanel,navigationPanel">
+									reRender="conferencePanel,navigationPanel" rendered="#{conference.endDate > currentDatetime}" >
 									<h:outputText value="#{conference.startDate.toLocaleString()}"
-										styleClass="smallHeadLine" />
+										styleClass="smallHeadLine"/>
 									<br />
 									<h:outputText value="#{conference.shortTitle} "
 										styleClass="title" />
+									<rich:separator height="2" lineType="solid" />
 								</a:commandLink>
 
 								<rich:spacer height="5px" />
-								<rich:separator height="2" lineType="solid" />
+								
 							</rich:dataGrid>
 						</rich:panel>
 					</a:form>
@@ -58,7 +59,7 @@
 
 					<a:form ajaxSubmit="true">
 						<rich:panel id="navigationPanel" style="border:0px">
-							<rich:panel header="#{messages['menu.tag.main']}">
+							<rich:panel header="#{messages['menu.tag.main']}" headerClass="smallHeadLine">
 								<h:panelGrid columns="1">
 									<s:button value="#{messages['menu.tag.home']}" action="home"
 										styleClass="myButton" style="width:100%"/>
@@ -80,7 +81,7 @@
 							</rich:panel>
 							<rich:spacer height="10px"/>
 							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
-								<rich:panel header="#{messages['menu.tag.conference']}">
+								<rich:panel header="#{messages['menu.tag.conference']}" headerClass="smallHeadLine">
 									<h:panelGrid columns="1">
 										<s:button value="#{messages['menu.tag.addarticle']}"
 											onclick="#{rich:component('article_panel')}.show(); return false;"

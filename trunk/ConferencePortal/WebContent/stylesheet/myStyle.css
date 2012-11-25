@@ -126,11 +126,27 @@
 }
 
 .date {
-	 font-size: 85%;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: black;
-      font-size: 20px;
-      font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
-      font-weight: 100;	
+	font-size: 85%;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: black;
+	font-size: 20px;
+	font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif;
+	font-weight: 100;
+}
+
+.paragraph:first-letter {
+	text-transform: uppercase;
+}
+
+.paragraph {
+	color: #424242;
+	font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond,
+		Times, serif;
+	letter-spacing: 0.1em;
+	margin: 40px auto;
+	text-transform: lowercase;
+	line-height: 145%;
+	font-size: 14pt;
+	font-variant: small-caps;
 }

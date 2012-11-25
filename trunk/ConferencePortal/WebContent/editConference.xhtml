@@ -131,7 +131,7 @@
 							style="width:100%;" id="article_dataGrid">
 								<h:panelGrid columns="2">
 									<h:outputText value="#{article.author}: #{article.title}" />
-									<h:outputLink value="#{article.url}"
+									<h:outputLink value="#{article.url}" target="_blank"
 										rendered="#{(article.url.length()>4)}"> #{messages['article.viewing']} </h:outputLink>
 								</h:panelGrid>
 								</rich:dataGrid>
