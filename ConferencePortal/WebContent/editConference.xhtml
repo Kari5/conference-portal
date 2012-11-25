@@ -74,7 +74,11 @@
 							<rich:separator height="1" lineType="solid" />
 
 							<h:outputText value="#{messages['conference.location']}:" />
-							<rich:spacer />
+							<s:div>
+								<h:outputText
+									value="#{editConferenceBackBean.conference.location != null ? editConferenceBackBean.conference.location.name+'('+editConferenceBackBean.conference.location.address+')' : ''}" />
+								<s:button value="add" onclick="#{rich:component('location_panel')}.show(); return false;"/>
+							</s:div>
 							<rich:separator height="1" lineType="solid" />
 							<rich:separator height="1" lineType="solid" />
 

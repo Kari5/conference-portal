@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<f:subview xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:modalPanel id="newlocation_panel" autosized="true" domElementAttachment="form">
+		<f:facet name="header">
+			<h:panelGroup>
+				<h:outputText value="Add new location" />
+			</h:panelGroup>
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/img/delete.png" styleClass="hidelink" id="hidelink_program"
+					style="cursor:pointer" title="#{messages['global.close']}" />
+				<rich:componentControl for="newlocation_panel" attachTo="hidelink_program" operation="hide"
+					event="onclick">
+				</rich:componentControl>
+			</h:panelGroup>
+		</f:facet>
+		<a4j:form ajaxSubmit="true">
+			<h:outputText value="Location name:" />
+			<h:inputText value="#{editConferenceBackBean.locationName}" />
+			<h:outputText value="Location address:" />
+			<h:inputText value="#{editConferenceBackBean.locationAddress}" />
+			<rich:toolBar>
+				<rich:toolBarGroup location="left">
+					<a4j:commandButton action="#{editConferenceBackBean.saveNewLocation()}"
+						value="#{messages['global.ok']}}" image="/img/save.png" title="#{messages['global.ok']}}"
+						styleClass="myButton" oncomplete="#{rich:component('newlocation_panel')}.hide()"
+						reRender="editconferencepanel" />
+				</rich:toolBarGroup>
+				<rich:toolBarGroup location="right">
+					<a4j:commandButton action="#" value="#{messages['global.cancel']}}" image="/img/delete.png"
+						title="#{messages['global.cancel']}}" styleClass="myButton"
+						onclick="#{rich:component('newlocation_panel')}.hide()" />
+				</rich:toolBarGroup>
+			</rich:toolBar>
+		</a4j:form>
+	</rich:modalPanel>
+
+
+
+</f:subview>
