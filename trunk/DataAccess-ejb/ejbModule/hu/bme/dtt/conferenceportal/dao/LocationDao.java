@@ -10,4 +10,6 @@ import javax.ejb.Local;
 @Local
 public interface LocationDao extends GenericDao<Location> {
 	List<Location> getAllLocation();
+
+	Location saveLocation(Location location);
 }
