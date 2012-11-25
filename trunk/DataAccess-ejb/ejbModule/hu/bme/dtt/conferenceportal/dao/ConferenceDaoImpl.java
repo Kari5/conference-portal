@@ -10,8 +10,12 @@ import hu.bme.dtt.conferenceportal.entity.User;
 import hu.futurion.mt.dao.GenericDaoImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
@@ -211,4 +215,115 @@ public class ConferenceDaoImpl extends GenericDaoImpl<Conference> implements Con
 		return (List<Conference>) executeQueryMultipleResult("FROM Conference");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws NamingException
+	 */
+	@Override
+	public List<Conference> searchConferences(String title, List<String> tags, Date startDate,
+			Date endDate, String location) throws NamingException {
+		LOGGER.debug("Searching conferences! title=" + title + " tags="
+				+ Arrays.toString(tags.toArray()) + " startDate=" + startDate + " endDate="
+				+ endDate + " location=" + location);
+		if (((title == null) || title.isEmpty()) && ((tags == null) || tags.isEmpty())
+				&& (startDate == null) && (endDate == null)
+				&& ((location == null) || location.isEmpty())) {
+			LOGGER.debug("No search conditions, returning all.");
+			return conferences();
+		}
+
+		List<Conference> searchResult = new ArrayList<Conference>();
+		StringBuilder queryString = new StringBuilder();
+		queryString.append("FROM Conference c ");
+		if (startDate != null) {
+			queryString.append("WHERE c.startDate >= ? ");
+			if (endDate != null) {
+				queryString.append("AND c.endDate <= ? ");
+				searchResult = (List<Conference>) executeQueryMultipleResult(
+						queryString.toString(), startDate, endDate);
+			} else {
+				searchResult = (List<Conference>) executeQueryMultipleResult(
+						queryString.toString(), startDate);
+			}
+		} else {
+			if (endDate != null) {
+				queryString.append("WHERE c.endDate <= ? ");
+				searchResult = (List<Conference>) executeQueryMultipleResult(
+						queryString.toString(), endDate);
+			} else {
+				searchResult = (List<Conference>) executeQueryMultipleResult(queryString.toString());
+			}
+		}
+		LOGGER.debug("Search result size by dates: " + searchResult.size());
+		if (!searchResult.isEmpty()) {
+			Map<Integer, List<Conference>> rankedSearchResult = new HashMap<Integer, List<Conference>>();
+			String[] splitTitle = null;
+			if (title != null) {
+				splitTitle = title.split("\\s+");
+			}
+			String[] splitLocation = null;
+			if (location != null) {
+				splitLocation = location.split("\\s+");
+			}
+			for (Conference conference : searchResult) {
+				int rank = 0;
+				if (splitTitle != null) {
+					for (String titlePart : splitTitle) {
+						if ((((conference.getShortTitle() != null)
+								&& (conference.getTitle() != null) && (conference.getShortTitle()
+								.toLowerCase().contains(titlePart.toLowerCase()))) || conference
+								.getTitle().toLowerCase().contains(titlePart.toLowerCase()))) {
+							rank++;
+						}
+					}
+				}
+				if (splitLocation != null) {
+					for (String locationPart : splitLocation) {
+						if ((conference.getLocation() != null)
+								&& (conference.getLocation().getName().toLowerCase()
+										.contains(locationPart.toLowerCase()) || conference
+										.getLocation().getAddress().toLowerCase()
+										.contains(locationPart.toLowerCase()))) {
+							rank++;
+						}
+					}
+				}
+				if ((tags != null) && !tags.isEmpty()) {
+					TagDao tagDao = (TagDao) InitialContext
+							.doLookup("ConferencePortal-ear/tagDao/local");
+					for (String tagName : tags) {
+						Tag tag = tagDao.searchTag(tagName);
+						if ((conference.getTags() != null) && conference.getTags().contains(tag)) {
+							rank++;
+						}
+					}
+				}
+				if (rank > 0) {
+					if (rankedSearchResult.containsKey(rank)) {
+						List<Conference> rankedConferences = rankedSearchResult.get(rank);
+						rankedConferences.add(conference);
+						rankedSearchResult.put(rank, rankedConferences);
+					} else {
+						ArrayList<Conference> rankedConferences = new ArrayList<Conference>();
+						rankedConferences.add(conference);
+						rankedSearchResult.put(rank, rankedConferences);
+					}
+				}
+				LOGGER.debug("Conference rank: id=" + conference.getId() + " rank=" + rank);
+			}
+			List<Conference> finalSearchResult = new ArrayList<Conference>();
+			Integer maxRank = (splitLocation != null ? splitLocation.length : 0)
+					+ (splitTitle != null ? splitTitle.length : 0)
+					+ (tags != null ? tags.size() : 0);
+			for (int i = maxRank; i > 0; i--) {
+				if (rankedSearchResult.containsKey(i)) {
+					finalSearchResult.addAll(rankedSearchResult.get(i));
+				}
+			}
+			return finalSearchResult;
+		} else {
+			return searchResult;
+		}
+	}
 }
