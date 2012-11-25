@@ -9,7 +9,7 @@
 	<rich:modalPanel id="newlocation_panel" autosized="true" domElementAttachment="form">
 		<f:facet name="header">
 			<h:panelGroup>
-				<h:outputText value="Add new location" />
+				<h:outputText value="#{messages['location.new']}" />
 			</h:panelGroup>
 		</f:facet>
 		<f:facet name="controls">
@@ -23,9 +23,9 @@
 		</f:facet>
 		<a4j:form ajaxSubmit="true">
 			<h:outputText value="Location name:" />
-			<h:inputText value="#{editConferenceBackBean.locationName}" />
+			<h:inputText value="#{editConferenceBackBean.newLocation.name}" />
 			<h:outputText value="Location address:" />
-			<h:inputText value="#{editConferenceBackBean.locationAddress}" />
+			<h:inputText value="#{editConferenceBackBean.newLocation.address}" />
 			<rich:toolBar>
 				<rich:toolBarGroup location="left">
 					<a4j:commandButton action="#{editConferenceBackBean.saveNewLocation()}"

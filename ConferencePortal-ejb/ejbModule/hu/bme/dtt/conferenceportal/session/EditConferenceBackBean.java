@@ -92,10 +92,12 @@ public class EditConferenceBackBean {
 	 */
 	@In(create = true)
 	private StateContainer<Location> locationsStateContainer;
+
 	/**
 	 * A létezõ helyszínek select item-ként.
 	 */
 	private List<SelectItem> locationSelectItems;
+
 	/**
 	 * A kiválasztott helyszín.
 	 */
@@ -104,14 +106,11 @@ public class EditConferenceBackBean {
 	 * A helszínek DAO-ja.
 	 */
 	private LocationDao locationDao;
+
 	/**
-	 * Új helyszín címe.
+	 * Új helyszín mentéséhez location objektum.
 	 */
-	private String locationAddress;
-	/**
-	 * Új helyszín neve.
-	 */
-	private String locationName;
+	private Location newLocation;
 
 	/**
 	 * Szerkesztés alatt álló program ideiglenes tárolóhelye. Arra a célra van,
@@ -125,7 +124,8 @@ public class EditConferenceBackBean {
 	private Integer oldProgramIndex;
 
 	/** Logoláshoz logger. */
-	private static final Logger logger = Logger.getLogger(EditConferenceBackBean.class);
+	private static final Logger logger = Logger
+			.getLogger(EditConferenceBackBean.class);
 
 	/**
 	 * Init függvény, ami eldönti, hogy új konferncia lesz létrehozva, vagy egy
@@ -134,6 +134,7 @@ public class EditConferenceBackBean {
 	@Create
 	public void init() {
 		logger.debug("init meghívódott");
+		newLocation = new Location();
 		if (conferenceStateHolder.getSelected() != null) {
 			conference = conferenceStateHolder.getSelected();
 			programs = (List<Program>) conference.getPrograms();
@@ -145,7 +146,8 @@ public class EditConferenceBackBean {
 		}
 
 		try {
-			tagDao = (TagDao) InitialContext.doLookup("ConferencePortal-ear/tagDao/local");
+			tagDao = (TagDao) InitialContext
+					.doLookup("ConferencePortal-ear/tagDao/local");
 			conferenceDao = (ConferenceDao) InitialContext
 					.doLookup("ConferencePortal-ear/conferenceDao/local");
 			locationDao = (LocationDao) InitialContext
@@ -163,25 +165,23 @@ public class EditConferenceBackBean {
 	}
 
 	/**
-	 * Létrehozza ahelszín select itemeket.
+	 * Létrehozza a helyszín select itemeket.
 	 */
 	private void makeLocationSelectItems() {
 		logger.debug("makeLocationSelectItems meghívódott");
 		locationSelectItems = new ArrayList<SelectItem>();
 		for (Location loc : locationsStateContainer.getList()) {
-			locationSelectItems.add(new SelectItem(loc.getId(), loc.getName() + "("
-					+ loc.getAddress() + ")"));
+			locationSelectItems.add(new SelectItem(loc.getId().toString(), loc
+					.getName() + "(" + loc.getAddress() + ")"));
 		}
 	}
 
 	/**
-	 * Elment egy új helyszínt.
+	 * Elment egy új helyszínt, frissíti az elérhetõ helyszínek listáját, majd
+	 * elkészíti a selectItemeket belõlük.
 	 */
 	public void saveNewLocation() {
-		Location loc = new Location();
-		loc.setAddress(locationAddress);
-		loc.setName(locationName);
-		conference.setLocation(locationDao.saveLocation(loc));
+		newLocation = locationDao.saveLocation(newLocation);
 		locationsStateContainer.setList(locationDao.getAllLocation());
 		makeLocationSelectItems();
 	}
@@ -192,9 +192,22 @@ public class EditConferenceBackBean {
 	 * @throws Exception
 	 *             lekérdezési hiba.
 	 */
-	public void setLocation() throws Exception {
-		logger.debug("Set location id=" + selectedLocationId);
-		conference.setLocation(locationDao.findByPrimaryKey(Long.parseLong(selectedLocationId)));
+	public void changeLocation() {
+		logger.info("Change location id=" + selectedLocationId);
+		Location location;
+		try {
+			location = locationDao.findByPrimaryKey(Long
+					.parseLong(selectedLocationId));
+		} catch (NumberFormatException e) {
+			logger.error(e.getMessage());
+			return;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return;
+		}
+		logger.info("Új helyszín: " + location.getName());
+		conference.setLocation(location);
+		logger.info("Új helyszín rendben beállítva!");
 	}
 
 	/**
@@ -260,7 +273,8 @@ public class EditConferenceBackBean {
 		selectedProgramStateHolder.setSelected(program);
 		oldProgram = program.clone();
 		logger.debug("Új kiválasztott program: " + selectedProgramStateHolder);
-		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
+		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
@@ -271,7 +285,8 @@ public class EditConferenceBackBean {
 		oldProgramIndex = null;
 		oldProgram = null;
 		selectedProgramStateHolder.setSelected(new Program());
-		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: " + oldProgram);
+		logger.debug("oldProgramIndex: " + oldProgramIndex + ", oldProgram: "
+				+ oldProgram);
 	}
 
 	/**
@@ -313,7 +328,8 @@ public class EditConferenceBackBean {
 			FacesMessages.instance().add("Cím megadása kötelezõ!");
 			return;
 		}
-		if ((conference.getShortTitle() == null) || conference.getShortTitle().isEmpty()) {
+		if ((conference.getShortTitle() == null)
+				|| conference.getShortTitle().isEmpty()) {
 			FacesMessages.instance().add("Rövid cím megadása kötelezõ!");
 			// FacesMessages.instance().add(msg);
 			return;
@@ -321,9 +337,10 @@ public class EditConferenceBackBean {
 
 		if (newConference) {
 			try {
-				UserDao userDao = InitialContext.doLookup("ConferencePortal-ear/userDao/local");
-				conference.setOwner(userDao.getUser(Identity.instance().getCredentials()
-						.getUsername()));
+				UserDao userDao = InitialContext
+						.doLookup("ConferencePortal-ear/userDao/local");
+				conference.setOwner(userDao.getUser(Identity.instance()
+						.getCredentials().getUsername()));
 			} catch (NamingException e) {
 				logger.error(e.getMessage(), e);
 			}
@@ -351,13 +368,15 @@ public class EditConferenceBackBean {
 		List<Article> result = new ArrayList<Article>();
 		ArticleDao articleDao;
 		try {
-			articleDao = InitialContext.doLookup("ConferencePortal-ear/articleDao/local");
+			articleDao = InitialContext
+					.doLookup("ConferencePortal-ear/articleDao/local");
 		} catch (NamingException e) {
 			logger.error(e.getMessage(), e);
 			return result;
 		}
 		logger.info("selectedArticles.get(0)=" + selectedArticles.get(0));
-		logger.info("selectedArticles.get(0)=" + selectedArticles.get(0).getClass());
+		logger.info("selectedArticles.get(0)="
+				+ selectedArticles.get(0).getClass());
 		for (String id : selectedArticles) {
 			logger.info(id.toString() + ". azonosítójú cikk keresése!");
 			Long id_Long = Long.parseLong(id);
@@ -391,6 +410,16 @@ public class EditConferenceBackBean {
 	 */
 	public void articleChange() {
 		logger.info(selectedArticles.size() + " db. cikk van kiválasztva!");
+		// if (selectedArticles.size() > 0) {
+		// logger.info("selectedArticles.get(0)=" + selectedArticles.get(0));
+		// }
+	}
+
+	/**
+	 * Teszthez, kiírja, ha változott a kiválasztott hely.
+	 */
+	public void locationChange() {
+		logger.info(selectedLocationId + ". hely kiválasztva!");
 		// if (selectedArticles.size() > 0) {
 		// logger.info("selectedArticles.get(0)=" + selectedArticles.get(0));
 		// }
@@ -512,7 +541,8 @@ public class EditConferenceBackBean {
 	 * @param articlesStateContainer
 	 *            the articlesStateContainer to set
 	 */
-	public void setArticlesStateContainer(StateContainer<Article> articlesStateContainer) {
+	public void setArticlesStateContainer(
+			StateContainer<Article> articlesStateContainer) {
 		this.articlesStateContainer = articlesStateContainer;
 	}
 
@@ -550,7 +580,8 @@ public class EditConferenceBackBean {
 	 * @param locationsStateContainer
 	 *            the locationsStateContainer to set
 	 */
-	public void setLocationsStateContainer(StateContainer<Location> locationsStateContainer) {
+	public void setLocationsStateContainer(
+			StateContainer<Location> locationsStateContainer) {
 		this.locationsStateContainer = locationsStateContainer;
 	}
 
@@ -577,33 +608,18 @@ public class EditConferenceBackBean {
 	}
 
 	/**
-	 * @param locationAddress
-	 *            the locationAddress to set
+	 * @return the newLocation
 	 */
-	public void setLocationAddress(String locationAddress) {
-		this.locationAddress = locationAddress;
+	public Location getNewLocation() {
+		return newLocation;
 	}
 
 	/**
-	 * @return the locationAddress
+	 * @param newLocation
+	 *            the newLocation to set
 	 */
-	public String getLocationAddress() {
-		return locationAddress;
-	}
-
-	/**
-	 * @param locationName
-	 *            the locationName to set
-	 */
-	public void setLocationName(String locationName) {
-		this.locationName = locationName;
-	}
-
-	/**
-	 * @return the locationName
-	 */
-	public String getLocationName() {
-		return locationName;
+	public void setNewLocation(Location newLocation) {
+		this.newLocation = newLocation;
 	}
 
 	/**

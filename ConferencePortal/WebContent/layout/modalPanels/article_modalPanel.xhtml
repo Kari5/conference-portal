@@ -43,7 +43,7 @@
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
 					<a4j:commandButton action="#{editConferenceBackBean.saveArticles()}"
-						value="OK" image="/img/save.png" title="OK" styleClass="myButton"
+						value="OK" image="/img/save.png" title="#{messages['global.ok']}" styleClass="myButton"
 						onclick="#{rich:component('article_panel')}.hide()"
 						reRender="article_dataGrid" />
 					<a4j:commandButton action="#"
