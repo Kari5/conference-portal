@@ -27,8 +27,9 @@
 		</f:facet>
 	<a4j:form>
 	<rich:pickList value="#{editConferenceBackBean.selectedArticles}"
-				id="tag_select">
+				id="article_select">
 				<f:selectItems value="#{editConferenceBackBean.articlesSeletcItems}" />
+				<a4j:support event="onclick" action="#{editConferenceBackBean.articleChange()}"/>
 			</rich:pickList>
 </a4j:form>
 		<a4j:form>
@@ -41,10 +42,13 @@
 									styleClass="myButton"/>
 				</rich:toolBarGroup>
 				<rich:toolBarGroup location="right">
-					<a4j:commandButton action="#"
+					<a4j:commandButton action="#{editConferenceBackBean.saveArticles()}"
 						value="OK" image="/img/save.png" title="OK" styleClass="myButton"
 						onclick="#{rich:component('article_panel')}.hide()"
 						reRender="article_dataGrid" />
+					<a4j:commandButton action="#"
+						value="OK" image="/img/cancel.png" title="#{messages['global.cancel']}" styleClass="myButton"
+						onclick="#{rich:component('article_panel')}.hide()" />
 				</rich:toolBarGroup>
 			</rich:toolBar>
 		</a4j:form>

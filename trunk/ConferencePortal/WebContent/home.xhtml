@@ -10,6 +10,7 @@
 			<a4j:form ajaxSubmit="true">
 				<rich:panel style="width:100%" id="conferencePanel"
 					header="#{conferenceStateHolder.selected == null ? messages['conferenece.select_one_conference']: conferenceStateHolder.selected.title}">
+				<h:graphicImage value="/img/logo.png" rendered="#{(conferenceStateHolder.selected == null)}"/>
 					<h:panelGrid columns="2" rendered="#{not (conferenceStateHolder.selected == null)}"
 						style="width:100%;">
 						<h:outputText value="#{messages['conference.short_title']}:" />
@@ -86,10 +87,9 @@
 						<h:outputText value="#{messages['conference.articles']}:" />
 						<rich:dataGrid columns="1" value="#{conferenceStateHolder.selected.articles}" var="article"
 							style="width:100%;">
-							<h:panelGrid columns="1">
+							<h:panelGrid columns="2">
 								<h:outputText value="#{article.author}: #{article.title}" />
-								<h:outputLink value="#{article.url}" rendered="#{not article.url ==  null}"> Megtekintentes </h:outputLink>
-								<rich:separator height="1" lineType="solid" />
+								<h:outputLink value="#{article.url}" rendered="#{(article.url.length()>4)}" target="_blank"> #{messages['article.viewing']} </h:outputLink>
 							</h:panelGrid>
 						</rich:dataGrid>
 						<rich:separator height="1" lineType="solid" />
