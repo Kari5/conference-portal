@@ -61,21 +61,21 @@
 							<rich:panel header="#{messages['menu.tag.main']}">
 								<h:panelGrid columns="1">
 									<s:button value="#{messages['menu.tag.home']}" action="home"
-										styleClass="myButton" />
+										styleClass="myButton" style="width:100%"/>
 									<s:button value="#{messages['menu.tag.uploadarticle']}"
 										onclick="#{rich:component('new_article_panel')}.show(); return false;"
-										styleClass="myButton" />
+										styleClass="myButton" style="width:100%" />
 									<s:button value="#{messages['menu.tag.createconference']}"
 										action="#{homePageBackBean.createConference()}"
-										styleClass="myButton" />
+										styleClass="myButton" style="width:100%" />
 									<s:button value="#{messages['menu.tag.editaccount']}"
 										action="editAccount" rendered="#{identity.loggedIn}"
-										styleClass="myButton" />
+										styleClass="myButton" style="width:100%" />
 									<s:button value="#{messages['menu.tag.listsubscriptions']}"
 										action="listSubs" rendered="#{identity.loggedIn}"
-										styleClass="myButton" />
+										styleClass="myButton" style="width:100%" />
 									<s:button value="#{messages['search.tag.btn']}"
-										action="searchConf" styleClass="myButton" />
+										action="searchConf" styleClass="myButton" style="width:100%" />
 								</h:panelGrid>
 							</rich:panel>
 							<rich:spacer height="10px"/>
@@ -84,22 +84,22 @@
 									<h:panelGrid columns="1">
 										<s:button value="#{messages['menu.tag.addarticle']}"
 											onclick="#{rich:component('article_panel')}.show(); return false;"
-											styleClass="myButton" />
+											styleClass="myButton" style="width:100%" />
 										<s:button value="#{messages['menu.tag.editconference']}"
 											action="editConference"
 											rendered="#{homePageBackBean.checkOwner()}"
-											styleClass="myButton" />
+											styleClass="myButton" style="width:100%" />
 										<s:button value="#{messages['menu.tag.addquestion']}"
 											onclick="#{rich:component('question_panel')}.show(); return false;"
-											styleClass="myButton" />
+											styleClass="myButton" style="width:100%" />
 										<s:button value="#{messages['menu.tag.subscribe']}"
 											action="#{homePageBackBean.subscribe()}"
 											rendered="#{not homePageBackBean.checkSubscription()}"
-											styleClass="myButton" />
+											styleClass="myButton" style="width:100%" />
 										<s:button value="#{messages['menu.tag.unsubscribe']}"
 											action="#{homePageBackBean.unsubscribe()}"
 											rendered="#{homePageBackBean.checkSubscription()}"
-											styleClass="myButton" />
+											styleClass="myButton" style="width:100%" />
 									</h:panelGrid>
 								</rich:panel>
 							</s:fragment>

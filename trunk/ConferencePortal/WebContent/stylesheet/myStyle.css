@@ -1,66 +1,75 @@
 @CHARSET "UTF-8";
+
 .myButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #dcecfb;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #dcecfb;
-	box-shadow:inset 0px 1px 0px 0px #dcecfb;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #b3dbfc), color-stop(1, #ffffff) );
-	background:-moz-linear-gradient( center top, #b3dbfc 5%, #80b5ea 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3dbfc', endColorstr='#ffffff');
-	background-color:#bddbfa;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	border:1px solid #84bbf3;
-	display:inline-block;
-	color:black;
-	font-family:arial;
-	padding:3px 12px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #ffffff;
+	-moz-box-shadow: inset 0px 1px 0px 0px #dcecfb;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #dcecfb;
+	box-shadow: inset 0px 1px 0px 0px #dcecfb;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #b3dbfc
+		), color-stop(1, #ffffff) );
+	background: -moz-linear-gradient(center top, #b3dbfc 5%, #80b5ea 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b3dbfc',
+		endColorstr='#ffffff' );
+	background-color: #bddbfa;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #84bbf3;
+	display: inline-block;
+	color: black;
+	font-family: times, Times New Roman, times-roman, georgia, serif;
+	padding: 3px 12px;
+	text-decoration: none;
+	text-shadow: 1px 1px 0px #ffffff;
+	font-size: 14px;
+	line-height: 20px;
+	text-transform: uppercase;
 }
 
 .myButton:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #80b5ea), color-stop(1, #bddbfa) );
-	background:-moz-linear-gradient( center top, #80b5ea 5%, #bddbfa 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#80b5ea', endColorstr='#bddbfa');
-	background-color:#80b5ea;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #80b5ea
+		), color-stop(1, #bddbfa) );
+	background: -moz-linear-gradient(center top, #80b5ea 5%, #bddbfa 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80b5ea',
+		endColorstr='#bddbfa' );
+	background-color: #80b5ea;
 }
 
 .myButton:active {
-	position:relative;
-	top:1px;
+	position: relative;
+	top: 1px;
 }
 
 .noBorder {
-	border:0px;
+	border: 0px;
 }
 
-.cursorPointer{
+.cursorPointer {
 	cursor: pointer;
 }
 
-.state_message{
-	border:1px;
+.state_message {
+	border: 1px;
 	background-color: #CBDCF2;
 	text-align: center;
 }
 
-.top20{
+.top20 {
 	vertical-align: top;
 	width: 19%;
 }
 
-.top40{
+.top40 {
 	vertical-align: top;
 	width: 39%;
 }
-.top60{
+
+.top60 {
 	vertical-align: top;
 	width: 59%;
 }
 
-.title{
-	 font-family: times, Times New Roman, times-roman, georgia, serif;
+.title {
+	font-family: times, Times New Roman, times-roman, georgia, serif;
 	color: #444;
 	margin: 0;
 	padding: 0px 0px 6px 0px;
@@ -80,10 +89,10 @@
 	line-height: 44px;
 	letter-spacing: -2px;
 	font-weight: bold;
-	color:#101010;
+	color: #101010;
 }
 
-.smallHeadLine{
+.smallHeadLine {
 	font-family: Gill Sans, Verdana;
 	font-size: 11px;
 	line-height: 14px;
@@ -103,6 +112,15 @@
 	letter-spacing: -2px;
 	font-weight: bold;
 	text-decoration: none;
-	color:#cccccc;
+	color: #cccccc;
 }
 
+.specTitle {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 55px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	text-align: center;
+	font-weight: normal;
+	color: #222;
+}
