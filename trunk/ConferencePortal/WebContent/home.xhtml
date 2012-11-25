@@ -99,8 +99,12 @@
 							style="width:100%;border:0px" columnClasses="noBorder">
 							<h:panelGrid columns="2">
 								<h:outputText value="#{article.author}: #{article.title}" />
+								<h:form>
 								<h:outputLink value="#{article.url}"
-									rendered="#{(article.url.length()>4)}" target="_blank"> #{messages['article.viewing']} </h:outputLink>
+									rendered="#{(article.url.length()>4)}" target="_blank" > #{messages['article.viewing']} </h:outputLink>
+								<h:commandLink actionListener="#{homePageBackBean.sendFile(article)}" target="_blank"
+									value="#{messages['article.viewing']}" rendered="#{article.length > 0}"/>
+									</h:form>
 							</h:panelGrid>
 						</rich:dataGrid>
 						<rich:separator height="1" lineType="solid" />
