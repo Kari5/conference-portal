@@ -6,64 +6,62 @@
 	xmlns:a="http://richfaces.org/a4j" template="layout/template.xhtml">
 
 	<ui:define name="body">
-		<h:form id="searchForm">
+		<rich:panel id="search_panel">
 			<rich:panel>
-				<rich:panel>
-					<f:facet name="header">
-						<h:outputText value="#{messages['search.tag.title']}" />
-					</f:facet>
-
-					<a:form ajaxSubmit="true">
-						<h:panelGrid columns="2">
-							<h:outputText value="#{messages['search.tag.bytitle']}:" />
-							<h:inputText value="#{searchConference.searchTitle}" />
-							<h:outputText value="#{messages['search.tag.bytags']}:" />
-							<rich:panel>
-								<h:outputText value="#{searchConference.concatSelectedTags()}" style="font-size:2.5em;" />
-								<s:button value="#{messages['search.tag.addtags']}"
-									onclick="#{rich:component('searchtag_panel')}.show(); return false;" />
-							</rich:panel>
-							<h:outputText value="#{messages['search.tag.bydate']}:" />
-							<rich:panel>
-								<h:panelGrid columns="2">
-									<h:outputText value="#{messages['search.tag.bydate.start']}:" />
-									<rich:calendar value="#{searchConference.startDate}" popup="true"
-										datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
-									<h:outputText value="#{messages['search.tag.bydate.end']}:" />
-									<rich:calendar value="#{searchConference.endDate}" popup="true"
-										datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
-								</h:panelGrid>
-							</rich:panel>
-							<h:outputText value="#{messages['search.tag.bylocation']}:" />
-							<h:inputText value="#{searchConference.location}" />
-						</h:panelGrid>
-						<a:commandButton value="#{messages['search.tag.btn']}"
-							action="#{searchConference.executeSearch()}" reRender="searchForm" />
-					</a:form>
-
-				</rich:panel>
+				<f:facet name="header">
+					<h:outputText value="#{messages['search.tag.title']}" />
+				</f:facet>
 
 				<a:form ajaxSubmit="true">
-					<rich:panel>
-						<f:facet name="header">
-							<h:outputText value="#{messages['search.tag.resulttitle']}" />
-						</f:facet>
-						<rich:dataGrid value="#{searchConference.searchResults}" var="conference" columns="1"
-							rowKeyVar="row" columnClasses="noBorder" style="border:0px">
-							<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
-								reRender="conferencePanel,navigationPanel" styleClass="title">
-								<h:outputText value="#{row+1} " />
-								<h:outputText value="#{conference.shortTitle} " />
-								<br />
-								<rich:calendar value="#{conference.startDate}" popup="true"
-									datePattern="yyyy. MM. dd. HH:mm" disabled="true" />
-							</a:commandLink>
-							<rich:separator height="1" lineType="solid" />
-						</rich:dataGrid>
-					</rich:panel>
+					<h:panelGrid columns="2">
+						<h:outputText value="#{messages['search.tag.bytitle']}:" />
+						<h:inputText value="#{searchConference.searchTitle}" />
+						<h:outputText value="#{messages['search.tag.bytags']}:" />
+						<rich:panel>
+							<h:outputText value="#{searchConference.concatSelectedTags()}" style="font-size:2.5em;" />
+							<s:button value="#{messages['search.tag.addtags']}"
+								onclick="#{rich:component('searchtag_panel')}.show(); return false;" />
+						</rich:panel>
+						<h:outputText value="#{messages['search.tag.bydate']}:" />
+						<rich:panel>
+							<h:panelGrid columns="2">
+								<h:outputText value="#{messages['search.tag.bydate.start']}:" />
+								<rich:calendar value="#{searchConference.startDate}" popup="true"
+									datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
+								<h:outputText value="#{messages['search.tag.bydate.end']}:" />
+								<rich:calendar value="#{searchConference.endDate}" popup="true"
+									datePattern="yyyy. MM. dd. HH:mm" showApplyButton="true" />
+							</h:panelGrid>
+						</rich:panel>
+						<h:outputText value="#{messages['search.tag.bylocation']}:" />
+						<h:inputText value="#{searchConference.location}" />
+					</h:panelGrid>
+					<a:commandButton value="#{messages['search.tag.btn']}"
+						action="#{searchConference.executeSearch()}" reRender="search_panel" />
 				</a:form>
+
 			</rich:panel>
-		</h:form>
+
+			<a:form ajaxSubmit="true">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{messages['search.tag.resulttitle']}" />
+					</f:facet>
+					<rich:dataGrid value="#{searchConference.searchResults}" var="conference" columns="1"
+						rowKeyVar="row" columnClasses="noBorder" style="border:0px">
+						<a:commandLink action="#{homePageBackBean.changeSelectedConference(conference)}"
+							reRender="conferencePanel,navigationPanel" styleClass="title">
+							<h:outputText value="#{row+1} " />
+							<h:outputText value="#{conference.shortTitle} " />
+							<br />
+							<rich:calendar value="#{conference.startDate}" popup="true" datePattern="yyyy. MM. dd. HH:mm"
+								disabled="true" />
+						</a:commandLink>
+						<rich:separator height="1" lineType="solid" />
+					</rich:dataGrid>
+				</rich:panel>
+			</a:form>
+		</rich:panel>
 
 		<!-- Kulccsszó hozzáadása panel -->
 		<ui:include src="/layout/modalPanels/searchtag_modalPanel.xhtml" />
