@@ -30,21 +30,23 @@
 				style="width:100%">
 				<s:div>
 					<a:form ajaxSubmit="true">
-						<rich:panel>
+						<rich:panel style="border:0px;">
 							<rich:dataGrid value="#{homePageBackBean.conferences}"
 								var="conference" columns="1" rowKeyVar="row"
 								columnClasses="noBorder" style="border:0px">
-								
-									<a:commandLink
-										action="#{homePageBackBean.changeSelectedConference(conference)}"
-										reRender="conferencePanel,navigationPanel">
-										<h:outputText value="#{conference.startDate.toLocaleString()}" styleClass="smallHeadLine"/>
-										<br />
-										<h:outputText value="#{conference.shortTitle} " styleClass="title" />
-									</a:commandLink>
-								
-								<rich:spacer height="5px"/>
-								<rich:separator height="1" lineType="solid" />
+
+								<a:commandLink
+									action="#{homePageBackBean.changeSelectedConference(conference)}"
+									reRender="conferencePanel,navigationPanel">
+									<h:outputText value="#{conference.startDate.toLocaleString()}"
+										styleClass="smallHeadLine" />
+									<br />
+									<h:outputText value="#{conference.shortTitle} "
+										styleClass="title" />
+								</a:commandLink>
+
+								<rich:spacer height="5px" />
+								<rich:separator height="2" lineType="solid" />
 							</rich:dataGrid>
 						</rich:panel>
 					</a:form>
@@ -53,40 +55,53 @@
 					<ui:insert name="body" />
 				</s:div>
 				<s:div>
-					<a:form ajaxSubmit="true">
-						<rich:panel id="navigationPanel">
-							<h:panelGrid columns="1">
-								<h:outputText value="#{messages['menu.tag.main']}" />
-								<s:button value="#{messages['menu.tag.home']}" action="home" />
-								<s:button value="#{messages['menu.tag.uploadarticle']}"
-									onclick="#{rich:component('new_article_panel')}.show(); return false;" />
-								<s:button value="#{messages['menu.tag.createconference']}"
-									action="#{homePageBackBean.createConference()}" />
-								<s:button value="#{messages['menu.tag.editaccount']}"
-									action="editAccount" rendered="#{identity.loggedIn}" />
-								<s:button value="#{messages['menu.tag.listsubscriptions']}"
-									action="listSubs" rendered="#{identity.loggedIn}" />
-								<s:button value="#{messages['search.tag.btn']}"
-									action="searchConf" />
-							</h:panelGrid>
 
-							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
+					<a:form ajaxSubmit="true">
+						<rich:panel id="navigationPanel" style="border:0px">
+							<rich:panel header="#{messages['menu.tag.main']}">
 								<h:panelGrid columns="1">
-									<h:outputText value="#{messages['menu.tag.conference']}" />
-									<s:button value="#{messages['menu.tag.addarticle']}"
-										onclick="#{rich:component('article_panel')}.show(); return false;" />
-									<s:button value="#{messages['menu.tag.editconference']}"
-										action="editConference"
-										rendered="#{homePageBackBean.checkOwner()}" />
-									<s:button value="#{messages['menu.tag.addquestion']}"
-										onclick="#{rich:component('question_panel')}.show(); return false;" />
-									<s:button value="#{messages['menu.tag.subscribe']}"
-										action="#{homePageBackBean.subscribe()}"
-										rendered="#{not homePageBackBean.checkSubscription()}" />
-									<s:button value="#{messages['menu.tag.unsubscribe']}"
-										action="#{homePageBackBean.unsubscribe()}"
-										rendered="#{homePageBackBean.checkSubscription()}" />
+									<s:button value="#{messages['menu.tag.home']}" action="home"
+										styleClass="myButton" />
+									<s:button value="#{messages['menu.tag.uploadarticle']}"
+										onclick="#{rich:component('new_article_panel')}.show(); return false;"
+										styleClass="myButton" />
+									<s:button value="#{messages['menu.tag.createconference']}"
+										action="#{homePageBackBean.createConference()}"
+										styleClass="myButton" />
+									<s:button value="#{messages['menu.tag.editaccount']}"
+										action="editAccount" rendered="#{identity.loggedIn}"
+										styleClass="myButton" />
+									<s:button value="#{messages['menu.tag.listsubscriptions']}"
+										action="listSubs" rendered="#{identity.loggedIn}"
+										styleClass="myButton" />
+									<s:button value="#{messages['search.tag.btn']}"
+										action="searchConf" styleClass="myButton" />
 								</h:panelGrid>
+							</rich:panel>
+							<rich:spacer height="10px"/>
+							<s:fragment rendered="#{conferenceStateHolder.selected != null}">
+								<rich:panel header="#{messages['menu.tag.conference']}">
+									<h:panelGrid columns="1">
+										<s:button value="#{messages['menu.tag.addarticle']}"
+											onclick="#{rich:component('article_panel')}.show(); return false;"
+											styleClass="myButton" />
+										<s:button value="#{messages['menu.tag.editconference']}"
+											action="editConference"
+											rendered="#{homePageBackBean.checkOwner()}"
+											styleClass="myButton" />
+										<s:button value="#{messages['menu.tag.addquestion']}"
+											onclick="#{rich:component('question_panel')}.show(); return false;"
+											styleClass="myButton" />
+										<s:button value="#{messages['menu.tag.subscribe']}"
+											action="#{homePageBackBean.subscribe()}"
+											rendered="#{not homePageBackBean.checkSubscription()}"
+											styleClass="myButton" />
+										<s:button value="#{messages['menu.tag.unsubscribe']}"
+											action="#{homePageBackBean.unsubscribe()}"
+											rendered="#{homePageBackBean.checkSubscription()}"
+											styleClass="myButton" />
+									</h:panelGrid>
+								</rich:panel>
 							</s:fragment>
 						</rich:panel>
 					</a:form>
@@ -114,18 +129,18 @@
 	<div class="footer">
 		<rich:separator width="100%" height="1" lineType="solid" />
 		<h:panelGrid columns="4" width="100%">
-		<center>
-			<h:graphicImage value="/img/logo.png" />
-			<s:div>
-				<p>
+			<center>
+				<h:graphicImage value="/img/logo.png" />
+				<s:div>
+					<p>
 
-					Powered by DTT. 2012. <br /> Software Architectures <br />
-					Budapest University of Technology and Economics
+						Powered by DTT. 2012. <br /> Software Architectures <br />
+						Budapest University of Technology and Economics
 
-				</p>
-			</s:div>
-	<h:graphicImage value="/img/logo.png" />
-	</center>
+					</p>
+				</s:div>
+				<h:graphicImage value="/img/logo.png" />
+			</center>
 		</h:panelGrid>
 		<rich:separator width="100%" height="1" lineType="solid" />
 	</div>
