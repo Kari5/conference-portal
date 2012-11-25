@@ -76,7 +76,7 @@
 							<h:outputText value="#{messages['conference.location']}:" />
 							<s:div>
 								<h:outputText
-									value="#{editConferenceBackBean.conference.location.name} (#{editConferenceBackBean.conference.location})" />
+									value="#{editConferenceBackBean.conference.location.name} (#{editConferenceBackBean.conference.location.address})" />
 								<s:button value="add"
 									onclick="#{rich:component('location_panel')}.show(); return false;"
 									image="img/edit.png" styleClass="myButton" />
