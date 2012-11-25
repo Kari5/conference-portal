@@ -37,7 +37,7 @@
 
 								<a:commandLink
 									action="#{homePageBackBean.changeSelectedConference(conference)}"
-									reRender="conferencePanel,navigationPanel" rendered="#{conference.endDate > currentDatetime}" >
+									reRender="conferencePanel,navigationPanel" rendered="#{conference.endDate > currentDatetime}" style="text-decoration:none;">
 									<h:outputText value="#{conference.startDate.toLocaleString()}"
 										styleClass="smallHeadLine"/>
 									<br />
