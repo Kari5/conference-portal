@@ -77,6 +77,7 @@
 							<s:div>
 								<h:outputText
 									value="#{editConferenceBackBean.conference.location.name} (#{editConferenceBackBean.conference.location.address})"  rendered="#{editConferenceBackBean.conference.location!=null}" />
+								<rich:spacer rendered="#{editConferenceBackBean.conference.location==null}"/>
 								<s:button value="add"
 									onclick="#{rich:component('location_panel')}.show(); return false;"
 									image="img/edit.png" styleClass="myButton" />
