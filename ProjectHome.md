@@ -1,0 +1,1 @@
+Portal for creating, managing, browsing and joining conferences. Also users can add and review articles corresponding to the subject of the given conference.
